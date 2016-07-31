@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">BangumiTV</string>
+
+    <!-- NavigationView -->
+    <string name="nav_my_collection">我的进度</string>
+    <string name="nav_daily_calendar">每日放送</string>
+    <string name="nav_search">搜索</string>
+    <string name="nav_ultra_expand">超展开</string>
+    <string name="nav_about">关于</string>
+    <string name="nav_logout">退出登录</string>
+    <string name="nav_setting">设置</string>
+    <string name="calender_bangumi_img">calender_bangumi_img</string>
+
+    <string name="monday">星期一</string>
+    <string name="tuesday">星期二</string>
+    <string name="wednesday">星期三</string>
+    <string name="thursday">星期四</string>
+    <string name="friday">星期五</string>
+    <string name="saturday">星期六</string>
+    <string name="sunday">星期日</string>
+
+    <string name="update_failed">更新失败</string>
+    <string name="update_retry">重试</string>
+</resources>

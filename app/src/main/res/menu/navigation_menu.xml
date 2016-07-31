@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group
+        android:id="@+id/first_group"
+        android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/nav_daily"
+            android:checked="true"
+            android:icon="@android:drawable/ic_menu_info_details"
+            android:title="@string/nav_daily_calendar" />
+
+        <item
+            android:id="@+id/nav_collections"
+            android:checked="false"
+            android:icon="@android:drawable/ic_menu_info_details"
+            android:title="@string/nav_my_collection" />
+
+
+        <item
+            android:id="@+id/nav_search"
+            android:checked="false"
+            android:icon="@android:drawable/ic_menu_info_details"
+            android:title="@string/nav_search" />
+
+
+        <item
+            android:id="@+id/nav_ultra_expand"
+            android:checked="false"
+            android:icon="@android:drawable/ic_menu_info_details"
+            android:title="@string/nav_ultra_expand" />
+    </group>
+
+    <group
+        android:id="@+id/second_group"
+        android:checkableBehavior="none">
+
+        <item
+            android:id="@+id/nav_about"
+            android:checked="false"
+            android:checkable="false"
+            android:icon="@android:drawable/ic_menu_compass"
+            android:title="@string/nav_about"/>
+
+        <item
+            android:id="@+id/nav_setting"
+            android:checked="false"
+            android:checkable="false"
+            android:icon="@android:drawable/ic_menu_compass"
+            android:title="@string/nav_setting"/>
+
+    </group>
+</menu>

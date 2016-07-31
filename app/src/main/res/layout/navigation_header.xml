@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@android:color/holo_purple"
+    android:theme="@style/ThemeOverlay.AppCompat.Dark"
+    android:layout_height="190dp">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/profile_image"
+        android:layout_marginTop="35dp"
+        android:layout_marginLeft="20dp"
+        android:src="@drawable/ic_default_avator"
+        android:layout_width="75dp"
+        android:layout_height="75dp" />
+
+    <TextView
+        android:layout_below="@+id/profile_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Akash Bangad"
+        android:textSize="14sp"
+        android:textColor="#FFF"
+        android:textStyle="bold"
+        android:gravity="left"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
+        android:paddingBottom="4dp"
+        android:id="@+id/username" />
+
+    <ImageView
+        android:id="@+id/nav_logout"
+        android:layout_marginTop="15dp"
+        android:padding="14dp"
+        android:layout_alignParentRight="true"
+        android:src="@android:drawable/ic_menu_manage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</RelativeLayout>
