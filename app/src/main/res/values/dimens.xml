@@ -6,4 +6,6 @@
     <!-- 每日放送 -->
     <dimen name="calender_item_title_size">14sp</dimen>
     <dimen name="calender_item_outline_size">12sp</dimen>
+
+    <dimen name="common_padding">14dp</dimen>
 </resources>

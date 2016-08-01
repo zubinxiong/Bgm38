@@ -24,4 +24,7 @@
     <string name="update_failed">更新失败</string>
     <string name="update_retry">重试</string>
 
+    <!-- 番剧详情 -->
+    <string name="bangumi_detail_title">详情</string>
+
 </resources>

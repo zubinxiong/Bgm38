@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/cover_group"
+    android:fitsSystemWindows="true"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="72dp"
+    android:paddingLeft="@dimen/common_padding"
+    android:paddingRight="@dimen/common_padding"
+    android:paddingBottom="@dimen/common_padding">
+
+    <ImageView
+        android:id="@+id/cover_img"
+        android:layout_width="150dp"
+        android:layout_height="150dp" />
+
+    <TextView
+        android:id="@+id/cover_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/common_padding"
+        android:layout_marginTop="10dp"
+        android:layout_toRightOf="@+id/cover_img"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:text="弹丸论破3 -The End of 希望之峰学园- 未来篇(タブー・タトゥー)/ダンガンロンパ3 -The End of 希望ヶ峰学園- 未来編"
+        android:textColor="@color/white"
+        android:textSize="@dimen/calender_item_title_size" />
+
+    <TextView
+        android:id="@+id/cover_summary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/cover_name"
+        android:layout_marginLeft="@dimen/common_padding"
+        android:layout_marginTop="10dp"
+        android:layout_toRightOf="@+id/cover_img"
+        android:maxLines="3"
+        android:ellipsize="end"
+        android:text="简介: 每天都在自家的市郊餐馆“幸平”帮忙的幸平创真，在初中毕业的同时，就被父亲·城一郎推荐编入某所料理学校。\r\n那是日本首屈一指的料理学校“远月茶寮料理学园”……是毕业到达率不足10%的超级精英学校。\r\n严酷的考试、不断有人脱落的地狱宿泊研修、以退学为赌注的食戟。\r\n跨越各种试炼，磨炼着料理水平的创真。\r\n他与志同道合的伙伴，以及同世代的实力者们相遇，作为一个人类也有着确实的成长。\r\n——之后，秋季到来。\r\n即使在一年生当中也只允许被选拔出来的人出场的远月传统“秋之选拔”，创真得到了这场选拔的出场券。\r\n“秋之选拔”预选的题目是“咖喱料理”。\r\n优胜候补的调味料名手，叶山亮所制作的咖喱当中调味料的那份奥妙，得知这一点的创真为了应对叶山的宣战布告，而与调味料展开格斗。\r\n他直到预选当天的早晨为止都在试行错误当中面临调理，虽然抵达了与叶山相同的“香味炸弹”这一想法，但结果以叶山94分、创真93分的微小差距，令叶山夺得第一名。\r\n虽然败在叶山手下，创真仍然决定漂亮地在正赛中出场。\r\n他在满溢不甘的同时，在心中发誓要变得更强，如此这般，“秋之选拔”的正赛到来了。\r\n在淘汰赛中并肩出场的是，创真、惠、塔克米、绯沙子、爱丽丝、黑木场、叶山、美作这8人。\r\n创真的下一个对手是……！？\r\n以及，抵达顶点之人将会是……！？"
+        android:textColor="@color/white"
+        android:textSize="@dimen/calender_item_outline_size" />
+
+    <TextView
+        android:id="@+id/cover_air_day"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/cover_summary"
+        android:layout_marginLeft="@dimen/common_padding"
+        android:layout_marginTop="10dp"
+        android:layout_toRightOf="@+id/cover_img"
+        android:text="放送日期:2016-07-02"
+        android:textColor="@color/white"
+        android:textSize="@dimen/calender_item_outline_size" />
+</RelativeLayout>
