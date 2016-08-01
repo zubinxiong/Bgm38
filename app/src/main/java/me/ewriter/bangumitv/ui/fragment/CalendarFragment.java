@@ -6,12 +6,16 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+
+import org.greenrobot.eventbus.EventBus;
 
 import me.ewriter.bangumitv.BangumiApp;
 import me.ewriter.bangumitv.R;
 import me.ewriter.bangumitv.base.BaseFragment;
+import me.ewriter.bangumitv.event.OpenNavgationEvent;
 import me.ewriter.bangumitv.ui.adapter.CalendarPagerAdapter;
 import me.ewriter.bangumitv.utils.LogUtil;
 import me.ewriter.bangumitv.utils.ToastUtils;
@@ -64,11 +68,21 @@ public class CalendarFragment extends BaseFragment {
     private void setupToolbar() {
         mToolbar.setNavigationIcon(R.drawable.ic_action_drawer);
         mToolbar.setTitle("每日放送");
+        mToolbar.inflateMenu(R.menu.search_menu);
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                EventBus.getDefault().post(new OpenNavgationEvent());
-                ToastUtils.showShortToast(BangumiApp.sAppCtx, "click toolbar");
+                EventBus.getDefault().post(new OpenNavgationEvent());
+            }
+        });
+
+        mToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                if (item.getItemId() == R.id.toolbar_search) {
+                    ToastUtils.showShortToast(BangumiApp.sAppCtx, "search");
+                }
+                return false;
             }
         });
     }

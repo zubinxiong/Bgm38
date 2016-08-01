@@ -30,6 +30,10 @@ public class BangumiCalendarDao extends AbstractDao<BangumiCalendar, Long> {
         public final static Property Bangumi_average = new Property(5, Float.class, "bangumi_average", false, "BANGUMI_AVERAGE");
         public final static Property Large_image = new Property(6, String.class, "large_image", false, "LARGE_IMAGE");
         public final static Property Common_image = new Property(7, String.class, "common_image", false, "COMMON_IMAGE");
+        public final static Property Medium_image = new Property(8, String.class, "medium_image", false, "MEDIUM_IMAGE");
+        public final static Property Small_image = new Property(9, String.class, "small_image", false, "SMALL_IMAGE");
+        public final static Property Grid_image = new Property(10, String.class, "grid_image", false, "GRID_IMAGE");
+        public final static Property Rank = new Property(11, Integer.class, "rank", false, "RANK");
     };
 
 
@@ -52,7 +56,11 @@ public class BangumiCalendarDao extends AbstractDao<BangumiCalendar, Long> {
                 "\"BANGUMI_TOTAL\" INTEGER," + // 4: bangumi_total
                 "\"BANGUMI_AVERAGE\" REAL," + // 5: bangumi_average
                 "\"LARGE_IMAGE\" TEXT," + // 6: large_image
-                "\"COMMON_IMAGE\" TEXT);"); // 7: common_image
+                "\"COMMON_IMAGE\" TEXT," + // 7: common_image
+                "\"MEDIUM_IMAGE\" TEXT," + // 8: medium_image
+                "\"SMALL_IMAGE\" TEXT," + // 9: small_image
+                "\"GRID_IMAGE\" TEXT," + // 10: grid_image
+                "\"RANK\" INTEGER);"); // 11: rank
     }
 
     /** Drops the underlying database table. */
@@ -92,6 +100,26 @@ public class BangumiCalendarDao extends AbstractDao<BangumiCalendar, Long> {
         if (common_image != null) {
             stmt.bindString(8, common_image);
         }
+ 
+        String medium_image = entity.getMedium_image();
+        if (medium_image != null) {
+            stmt.bindString(9, medium_image);
+        }
+ 
+        String small_image = entity.getSmall_image();
+        if (small_image != null) {
+            stmt.bindString(10, small_image);
+        }
+ 
+        String grid_image = entity.getGrid_image();
+        if (grid_image != null) {
+            stmt.bindString(11, grid_image);
+        }
+ 
+        Integer rank = entity.getRank();
+        if (rank != null) {
+            stmt.bindLong(12, rank);
+        }
     }
 
     @Override
@@ -125,6 +153,26 @@ public class BangumiCalendarDao extends AbstractDao<BangumiCalendar, Long> {
         if (common_image != null) {
             stmt.bindString(8, common_image);
         }
+ 
+        String medium_image = entity.getMedium_image();
+        if (medium_image != null) {
+            stmt.bindString(9, medium_image);
+        }
+ 
+        String small_image = entity.getSmall_image();
+        if (small_image != null) {
+            stmt.bindString(10, small_image);
+        }
+ 
+        String grid_image = entity.getGrid_image();
+        if (grid_image != null) {
+            stmt.bindString(11, grid_image);
+        }
+ 
+        Integer rank = entity.getRank();
+        if (rank != null) {
+            stmt.bindLong(12, rank);
+        }
     }
 
     @Override
@@ -142,7 +190,11 @@ public class BangumiCalendarDao extends AbstractDao<BangumiCalendar, Long> {
             cursor.isNull(offset + 4) ? null : cursor.getInt(offset + 4), // bangumi_total
             cursor.isNull(offset + 5) ? null : cursor.getFloat(offset + 5), // bangumi_average
             cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // large_image
-            cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7) // common_image
+            cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7), // common_image
+            cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8), // medium_image
+            cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9), // small_image
+            cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10), // grid_image
+            cursor.isNull(offset + 11) ? null : cursor.getInt(offset + 11) // rank
         );
         return entity;
     }
@@ -157,6 +209,10 @@ public class BangumiCalendarDao extends AbstractDao<BangumiCalendar, Long> {
         entity.setBangumi_average(cursor.isNull(offset + 5) ? null : cursor.getFloat(offset + 5));
         entity.setLarge_image(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
         entity.setCommon_image(cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7));
+        entity.setMedium_image(cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8));
+        entity.setSmall_image(cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9));
+        entity.setGrid_image(cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10));
+        entity.setRank(cursor.isNull(offset + 11) ? null : cursor.getInt(offset + 11));
      }
     
     @Override

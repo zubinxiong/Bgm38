@@ -3,18 +3,19 @@ package me.ewriter.bangumitv.ui.activity;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
-import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import me.ewriter.bangumitv.BangumiApp;
 import me.ewriter.bangumitv.R;
 import me.ewriter.bangumitv.base.BaseActivity;
 import me.ewriter.bangumitv.constants.MyConstants;
-import me.ewriter.bangumitv.event.TestEvent;
+import me.ewriter.bangumitv.event.OpenNavgationEvent;
 import me.ewriter.bangumitv.ui.fragment.CalendarFragment;
 import me.ewriter.bangumitv.ui.fragment.MyCollectionFragment;
 import me.ewriter.bangumitv.utils.ToastUtils;
@@ -49,8 +50,13 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     }
 
     @Override
+    protected void initIntent() {
+
+    }
+
+    @Override
     protected boolean isSubscribeEvent() {
-        return false;
+        return true;
     }
 
     @Override
@@ -93,7 +99,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         if (target == null) {
             if (tag.equals(MyConstants.TAG_CALENDER_FRAGMENT)) {
                 target = new CalendarFragment();
-                EventBus.getDefault().post(new TestEvent());
             } else if (tag.equals(MyConstants.TAG_MY_COLLECTION)){
                 target = new MyCollectionFragment();
             }
@@ -124,5 +129,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 ToastUtils.showShortToast(BangumiApp.sAppCtx, R.string.nav_logout);
                 break;
         }
+    }
+
+    @Subscribe
+    public void openNavigationEvent(OpenNavgationEvent event) {
+        mDrawLayout.openDrawer(GravityCompat.START);
     }
 }

@@ -20,6 +20,10 @@ public class BangumiCalendar {
     private Float bangumi_average;
     private String large_image;
     private String common_image;
+    private String medium_image;
+    private String small_image;
+    private String grid_image;
+    private Integer rank;
 
     @Generated
     public BangumiCalendar() {
@@ -30,7 +34,7 @@ public class BangumiCalendar {
     }
 
     @Generated
-    public BangumiCalendar(Long id, String name_cn, int air_weekday, int bangumi_id, Integer bangumi_total, Float bangumi_average, String large_image, String common_image) {
+    public BangumiCalendar(Long id, String name_cn, int air_weekday, int bangumi_id, Integer bangumi_total, Float bangumi_average, String large_image, String common_image, String medium_image, String small_image, String grid_image, Integer rank) {
         this.id = id;
         this.name_cn = name_cn;
         this.air_weekday = air_weekday;
@@ -39,6 +43,10 @@ public class BangumiCalendar {
         this.bangumi_average = bangumi_average;
         this.large_image = large_image;
         this.common_image = common_image;
+        this.medium_image = medium_image;
+        this.small_image = small_image;
+        this.grid_image = grid_image;
+        this.rank = rank;
     }
 
     public Long getId() {
@@ -105,6 +113,38 @@ public class BangumiCalendar {
 
     public void setCommon_image(String common_image) {
         this.common_image = common_image;
+    }
+
+    public String getMedium_image() {
+        return medium_image;
+    }
+
+    public void setMedium_image(String medium_image) {
+        this.medium_image = medium_image;
+    }
+
+    public String getSmall_image() {
+        return small_image;
+    }
+
+    public void setSmall_image(String small_image) {
+        this.small_image = small_image;
+    }
+
+    public String getGrid_image() {
+        return grid_image;
+    }
+
+    public void setGrid_image(String grid_image) {
+        this.grid_image = grid_image;
+    }
+
+    public Integer getRank() {
+        return rank;
+    }
+
+    public void setRank(Integer rank) {
+        this.rank = rank;
     }
 
 }

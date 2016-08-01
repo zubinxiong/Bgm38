@@ -1,6 +1,7 @@
 package me.ewriter.bangumitv.ui.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -27,8 +28,10 @@ import me.ewriter.bangumitv.dao.BangumiCalendar;
 import me.ewriter.bangumitv.dao.BangumiCalendarDao;
 import me.ewriter.bangumitv.dao.DaoSession;
 import me.ewriter.bangumitv.event.CalendarUpdateEvent;
+import me.ewriter.bangumitv.ui.activity.BangumiDetailActivity;
 import me.ewriter.bangumitv.ui.adapter.CalendarItemAdapter;
 import me.ewriter.bangumitv.utils.LogUtil;
+import me.ewriter.bangumitv.utils.ToastUtils;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -97,6 +100,19 @@ public class CalendarPageFragment extends BaseFragment {
         mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         mRecyclerView.setHasFixedSize(false);
         mRecyclerView.setAdapter(calendarItemAdapter);
+
+        calendarItemAdapter.setOnCalendarItemClickListener(new CalendarItemAdapter.onCalendarItemListener() {
+
+            @Override
+            public void onCalendarClick(View view, BangumiCalendar calendar) {
+                Intent intent = new Intent(getActivity(), BangumiDetailActivity.class);
+                intent.putExtra("bangumiId", calendar.getBangumi_id());
+                intent.putExtra("name", calendar.getBangumi_id());
+                intent.putExtra("common_url", calendar.getCommon_image());
+                intent.putExtra("large_url", calendar.getLarge_image());
+                startActivity(intent);
+            }
+        });
     }
 
     private void setupSwipeRefreshLayout() {
@@ -235,6 +251,7 @@ public class CalendarPageFragment extends BaseFragment {
                         entity.setCommon_image(calendar.getItems().get(j).getImages().getCommon());
                         entity.setLarge_image(calendar.getItems().get(j).getImages().getLarge());
                     }
+                    entity.setRank(calendar.getItems().get(j).getRank());
 
                     if ((mPosition + 1) == calendar.getItems().get(i).getAir_weekday()) {
                         mCalendarList.add(entity);
@@ -272,7 +289,12 @@ public class CalendarPageFragment extends BaseFragment {
                     if (calendar.getItems().get(j).getImages() != null) {
                         entity.setCommon_image(calendar.getItems().get(j).getImages().getCommon());
                         entity.setLarge_image(calendar.getItems().get(j).getImages().getLarge());
+                        entity.setMedium_image(calendar.getItems().get(j).getImages().getMedium());
+                        entity.setSmall_image(calendar.getItems().get(j).getImages().getSmall());
+                        entity.setGrid_image(calendar.getItems().get(j).getImages().getGrid());
                     }
+
+                    entity.setRank(calendar.getItems().get(j).getRank());
 
                     mDbList.add(entity);
                 }
