@@ -9,6 +9,7 @@
 
     <ImageView
         android:id="@+id/calendar_bangumi_img"
+        android:transitionName="img"
         android:scaleType="fitXY"
         android:adjustViewBounds="true"
         android:layout_width="match_parent"

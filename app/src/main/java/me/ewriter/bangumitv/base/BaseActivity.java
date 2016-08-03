@@ -24,14 +24,14 @@ public abstract class BaseActivity extends AppCompatActivity {
     /** 初始化views */
     protected abstract void initViews();
 
-    protected abstract void initIntent();
+    protected abstract void initBeforeCreate();
 
     /** 根据 Activity 需要判断是否需要订阅 EventBus */
     protected abstract boolean isSubscribeEvent();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        initIntent();
+        initBeforeCreate();
         super.onCreate(savedInstanceState);
 
         setContentView(getContentViewResId());

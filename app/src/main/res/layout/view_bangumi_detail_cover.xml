@@ -11,6 +11,7 @@
 
     <ImageView
         android:id="@+id/cover_img"
+        android:transitionName="img"
         android:layout_width="150dp"
         android:layout_height="150dp" />
 

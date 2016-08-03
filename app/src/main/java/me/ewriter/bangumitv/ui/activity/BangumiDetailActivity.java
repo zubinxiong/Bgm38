@@ -2,14 +2,18 @@ package me.ewriter.bangumitv.ui.activity;
 
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.os.Build;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.view.GravityCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.transition.Fade;
+import android.transition.Slide;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -62,7 +66,6 @@ public class BangumiDetailActivity extends BaseActivity implements View.OnClickL
 
     @Override
     protected void initViews() {
-
         if (mBangumiId == -1) {
             ToastUtils.showShortToast(this, R.string.bangumi_detail_init_error);
             return;
@@ -180,7 +183,13 @@ public class BangumiDetailActivity extends BaseActivity implements View.OnClickL
     }
 
     @Override
-    protected void initIntent() {
+    protected void initBeforeCreate() {
+
+        getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setExitTransition(new Fade());
+        }
+
         if (getIntent() != null) {
             mBangumiId = getIntent().getIntExtra("bangumiId", 0);
             mCommonImageUrl = getIntent().getStringExtra("common_url");

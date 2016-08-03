@@ -38,7 +38,7 @@ public class CalendarItemAdapter extends RecyclerView.Adapter<CalendarItemAdapte
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
+    public void onBindViewHolder(final MyViewHolder holder, int position) {
 
         final BangumiCalendar calendar = mList.get(position);
 
@@ -77,7 +77,7 @@ public class CalendarItemAdapter extends RecyclerView.Adapter<CalendarItemAdapte
         holder.card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.onCalendarClick(v, calendar);
+                listener.onCalendarClick(holder.mBangumiImg, calendar);
             }
         });
     }
