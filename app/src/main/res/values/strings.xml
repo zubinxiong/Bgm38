@@ -26,5 +26,9 @@
 
     <!-- 番剧详情 -->
     <string name="bangumi_detail_title">详情</string>
+    <string name="bangumi_detail_more">更多信息 &gt;&gt;&gt; </string>
+    <string name="bangumi_detail_init_error">初始化失败</string>
+    <string name="bangumi_detail_summary">简介: %1$s</string>
+    <string name="bangumi_detail_air_day">放送日期: %1$s</string>
 
 </resources>

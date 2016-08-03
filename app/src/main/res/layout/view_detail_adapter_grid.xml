@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/bangumi_detail_grid"
+    android:background="@android:color/holo_purple"
+    android:textSize="@dimen/calender_item_title_size"
+    android:textColor="@color/calendar_title_color"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" />

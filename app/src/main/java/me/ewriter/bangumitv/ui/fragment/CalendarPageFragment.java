@@ -107,7 +107,7 @@ public class CalendarPageFragment extends BaseFragment {
             public void onCalendarClick(View view, BangumiCalendar calendar) {
                 Intent intent = new Intent(getActivity(), BangumiDetailActivity.class);
                 intent.putExtra("bangumiId", calendar.getBangumi_id());
-                intent.putExtra("name", calendar.getBangumi_id());
+                intent.putExtra("name", calendar.getName_cn() + "(" + calendar.getName_jp() + ")");
                 intent.putExtra("common_url", calendar.getCommon_image());
                 intent.putExtra("large_url", calendar.getLarge_image());
                 startActivity(intent);
@@ -252,6 +252,7 @@ public class CalendarPageFragment extends BaseFragment {
                         entity.setLarge_image(calendar.getItems().get(j).getImages().getLarge());
                     }
                     entity.setRank(calendar.getItems().get(j).getRank());
+                    entity.setName_jp(calendar.getItems().get(j).getName());
 
                     if ((mPosition + 1) == calendar.getItems().get(i).getAir_weekday()) {
                         mCalendarList.add(entity);
@@ -294,6 +295,7 @@ public class CalendarPageFragment extends BaseFragment {
                         entity.setGrid_image(calendar.getItems().get(j).getImages().getGrid());
                     }
 
+                    entity.setName_jp(calendar.getItems().get(j).getName());
                     entity.setRank(calendar.getItems().get(j).getRank());
 
                     mDbList.add(entity);

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fab="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
@@ -21,8 +22,8 @@
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
             <include
-                android:fitsSystemWindows="true"
                 layout="@layout/view_bangumi_detail_cover"
+                android:fitsSystemWindows="true"
                 app:layout_collapseMode="parallax" />
 
             <android.support.v7.widget.Toolbar
@@ -40,6 +41,24 @@
         android:id="@+id/bangumi_detail_recyclerview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/common_padding"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/edit_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:layout_margin="@dimen/common_padding"
+        android:src="@android:drawable/ic_menu_edit"
+        app:layout_behavior="me.ewriter.bangumitv.widget.ScrollAwareFABBehavior"
+        />
+
+    <ProgressBar
+        android:id="@+id/loading_progreeebar"
+        style="@style/Loading_ProgressBar"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
 </android.support.design.widget.CoordinatorLayout>

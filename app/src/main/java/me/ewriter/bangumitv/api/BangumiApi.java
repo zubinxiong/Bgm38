@@ -3,6 +3,7 @@ package me.ewriter.bangumitv.api;
 
 import java.util.List;
 
+import me.ewriter.bangumitv.api.response.BangumiDetail;
 import me.ewriter.bangumitv.api.response.BaseResponse;
 import me.ewriter.bangumitv.api.response.Calendar;
 import me.ewriter.bangumitv.api.response.Token;
@@ -58,7 +59,7 @@ public interface BangumiApi {
      * @return
      */
     @GET("subject/{subjectId}?responseGroup=large")
-    public Call<BaseResponse> getBangumiDetail(@Path("subjectId") int subjectId);
+    public Call<BangumiDetail> getBangumiDetail(@Path("subjectId") int subjectId);
 
     /**
      *  获取番剧的每集状态，比如第一集看过，第二季抛弃，想看等状态
