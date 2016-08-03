@@ -6,13 +6,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import me.ewriter.bangumitv.R;
 
 /**
@@ -74,7 +74,7 @@ public class BangumiDetailAdapter extends RecyclerView.Adapter<RecyclerView.View
             gridHolder.title.setText("Grid" + position);
         } else if (holder instanceof CardHolder) {
             CardHolder cardHolder = (CardHolder) holder;
-            cardHolder.title.setText("Card" + position);
+            cardHolder.roleName.setText("Card" + position);
             Picasso.with(mContext)
                     .load(R.drawable.role_img_test_medium)
                     .config(Bitmap.Config.RGB_565)
@@ -111,13 +111,15 @@ public class BangumiDetailAdapter extends RecyclerView.Adapter<RecyclerView.View
     }
 
     class CardHolder extends RecyclerView.ViewHolder {
-        ImageView image;
-        TextView title;
+        CircleImageView image;
+        TextView roleName;
+        TextView cvName;
 
         public CardHolder(View itemView) {
             super(itemView);
-            image = (ImageView) itemView.findViewById(R.id.role_img);
-            title = (TextView) itemView.findViewById(R.id.role_name);
+            image = (CircleImageView) itemView.findViewById(R.id.role_img);
+            roleName = (TextView) itemView.findViewById(R.id.role_name);
+            cvName = (TextView) itemView.findViewById(R.id.cv_name);
         }
     }
 }

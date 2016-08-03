@@ -159,7 +159,7 @@ public class BangumiDetailActivity extends BaseActivity implements View.OnClickL
                 if (type == BangumiDetailAdapter.TYPE_TITLE) {
                     return manager.getSpanCount();
                 } else if (type == BangumiDetailAdapter.TYPE_CARD){
-                    return 2;
+                    return 3;
                 } else {
                     return 1;
                 }

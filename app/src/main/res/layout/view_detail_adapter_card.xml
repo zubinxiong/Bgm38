@@ -1,20 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
     android:background="@drawable/bg_card"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/role_img"
-        android:layout_width="match_parent"
+        android:src="@drawable/role_img_test_medium"
+        android:layout_gravity="center"
+        android:layout_marginLeft="10dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
     <TextView
         android:id="@+id/role_name"
+        android:text="小酒窝"
+        android:layout_toRightOf="@+id/role_img"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
         android:textSize="@dimen/calender_item_title_size"
         android:textColor="@color/calendar_title_color"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/cv_name"
+        android:text="cv: 浪川大辅"
+        android:layout_toRightOf="@+id/role_img"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_below="@+id/role_name"
+        android:textSize="@dimen/calender_item_title_size"
+        android:textColor="@color/calendar_title_color"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</RelativeLayout>
