@@ -3,11 +3,8 @@ package me.ewriter.bangumitv;
 import android.app.Application;
 import android.content.Context;
 
-import com.squareup.leakcanary.LeakCanary;
-
 import org.greenrobot.greendao.database.Database;
 
-import me.ewriter.bangumitv.dao.CustomOpenHelper;
 import me.ewriter.bangumitv.dao.DaoMaster;
 import me.ewriter.bangumitv.dao.DaoSession;
 
@@ -25,7 +22,7 @@ public class BangumiApp extends Application {
     public void onCreate() {
         super.onCreate();
         sAppCtx = this;
-        LeakCanary.install(this);
+//        LeakCanary.install(this);
 
         DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, DB_NAME, null);
         // 不加密，加密的参考官方的demo

@@ -10,6 +10,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Pair;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -91,6 +92,11 @@ public class CalendarPageFragment extends BaseFragment {
 
         setupRecyclerView();
         setupSwipeRefreshLayout();
+
+        mSwipeRefreshLayout.setProgressViewOffset(false, 0,
+                (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24, getResources().getDisplayMetrics()));
+        mSwipeRefreshLayout.setRefreshing(true);
+        loadDataFromDB();
     }
 
 
@@ -165,15 +171,15 @@ public class CalendarPageFragment extends BaseFragment {
         LogUtil.d(LogUtil.ZUBIN, "CalendarPagerFragment onResume" + mPosition);
 
 
-        mSwipeRefreshLayout.post(new Runnable() {
-            @Override
-            public void run() {
-                // 这个post 是在 onResume 方法后执行
-                LogUtil.d(LogUtil.ZUBIN, "CalendarPagerFragment post");
-                mSwipeRefreshLayout.setRefreshing(true);
-                loadDataFromDB();
-            }
-        });
+//        mSwipeRefreshLayout.post(new Runnable() {
+//            @Override
+//            public void run() {
+//                // 这个post 是在 onResume 方法后执行
+//                LogUtil.d(LogUtil.ZUBIN, "CalendarPagerFragment post");
+//                mSwipeRefreshLayout.setRefreshing(true);
+//                loadDataFromDB();
+//            }
+//        });
 
 
     }

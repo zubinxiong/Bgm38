@@ -173,7 +173,8 @@ public class BangumiDetailActivity extends BaseActivity implements View.OnClickL
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+//                finish();
+                onBackPressed();
             }
         });
 
