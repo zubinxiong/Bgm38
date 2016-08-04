@@ -28,4 +28,7 @@ public class MyConstants {
     public static final String LOGIN_MANAGER_AVATAR_KEY = Md5Util.md5("LOGIN_MANAGER_AVATAR_KEY");
     public static final String LOGIN_MANAGER_AUTH_ENCODE_KEY = Md5Util.md5("LOGIN_MANAGER_AUTH_ENCODE_KEY");
 
+    /** 每日放送刷新时间，超过6小时刷新一次，使用默认的Name*/
+    public static final String CALENDAR_REFRESH_KEY = Md5Util.md5("CALENDAR_REFRESH_KEY");
+    public static final long CALENDAR_REFRESH_TIME = 21600000;
 }

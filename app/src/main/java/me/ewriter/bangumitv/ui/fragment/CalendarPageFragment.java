@@ -14,6 +14,7 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -27,6 +28,7 @@ import me.ewriter.bangumitv.R;
 import me.ewriter.bangumitv.api.response.Calendar;
 import me.ewriter.bangumitv.base.BaseActivity;
 import me.ewriter.bangumitv.base.BaseFragment;
+import me.ewriter.bangumitv.constants.MyConstants;
 import me.ewriter.bangumitv.dao.BangumiCalendar;
 import me.ewriter.bangumitv.dao.BangumiCalendarDao;
 import me.ewriter.bangumitv.dao.DaoSession;
@@ -34,6 +36,7 @@ import me.ewriter.bangumitv.event.CalendarUpdateEvent;
 import me.ewriter.bangumitv.ui.activity.BangumiDetailActivity;
 import me.ewriter.bangumitv.ui.adapter.CalendarItemAdapter;
 import me.ewriter.bangumitv.utils.LogUtil;
+import me.ewriter.bangumitv.utils.PreferencesUtils;
 import me.ewriter.bangumitv.utils.ToastUtils;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -87,16 +90,15 @@ public class CalendarPageFragment extends BaseFragment {
     @Override
     protected void initView(boolean resued) {
 
+        if (resued)
+            return;
+
         mRecyclerView = (RecyclerView) getRootView().findViewById(R.id.calendar_recycleviews);
         mSwipeRefreshLayout = (SwipeRefreshLayout) getRootView().findViewById(R.id.swipe_refresh_layout);
 
         setupRecyclerView();
         setupSwipeRefreshLayout();
 
-        mSwipeRefreshLayout.setProgressViewOffset(false, 0,
-                (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 24, getResources().getDisplayMetrics()));
-        mSwipeRefreshLayout.setRefreshing(true);
-        loadDataFromDB();
     }
 
 
@@ -137,6 +139,16 @@ public class CalendarPageFragment extends BaseFragment {
             }
         });
 
+        mSwipeRefreshLayout.getViewTreeObserver()
+                .addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                    @Override
+                    public void onGlobalLayout() {
+                        mSwipeRefreshLayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                        mSwipeRefreshLayout.setRefreshing(true);
+                        loadDataFromDB();
+                    }
+                });
+
 
     }
 
@@ -169,19 +181,6 @@ public class CalendarPageFragment extends BaseFragment {
     public void onResume() {
         super.onResume();
         LogUtil.d(LogUtil.ZUBIN, "CalendarPagerFragment onResume" + mPosition);
-
-
-//        mSwipeRefreshLayout.post(new Runnable() {
-//            @Override
-//            public void run() {
-//                // 这个post 是在 onResume 方法后执行
-//                LogUtil.d(LogUtil.ZUBIN, "CalendarPagerFragment post");
-//                mSwipeRefreshLayout.setRefreshing(true);
-//                loadDataFromDB();
-//            }
-//        });
-
-
     }
 
     @Override
@@ -205,10 +204,16 @@ public class CalendarPageFragment extends BaseFragment {
                 mSwipeRefreshLayout.setRefreshing(false);
             }
         } else {
-            mCalendarList.clear();
-            mCalendarList.addAll(queryResultList);
-            calendarItemAdapter.notifyDataSetChanged();
-            mSwipeRefreshLayout.setRefreshing(false);
+            // 虽然本地数据库有数据，但是如果超过6小时未刷新则也需要重新请求
+            long deta = System.currentTimeMillis() - PreferencesUtils.getLong(BangumiApp.sAppCtx, MyConstants.CALENDAR_REFRESH_KEY, 0);
+            if (deta > MyConstants.CALENDAR_REFRESH_TIME && mPosition == 0) {
+                requestDataRefresh();
+            } else {
+                mCalendarList.clear();
+                mCalendarList.addAll(queryResultList);
+                calendarItemAdapter.notifyDataSetChanged();
+                mSwipeRefreshLayout.setRefreshing(false);
+            }
         }
     }
 
@@ -271,6 +276,7 @@ public class CalendarPageFragment extends BaseFragment {
             }
             calendarItemAdapter.notifyDataSetChanged();
             mSwipeRefreshLayout.setRefreshing(false);
+            PreferencesUtils.putLong(BangumiApp.sAppCtx, MyConstants.CALENDAR_REFRESH_KEY, System.currentTimeMillis());
         }
     }
 
@@ -312,6 +318,8 @@ public class CalendarPageFragment extends BaseFragment {
             }
             daoSession.getBangumiCalendarDao().deleteAll();
             daoSession.getBangumiCalendarDao().insertInTx(mDbList);
+
+            PreferencesUtils.putLong(BangumiApp.sAppCtx, MyConstants.CALENDAR_REFRESH_KEY, System.currentTimeMillis());
         }
 
     }
