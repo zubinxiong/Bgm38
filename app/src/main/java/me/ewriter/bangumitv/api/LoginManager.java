@@ -91,4 +91,8 @@ public class LoginManager {
         }
     }
 
+    public static void logout(Context context) {
+        PreferencesUtils.clear(context, MyConstants.LOGIN_MANAGER_NAME);
+    }
+
 }

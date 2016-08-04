@@ -31,13 +31,24 @@
     <string name="bangumi_detail_summary">简介: %1$s</string>
     <string name="bangumi_detail_air_day">放送日期: %1$s</string>
 
-    <!-- 邮箱 -->
+    <!-- 登录 -->
     <string name="login_email_hint">邮箱</string>
     <string name="login_password_hint">密码</string>
     <string name="login">登录</string>
     <string name="login_fail">登录失败</string>
+    <string name="not_login_hint">还没登录呢！</string>
+    <string name="login_doing">登录中.....</string>
+
+    <!-- collection -->
+    <string name="get_retry">点击重试</string>
 
     <!-- 搜索 -->
     <string name="search">搜索</string>
+
+    <!-- 退出登录 -->
+    <string name="logout_title">退出登录</string>
+    <string name="logout_content">确认要退出登录么？</string>
+    <string name="logout_confirm">确认</string>
+    <string name="logout_cancel">取消</string>
 
 </resources>

@@ -17,6 +17,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +29,9 @@ import me.ewriter.bangumitv.api.response.BaseResponse;
 import me.ewriter.bangumitv.api.response.MyCollection;
 import me.ewriter.bangumitv.base.BaseActivity;
 import me.ewriter.bangumitv.base.BaseFragment;
+import me.ewriter.bangumitv.event.LogoutEvent;
 import me.ewriter.bangumitv.event.OpenNavgationEvent;
+import me.ewriter.bangumitv.event.UserLoginEvent;
 import me.ewriter.bangumitv.ui.activity.BangumiDetailActivity;
 import me.ewriter.bangumitv.ui.activity.LoginActivity;
 import me.ewriter.bangumitv.ui.activity.SearchActivity;
@@ -55,7 +58,7 @@ public class MyCollectionFragment extends BaseFragment implements View.OnClickLi
 
     @Override
     protected boolean isSubscribe() {
-        return false;
+        return true;
     }
 
     @Override
@@ -75,10 +78,14 @@ public class MyCollectionFragment extends BaseFragment implements View.OnClickLi
         mProgreebar = (ProgressBar) getRootView().findViewById(R.id.progressbar);
 
         mEmptyButton.setOnClickListener(this);
-
+        LogUtil.d(LogUtil.ZUBIN, "cf initview");
         setupToolbar();
         setupRecyclerview();
 
+        requestDataRefresh();
+    }
+
+    private void requestDataRefresh() {
         if (LoginManager.isLogin(getActivity())) {
             mEmptyButton.setVisibility(View.GONE);
             mEmptyText.setVisibility(View.GONE);
@@ -96,18 +103,18 @@ public class MyCollectionFragment extends BaseFragment implements View.OnClickLi
                 public void onFailure(Call<List<MyCollection>> call, Throwable t) {
                     LogUtil.d(LogUtil.ZUBIN, t.toString());
                     ToastUtils.showShortToast(getActivity(), "获取失败");
+                    mEmptyButton.setText(getString(R.string.get_retry));
                     mEmptyButton.setVisibility(View.VISIBLE);
                     mEmptyText.setVisibility(View.VISIBLE);
                     mProgreebar.setVisibility(View.GONE);
                 }
             });
         } else {
+            mEmptyButton.setText(getString(R.string.login));
             mProgreebar.setVisibility(View.GONE);
             mEmptyButton.setVisibility(View.VISIBLE);
             mEmptyText.setVisibility(View.VISIBLE);
         }
-
-        // TODO: 2016/8/4 load data and request data
     }
 
     private void setupRecyclerview() {
@@ -156,7 +163,10 @@ public class MyCollectionFragment extends BaseFragment implements View.OnClickLi
         switch (v.getId()) {
             case R.id.empty_button:
                 if (LoginManager.isLogin(getActivity())) {
-                    // TODO: 2016/8/4
+                    mList.clear();
+                    adapter.notifyDataSetChanged();
+                    mProgreebar.setVisibility(View.VISIBLE);
+                    requestDataRefresh();
                 } else {
                     startActivity(new Intent(getActivity(), LoginActivity.class));
                 }
@@ -165,6 +175,31 @@ public class MyCollectionFragment extends BaseFragment implements View.OnClickLi
 
             default:
                 break;
+        }
+    }
+
+    @Subscribe
+    public void onLougout(LogoutEvent event) {
+        // 退出登录的 event
+        mList.clear();
+        adapter.notifyDataSetChanged();
+        mProgreebar.setVisibility(View.VISIBLE);
+        requestDataRefresh();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        checkLoginEvent();
+        LogUtil.d(LogUtil.ZUBIN, "cf onresume");
+    }
+
+    private void checkLoginEvent() {
+        // 登录成功后的 event
+        UserLoginEvent stickyEvent = EventBus.getDefault().removeStickyEvent(UserLoginEvent.class);
+        if (stickyEvent != null) {
+            mProgreebar.setVisibility(View.VISIBLE);
+            requestDataRefresh();
         }
     }
 }

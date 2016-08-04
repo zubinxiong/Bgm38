@@ -1,5 +1,6 @@
 package me.ewriter.bangumitv.ui.activity;
 
+import android.app.ProgressDialog;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -29,6 +30,7 @@ public class LoginActivity extends BaseActivity {
     TextInputLayout mNameEdit;
     TextInputLayout mPasswordEdit;
     Button mLoginButton;
+    ProgressDialog mProgressDialog;
 
     @Override
     protected int getContentViewResId() {
@@ -63,6 +65,8 @@ public class LoginActivity extends BaseActivity {
                     return;
                 }
 
+                showLoginProDialog();
+
                 sBangumi.login(email, password).enqueue(new Callback<Token>() {
                     @Override
                     public void onResponse(Call<Token> call, Response<Token> response) {
@@ -74,16 +78,22 @@ public class LoginActivity extends BaseActivity {
                         } else {
                             ToastUtils.showShortToast(LoginActivity.this, getString(R.string.login_fail));
                         }
+                        mProgressDialog.dismiss();
                     }
 
                     @Override
                     public void onFailure(Call<Token> call, Throwable t) {
                         ToastUtils.showShortToast(LoginActivity.this, getString(R.string.login_fail));
                         LogUtil.d(LogUtil.ZUBIN, t.toString());
+                        mProgressDialog.dismiss();
                     }
                 });
             }
         });
+    }
+
+    private void showLoginProDialog() {
+        mProgressDialog = ProgressDialog.show(this, getString(R.string.login), getString(R.string.login_doing));
     }
 
     private void setupToolbar() {

@@ -1,21 +1,30 @@
 package me.ewriter.bangumitv.ui.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AlertDialog;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import me.ewriter.bangumitv.BangumiApp;
 import me.ewriter.bangumitv.R;
+import me.ewriter.bangumitv.api.LoginManager;
 import me.ewriter.bangumitv.base.BaseActivity;
 import me.ewriter.bangumitv.constants.MyConstants;
+import me.ewriter.bangumitv.event.LogoutEvent;
 import me.ewriter.bangumitv.event.OpenNavgationEvent;
 import me.ewriter.bangumitv.ui.fragment.CalendarFragment;
 import me.ewriter.bangumitv.ui.fragment.MyCollectionFragment;
@@ -28,6 +37,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     NavigationView mNavigationView;
     ImageView mNavLogout;
     FragmentManager mFragmentManager;
+    CircleImageView mAvatar;
+    TextView mUserName;
 
     @Override
     protected int getContentViewResId() {
@@ -40,6 +51,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         mNavigationView = (NavigationView) findViewById(R.id.navigation_view);
 
         mNavLogout = (ImageView) mNavigationView.getHeaderView(0).findViewById(R.id.nav_logout);
+        mAvatar = (CircleImageView) mNavigationView.getHeaderView(0).findViewById(R.id.profile_image);
+        mUserName = (TextView) mNavigationView.getHeaderView(0).findViewById(R.id.username);
         mNavLogout.setOnClickListener(this);
         mNavigationView.setNavigationItemSelectedListener(this);
         mFragmentManager = getSupportFragmentManager();
@@ -127,13 +140,53 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.nav_logout:
-                ToastUtils.showShortToast(BangumiApp.sAppCtx, R.string.nav_logout);
+                if (LoginManager.isLogin(MainActivity.this)) {
+                    showLogoutDialog();
+                } else {
+                    ToastUtils.showShortToast(MainActivity.this, R.string.not_login_hint);
+                }
+                break;
+
+            default:
                 break;
         }
+    }
+
+    private void showLogoutDialog() {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(getString(R.string.logout_title));
+        builder.setMessage(getString(R.string.logout_content));
+        builder.setPositiveButton(getString(R.string.logout_confirm), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                LoginManager.logout(MainActivity.this);
+                EventBus.getDefault().post(new LogoutEvent());
+                dialog.dismiss();
+                mDrawLayout.closeDrawers();
+            }
+        });
+
+        builder.setNegativeButton(getString(R.string.logout_cancel), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        builder.create().show();
     }
 
     @Subscribe
     public void openNavigationEvent(OpenNavgationEvent event) {
         mDrawLayout.openDrawer(GravityCompat.START);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (LoginManager.isLogin(this)) {
+            mUserName.setText(LoginManager.getUserNickName(this));
+            Picasso.with(this).load(LoginManager.getLargeAvatar(this)).noFade().into(mAvatar);
+        }
     }
 }
