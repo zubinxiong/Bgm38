@@ -53,7 +53,7 @@
 
 
     <TextView
-        android:id="@+id/cover_more"
+        android:id="@+id/cover_url"
         android:visibility="gone"
         android:text="@string/bangumi_detail_more"
         android:layout_toRightOf="@+id/cover_img"

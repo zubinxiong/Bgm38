@@ -6,14 +6,15 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-import de.hdodenhof.circleimageview.CircleImageView;
 import me.ewriter.bangumitv.R;
+import me.ewriter.bangumitv.api.entity.BangumiDetailEntity;
 
 /**
  * Created by Zubin on 2016/8/1.
@@ -21,7 +22,7 @@ import me.ewriter.bangumitv.R;
 public class BangumiDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
 
-    List<String> mList;
+    List<BangumiDetailEntity> mList;
     Context mContext;
 
     /** 标题,或者换行，当内容为空时换行 */
@@ -54,32 +55,29 @@ public class BangumiDetailAdapter extends RecyclerView.Adapter<RecyclerView.View
 
     @Override
     public int getItemViewType(int position) {
-        if (position == 0 || position == 7) {
-            return TYPE_TITLE;
-        } else if (position == 8 || position == 9){
-            return TYPE_CARD;
-        } else {
-            return TYPE_GRID;
-        }
+        return  mList.get(position).getType();
     }
 
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        BangumiDetailEntity entity = mList.get(position);
         if (holder instanceof TitleHolder) {
             TitleHolder titleHolder = (TitleHolder) holder;
-            titleHolder.title.setText("Title " + position);
+            titleHolder.title.setText(entity.getTitleName());
         } else if (holder instanceof GridHolder) {
             GridHolder gridHolder = (GridHolder) holder;
-            gridHolder.title.setText("Grid" + position);
+            gridHolder.title.setText(entity.getGirdName());
         } else if (holder instanceof CardHolder) {
             CardHolder cardHolder = (CardHolder) holder;
-            cardHolder.roleName.setText("Card" + position);
+            cardHolder.roleName.setText(entity.getRoleName());
+            cardHolder.roleJob.setText(entity.getRoleJob());
             Picasso.with(mContext)
-                    .load(R.drawable.role_img_test_medium)
+                    .load(entity.getRoleImageUrl())
                     .config(Bitmap.Config.RGB_565)
-                    .resize(200, 200)
+                    .resize(200, 300)
                     .centerInside()
+                    .noFade()
                     .into(cardHolder.image);
         }
 
@@ -111,15 +109,15 @@ public class BangumiDetailAdapter extends RecyclerView.Adapter<RecyclerView.View
     }
 
     class CardHolder extends RecyclerView.ViewHolder {
-        CircleImageView image;
+        ImageView image;
         TextView roleName;
-        TextView cvName;
+        TextView roleJob;
 
         public CardHolder(View itemView) {
             super(itemView);
-            image = (CircleImageView) itemView.findViewById(R.id.role_img);
+            image = (ImageView) itemView.findViewById(R.id.role_img);
             roleName = (TextView) itemView.findViewById(R.id.role_name);
-            cvName = (TextView) itemView.findViewById(R.id.cv_name);
+            roleJob = (TextView) itemView.findViewById(R.id.role_job);
         }
     }
 }
