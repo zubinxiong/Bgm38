@@ -30,6 +30,8 @@
         <activity android:name=".ui.activity.LoginActivity">
 
         </activity>
+
+        <activity android:name=".ui.activity.SearchActivity"></activity>
     </application>
 
 </manifest>

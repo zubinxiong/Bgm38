@@ -31,6 +31,7 @@ import me.ewriter.bangumitv.base.BaseFragment;
 import me.ewriter.bangumitv.event.OpenNavgationEvent;
 import me.ewriter.bangumitv.ui.activity.BangumiDetailActivity;
 import me.ewriter.bangumitv.ui.activity.LoginActivity;
+import me.ewriter.bangumitv.ui.activity.SearchActivity;
 import me.ewriter.bangumitv.ui.adapter.CollectionAdapter;
 import me.ewriter.bangumitv.utils.LogUtil;
 import me.ewriter.bangumitv.utils.ToastUtils;
@@ -143,7 +144,7 @@ public class MyCollectionFragment extends BaseFragment implements View.OnClickLi
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 if (item.getItemId() == R.id.toolbar_search) {
-                    ToastUtils.showShortToast(BangumiApp.sAppCtx, "search");
+                    startActivity(new Intent(getActivity(), SearchActivity.class));
                 }
                 return false;
             }

@@ -18,7 +18,6 @@
     <!--用来显示空白是的按钮，包括未登录时的按钮文字，空白是的按钮文字 -->
     <TextView
         android:id="@+id/empty_text"
-        android:text="未登录"
         android:visibility="gone"
         android:layout_centerInParent="true"
         android:layout_width="wrap_content"
@@ -26,7 +25,6 @@
 
     <Button
         android:id="@+id/empty_button"
-        android:text="denglu"
         android:visibility="gone"
         android:layout_marginTop="10dp"
         android:background="@color/colorPrimary"

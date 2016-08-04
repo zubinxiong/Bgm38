@@ -1,5 +1,6 @@
 package me.ewriter.bangumitv.ui.activity;
 
+import android.content.Intent;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -73,7 +74,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 return true;
 
             case R.id.nav_search:
-                ToastUtils.showShortToast(BangumiApp.sAppCtx, R.string.nav_search);
+                startActivity(new Intent(this, SearchActivity.class));
                 return true;
 
             case R.id.nav_ultra_expand:

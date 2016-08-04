@@ -1,5 +1,6 @@
 package me.ewriter.bangumitv.ui.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -16,6 +17,7 @@ import me.ewriter.bangumitv.BangumiApp;
 import me.ewriter.bangumitv.R;
 import me.ewriter.bangumitv.base.BaseFragment;
 import me.ewriter.bangumitv.event.OpenNavgationEvent;
+import me.ewriter.bangumitv.ui.activity.SearchActivity;
 import me.ewriter.bangumitv.ui.adapter.CalendarPagerAdapter;
 import me.ewriter.bangumitv.utils.LogUtil;
 import me.ewriter.bangumitv.utils.ToastUtils;
@@ -80,7 +82,7 @@ public class CalendarFragment extends BaseFragment {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 if (item.getItemId() == R.id.toolbar_search) {
-                    ToastUtils.showShortToast(BangumiApp.sAppCtx, "search");
+                    startActivity(new Intent(getActivity(), SearchActivity.class));
                 }
                 return false;
             }

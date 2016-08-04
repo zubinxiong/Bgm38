@@ -37,4 +37,7 @@
     <string name="login">登录</string>
     <string name="login_fail">登录失败</string>
 
+    <!-- 搜索 -->
+    <string name="search">搜索</string>
+
 </resources>
