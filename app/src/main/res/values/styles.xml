@@ -9,7 +9,7 @@
     </style>
 
     <style name="Loading_ProgressBar" parent="Widget.AppCompat.ProgressBar">
-
+        <item name="android:color">@color/colorAccent</item>
     </style>
 
 </resources>

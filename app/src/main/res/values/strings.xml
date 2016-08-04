@@ -31,4 +31,10 @@
     <string name="bangumi_detail_summary">简介: %1$s</string>
     <string name="bangumi_detail_air_day">放送日期: %1$s</string>
 
+    <!-- 邮箱 -->
+    <string name="login_email_hint">邮箱</string>
+    <string name="login_password_hint">密码</string>
+    <string name="login">登录</string>
+    <string name="login_fail">登录失败</string>
+
 </resources>

@@ -6,6 +6,7 @@ import java.util.List;
 import me.ewriter.bangumitv.api.response.BangumiDetail;
 import me.ewriter.bangumitv.api.response.BaseResponse;
 import me.ewriter.bangumitv.api.response.Calendar;
+import me.ewriter.bangumitv.api.response.MyCollection;
 import me.ewriter.bangumitv.api.response.Token;
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -79,7 +80,7 @@ public interface BangumiApi {
      * @return
      */
     @GET("user/{userId}/collection?cat=watching")
-    public Call<BaseResponse> getUserCollection(@Path("userId") int userId);
+    public Call<List<MyCollection>> getUserCollection(@Path("userId") int userId);
 
     /**
      *  获取周一到周五的每日放送

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@drawable/shape_detail_square"
+    android:layout_marginTop="@dimen/common_padding"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/collection_img"
+        android:transitionName="img"
+        android:layout_width="100dp"
+        android:layout_height="100dp" />
+
+    <TextView
+        android:id="@+id/collection_title"
+        android:layout_toRightOf="@+id/collection_img"
+        android:textSize="@dimen/calender_item_title_size"
+        android:textColor="@color/calendar_title_color"
+        android:paddingTop="10dp"
+        android:paddingLeft="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <ProgressBar
+        android:id="@+id/collection_progress"
+        android:layout_below="@+id/collection_title"
+        android:layout_toRightOf="@+id/collection_img"
+        android:paddingRight="@dimen/common_padding"
+        android:paddingTop="10dp"
+        android:paddingLeft="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@android:style/Widget.Holo.ProgressBar.Horizontal"
+        />
+
+    <TextView
+        android:id="@+id/collection_progress_text"
+        android:layout_below="@+id/collection_progress"
+        android:layout_toRightOf="@+id/collection_img"
+        android:textSize="@dimen/calender_item_title_size"
+        android:textColor="@color/calendar_title_color"
+        android:paddingLeft="10dp"
+        android:paddingTop="10dp"
+        android:paddingRight="@dimen/common_padding"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    
+</RelativeLayout>

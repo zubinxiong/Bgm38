@@ -3,9 +3,51 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:text="LoginActivity"
-        android:layout_width="wrap_content"
+    <include
+        layout="@layout/toolbar" />
+
+    <ImageView
+        android:id="@+id/image_title"
+        android:background="@android:color/holo_purple"
+        android:layout_width="match_parent"
+        android:layout_height="100dp" />
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/emaiInput"
+        android:padding="@dimen/common_padding"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:hint="@string/login_email_hint"
+            android:inputType="textEmailAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/passwordInput"
+        android:padding="@dimen/common_padding"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:hint="@string/login_password_hint"
+            android:inputType="textPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <Button
+        android:id="@+id/login_button"
+        android:text="@string/login"
+        android:textColor="@color/white"
+        android:background="@color/colorPrimary"
+        android:layout_margin="@dimen/common_padding"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
 </LinearLayout>

@@ -7,6 +7,7 @@ import java.util.List;
 /**
  * Created by Zubin on 2016/8/3.
  * 番剧详情 staff 信息的 info.alias 一部分返回 JsonArray，一部分返回JsonObject，移除掉了alias 信息
+ * crt.info.alias 也有这个问题，真是跪了，不做处理了，crt这个出现的比较少
  */
 public class BangumiDetail {
     /**
