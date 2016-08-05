@@ -55,4 +55,14 @@
     <string name="logout_confirm">确认</string>
     <string name="logout_cancel">取消</string>
 
+    <!-- 关于-->
+    <string name="about">关于</string>
+    <string name="version_info">版本: %1$s</string>
+    <string name="about_detail">程序中所有内容由Bangumi.tv 提供，感谢axxxxxx</string>
+    <string name="sina_weibo">新浪微博: \@熊胖胖x</string>
+    <string name="visit_github_title">Github 源码</string>
+    <string name="visit_github_detail">本项目在 Github 以 GPL 协议开源，点击查看</string>
+    <string name="open_source_title">本项目用到了下列开源库</string>
+    <string name="open_source_list">abc\ndd\nadasdsa\nadadas\n</string>
+
 </resources>

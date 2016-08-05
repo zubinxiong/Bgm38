@@ -27,11 +27,96 @@
                 android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin" />
 
-
         </android.support.design.widget.CollapsingToolbarLayout>
-
-
         
     </android.support.design.widget.AppBarLayout>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:text="@string/about"
+                android:padding="@dimen/common_padding"
+                android:textSize="@dimen/calender_item_title_size"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:background="@drawable/bg_card"
+                android:padding="@dimen/common_padding"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:text="@string/about_detail"
+                    android:textColor="@color/md_grey_500"
+                    android:textSize="@dimen/calender_item_outline_size"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/weibo_link"
+                    android:text="@string/sina_weibo"
+                    android:textSize="@dimen/calender_item_outline_size"
+                    android:textColor="@color/md_pink_400"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+
+            <TextView
+                android:text="@string/visit_github_title"
+                android:padding="@dimen/common_padding"
+                android:textSize="@dimen/calender_item_title_size"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:padding="@dimen/common_padding"
+                android:background="@drawable/bg_card"
+                android:text="@string/visit_github_detail"
+                android:textColor="@color/md_grey_500"
+                android:textSize="@dimen/calender_item_outline_size"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+
+
+            <TextView
+                android:text="@string/open_source_title"
+                android:padding="@dimen/common_padding"
+                android:textSize="@dimen/calender_item_title_size"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <RelativeLayout
+                android:background="@drawable/bg_card"
+                android:padding="@dimen/common_padding"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:text="@string/open_source_list"
+                    android:textColor="@color/md_grey_500"
+                    android:textSize="@dimen/calender_item_outline_size"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+
+
+    </android.support.v4.widget.NestedScrollView>
 
 </android.support.design.widget.CoordinatorLayout>
