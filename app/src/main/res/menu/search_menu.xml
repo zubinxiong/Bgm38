@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/toolbar_search"
-        android:icon="@android:drawable/ic_menu_search"
+        android:icon="@drawable/ic_search_white_24dp"
         android:title="@string/nav_search"
         app:showAsAction="always" />
 </menu>
