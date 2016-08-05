@@ -2,7 +2,9 @@ package me.ewriter.bangumitv.ui.activity;
 
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Build;
+import android.support.customtabs.CustomTabsIntent;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.view.GravityCompat;
@@ -121,10 +123,27 @@ public class BangumiDetailActivity extends BaseActivity implements View.OnClickL
 
     private void updateList(BangumiDetail detail) {
 
+        // 作品类型
+        mList.add(new BangumiDetailEntity(BangumiDetailAdapter.TYPE_TITLE, "类型"));
+        int category_type = detail.getType();
+        String type = "_(:з”∠)_";
+        if (category_type == 1) {
+            type = "漫画/小说";
+        } else if (category_type == 2) {
+            type = "动画/二次元番";
+        } else if (category_type == 3) {
+            type = "音乐";
+        } else if (category_type == 4) {
+            type = "游戏";
+        } else if (category_type == 6) {
+            type = "三次元番";
+        }
+        mList.add(new BangumiDetailEntity(BangumiDetailAdapter.TYPE_TITLE, type));
+        mList.add(new BangumiDetailEntity(BangumiDetailAdapter.TYPE_TITLE, ""));
+
         // 作品简介
         mList.add(new BangumiDetailEntity(BangumiDetailAdapter.TYPE_TITLE, "作品简介"));
         if (!TextUtils.isEmpty(detail.getSummary())) {
-            mList.add(new BangumiDetailEntity(BangumiDetailAdapter.TYPE_TITLE, ""));
             mList.add(new BangumiDetailEntity(BangumiDetailAdapter.TYPE_TITLE, detail.getSummary()));
             mList.add(new BangumiDetailEntity(BangumiDetailAdapter.TYPE_TITLE, ""));
         } else {
@@ -276,8 +295,10 @@ public class BangumiDetailActivity extends BaseActivity implements View.OnClickL
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.cover_group:
-                ToastUtils.showShortToast(BangumiDetailActivity.this, mDetailUrl);
                 // 启动url
+                CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
+                CustomTabsIntent customTabsIntent = builder.build();
+                customTabsIntent.launchUrl(this, Uri.parse(mDetailUrl));
                 break;
 
             default:

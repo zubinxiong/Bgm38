@@ -2,6 +2,8 @@ package me.ewriter.bangumitv.ui.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
+import android.support.customtabs.CustomTabsIntent;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -21,6 +23,7 @@ import org.greenrobot.eventbus.Subscribe;
 import de.hdodenhof.circleimageview.CircleImageView;
 import me.ewriter.bangumitv.BangumiApp;
 import me.ewriter.bangumitv.R;
+import me.ewriter.bangumitv.api.BangumiApi;
 import me.ewriter.bangumitv.api.LoginManager;
 import me.ewriter.bangumitv.base.BaseActivity;
 import me.ewriter.bangumitv.constants.MyConstants;
@@ -28,7 +31,9 @@ import me.ewriter.bangumitv.event.LogoutEvent;
 import me.ewriter.bangumitv.event.OpenNavgationEvent;
 import me.ewriter.bangumitv.ui.fragment.CalendarFragment;
 import me.ewriter.bangumitv.ui.fragment.MyCollectionFragment;
+import me.ewriter.bangumitv.utils.LogUtil;
 import me.ewriter.bangumitv.utils.ToastUtils;
+import me.ewriter.bangumitv.utils.Tools;
 
 
 public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
@@ -91,16 +96,21 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 return true;
 
             case R.id.nav_ultra_expand:
-                ToastUtils.showShortToast(BangumiApp.sAppCtx, R.string.nav_ultra_expand);
+                LogUtil.d(LogUtil.ZUBIN, "is chrome installed? = " + Tools.isChromeCustomTabsSupported(this));
+                mDrawLayout.closeDrawers();
+                CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
+                CustomTabsIntent customTabsIntent = builder.build();
+                customTabsIntent.launchUrl(this, Uri.parse(BangumiApi.ULTRA_EXPAND_URL));
                 return true;
 
             case R.id.nav_about:
-                ToastUtils.showShortToast(BangumiApp.sAppCtx, R.string.nav_about);
+//                ToastUtils.showShortToast(BangumiApp.sAppCtx, R.string.nav_about);
+                startActivity(new Intent(this, AboutActivity.class));
                 return true;
 
-            case R.id.nav_setting:
-                ToastUtils.showShortToast(BangumiApp.sAppCtx, R.string.nav_setting);
-                return true;
+//            case R.id.nav_setting:
+//                ToastUtils.showShortToast(BangumiApp.sAppCtx, R.string.nav_setting);
+//                return true;
 
             default:
                 return true;

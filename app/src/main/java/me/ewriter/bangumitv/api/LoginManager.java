@@ -78,7 +78,9 @@ public class LoginManager {
         setUserId(context, token.getId());
         setUserHomeUrl(context, token.getUrl());
         setUserNickName(context, token.getNickname());
-        setLargeAvatar(context, token.getAvatar().getLarge());
+        if (token.getAvatar()!= null && token.getAvatar().getLarge() != null) {
+            setLargeAvatar(context, token.getAvatar().getLarge());
+        }
         setAuthString(context, token.getAuth());
         setAuthEncode(context, token.getAuthEncode());
     }

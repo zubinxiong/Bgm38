@@ -7,6 +7,7 @@ import me.ewriter.bangumitv.api.response.BangumiDetail;
 import me.ewriter.bangumitv.api.response.BaseResponse;
 import me.ewriter.bangumitv.api.response.Calendar;
 import me.ewriter.bangumitv.api.response.MyCollection;
+import me.ewriter.bangumitv.api.response.SearchResponse;
 import me.ewriter.bangumitv.api.response.Token;
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -95,7 +96,7 @@ public interface BangumiApi {
      * @return
      */
     @GET("search/subject/{query}")
-    public Call<BaseResponse> search(@Path("query") String query);
+    public Call<SearchResponse> search(@Path("query") String query);
 
     /**
      * 更新某个番剧的评价

@@ -21,6 +21,7 @@
         <item
             android:id="@+id/nav_search"
             android:checked="false"
+            android:checkable="false"
             android:icon="@android:drawable/ic_menu_info_details"
             android:title="@string/nav_search" />
 
@@ -28,6 +29,7 @@
         <item
             android:id="@+id/nav_ultra_expand"
             android:checked="false"
+            android:checkable="false"
             android:icon="@android:drawable/ic_menu_info_details"
             android:title="@string/nav_ultra_expand" />
     </group>
@@ -43,12 +45,12 @@
             android:icon="@android:drawable/ic_menu_compass"
             android:title="@string/nav_about"/>
 
-        <item
-            android:id="@+id/nav_setting"
-            android:checked="false"
-            android:checkable="false"
-            android:icon="@android:drawable/ic_menu_compass"
-            android:title="@string/nav_setting"/>
+        <!--<item-->
+            <!--android:id="@+id/nav_setting"-->
+            <!--android:checked="false"-->
+            <!--android:checkable="false"-->
+            <!--android:icon="@android:drawable/ic_menu_compass"-->
+            <!--android:title="@string/nav_setting"/>-->
 
     </group>
 </menu>

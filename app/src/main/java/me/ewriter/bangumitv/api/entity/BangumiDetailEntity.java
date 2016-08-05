@@ -11,6 +11,8 @@ public class BangumiDetailEntity {
 
     /** 类型，包括 title，card和 grid*/
     private int type;
+    /** 作品什么类型, 1 为漫画/小说， 2为 动画/二次元, 3 为音乐，4 为游戏，6为三次元番*/
+    private int category_type;
     private String titleName;
 
     private String roleImageUrl;
