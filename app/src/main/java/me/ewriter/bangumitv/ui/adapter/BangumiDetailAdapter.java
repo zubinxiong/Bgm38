@@ -31,6 +31,8 @@ public class BangumiDetailAdapter extends RecyclerView.Adapter<RecyclerView.View
     public static final int TYPE_CARD = 2;
     /** 每集的grid */
     public static final int TYPE_GRID = 3;
+    /** 标题下的纯文字,和 TYPE_TITLE 只是文字颜色大小有些不同*/
+    public static final int TYPE_CONTENT = 4;
 
     public BangumiDetailAdapter(Context context, List list) {
         mContext = context;
@@ -39,7 +41,7 @@ public class BangumiDetailAdapter extends RecyclerView.Adapter<RecyclerView.View
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        if (viewType == TYPE_TITLE) {
+        if (viewType == TYPE_TITLE || viewType == TYPE_CONTENT) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_detail_adapter_title, parent, false);
             return new TitleHolder(view);
         } else if (viewType == TYPE_CARD) {
@@ -64,7 +66,13 @@ public class BangumiDetailAdapter extends RecyclerView.Adapter<RecyclerView.View
         BangumiDetailEntity entity = mList.get(position);
         if (holder instanceof TitleHolder) {
             TitleHolder titleHolder = (TitleHolder) holder;
+            if (entity.getType() == TYPE_CONTENT) {
+                titleHolder.title.setTextColor(mContext.getResources().getColor(R.color.md_grey_500));
+            } else if (entity.getType() == TYPE_TITLE) {
+                titleHolder.title.setTextColor(mContext.getResources().getColor(R.color.calendar_title_color));
+            }
             titleHolder.title.setText(entity.getTitleName());
+
         } else if (holder instanceof GridHolder) {
             GridHolder gridHolder = (GridHolder) holder;
             gridHolder.title.setText(entity.getGirdName());

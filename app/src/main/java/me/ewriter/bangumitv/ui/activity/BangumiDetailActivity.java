@@ -1,5 +1,7 @@
 package me.ewriter.bangumitv.ui.activity;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
@@ -7,15 +9,21 @@ import android.os.Build;
 import android.support.customtabs.CustomTabsIntent;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.view.GravityCompat;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.transition.Fade;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -27,8 +35,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import me.ewriter.bangumitv.R;
+import me.ewriter.bangumitv.api.LoginManager;
 import me.ewriter.bangumitv.api.entity.BangumiDetailEntity;
 import me.ewriter.bangumitv.api.response.BangumiDetail;
+import me.ewriter.bangumitv.api.response.BaseResponse;
+import me.ewriter.bangumitv.api.response.SubjectComment;
 import me.ewriter.bangumitv.base.BaseActivity;
 import me.ewriter.bangumitv.ui.adapter.BangumiDetailAdapter;
 import me.ewriter.bangumitv.utils.BlurUtil;
@@ -53,10 +64,12 @@ public class BangumiDetailActivity extends BaseActivity implements View.OnClickL
     ViewGroup mCoverGroup;
     TextView mCoverName, mCoverSummary, mCoverAirDay, mCoverUrl;
     ProgressBar mProgressbar;
+    FloatingActionButton mFab;
 
     BangumiDetailAdapter adapter;
     GridLayoutManager manager;
     List<BangumiDetailEntity> mList;
+    SubjectComment mSubjectComment;
 
     int mBangumiId = -1;
     String mCommonImageUrl;
@@ -87,13 +100,23 @@ public class BangumiDetailActivity extends BaseActivity implements View.OnClickL
         mCoverGroup = (ViewGroup) findViewById(R.id.cover_group);
         mCoverUrl = (TextView) findViewById(R.id.cover_url);
         mProgressbar = (ProgressBar) findViewById(R.id.loading_progreeebar);
+        mFab = (FloatingActionButton) findViewById(R.id.edit_fab);
 
         setUpCover();
         setUpToolbar();
         setUpRecyclerView();
 
         mCoverGroup.setOnClickListener(this);
+        mFab.setOnClickListener(this);
 
+        requestDetailData();
+        if (LoginManager.isLogin(this)) {
+            requestCommentData();
+        }
+
+    }
+
+    private void requestDetailData() {
         sBangumi.getBangumiDetail(mBangumiId).enqueue(new Callback<BangumiDetail>() {
             @Override
             public void onResponse(Call<BangumiDetail> call, Response<BangumiDetail> response) {
@@ -114,6 +137,23 @@ public class BangumiDetailActivity extends BaseActivity implements View.OnClickL
         });
     }
 
+    private void requestCommentData() {
+        sBangumi.getSubjectComment(mBangumiId, LoginManager.getAuthString(this)).enqueue(new Callback<SubjectComment>() {
+            @Override
+            public void onResponse(Call<SubjectComment> call, Response<SubjectComment> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    mSubjectComment = response.body();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<SubjectComment> call, Throwable t) {
+                LogUtil.e(LogUtil.ZUBIN, t.toString());
+                ToastUtils.showShortToast(BangumiDetailActivity.this, t.toString());
+            }
+        });
+    }
+
     private void updateCover(BangumiDetail detail) {
         mCoverSummary.setText(String.format(getString(R.string.bangumi_detail_summary), detail.getSummary()));
         mCoverAirDay.setText(String.format(getString(R.string.bangumi_detail_air_day),detail.getAir_date()));
@@ -122,7 +162,7 @@ public class BangumiDetailActivity extends BaseActivity implements View.OnClickL
     }
 
     private void updateList(BangumiDetail detail) {
-
+        mFab.setVisibility(View.VISIBLE);
         // 作品类型
         mList.add(new BangumiDetailEntity(BangumiDetailAdapter.TYPE_TITLE, "类型"));
         int category_type = detail.getType();
@@ -138,16 +178,16 @@ public class BangumiDetailActivity extends BaseActivity implements View.OnClickL
         } else if (category_type == 6) {
             type = "三次元番";
         }
-        mList.add(new BangumiDetailEntity(BangumiDetailAdapter.TYPE_TITLE, type));
+        mList.add(new BangumiDetailEntity(BangumiDetailAdapter.TYPE_CONTENT, type));
         mList.add(new BangumiDetailEntity(BangumiDetailAdapter.TYPE_TITLE, ""));
 
         // 作品简介
         mList.add(new BangumiDetailEntity(BangumiDetailAdapter.TYPE_TITLE, "作品简介"));
         if (!TextUtils.isEmpty(detail.getSummary())) {
-            mList.add(new BangumiDetailEntity(BangumiDetailAdapter.TYPE_TITLE, detail.getSummary()));
+            mList.add(new BangumiDetailEntity(BangumiDetailAdapter.TYPE_CONTENT, detail.getSummary()));
             mList.add(new BangumiDetailEntity(BangumiDetailAdapter.TYPE_TITLE, ""));
         } else {
-            mList.add(new BangumiDetailEntity(BangumiDetailAdapter.TYPE_TITLE, "没有啦_(:з”∠)_"));
+            mList.add(new BangumiDetailEntity(BangumiDetailAdapter.TYPE_CONTENT, "没有啦_(:з”∠)_"));
             mList.add(new BangumiDetailEntity(BangumiDetailAdapter.TYPE_TITLE, ""));
         }
 
@@ -243,7 +283,7 @@ public class BangumiDetailActivity extends BaseActivity implements View.OnClickL
             @Override
             public int getSpanSize(int position) {
                 int type = adapter.getItemViewType(position);
-                if (type == BangumiDetailAdapter.TYPE_TITLE) {
+                if (type == BangumiDetailAdapter.TYPE_TITLE || type == BangumiDetailAdapter.TYPE_CONTENT) {
                     return manager.getSpanCount();
                 } else if (type == BangumiDetailAdapter.TYPE_CARD){
                     return 3;
@@ -301,8 +341,91 @@ public class BangumiDetailActivity extends BaseActivity implements View.OnClickL
                 customTabsIntent.launchUrl(this, Uri.parse(mDetailUrl));
                 break;
 
+            case R.id.edit_fab:
+                Intent intent = null;
+                if (LoginManager.isLogin(this)) {
+                    showEvaluationDialog();
+                } else {
+                    ToastUtils.showShortToast(this, R.string.not_login_hint);
+                    intent = new Intent(this, LoginActivity.class);
+                    startActivity(intent);
+                }
+                break;
             default:
                 break;
         }
+    }
+
+    private void showEvaluationDialog() {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        View itemView = LayoutInflater.from(this).inflate(R.layout.view_evaluation, null);
+        // spinner
+        final AppCompatSpinner spinner = (AppCompatSpinner) itemView.findViewById(R.id.spanner);
+        String[] mItems = getResources().getStringArray(R.array.spinner_name);
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_dropdown_item ,mItems);
+        spinner.setAdapter(spinnerAdapter);
+
+        // 评分
+        final TextInputLayout mRatingNumber = (TextInputLayout) itemView.findViewById(R.id.rate_number);
+
+        // 详情
+        final TextInputLayout mRatingDetail = (TextInputLayout) itemView.findViewById(R.id.rate_detail);
+
+        if (mSubjectComment != null) {
+            if (mSubjectComment.getRating() != 0) {
+                mRatingNumber.getEditText().setText(mSubjectComment.getRating() + "");
+            }
+            mRatingDetail.getEditText().setText(mSubjectComment.getComment());
+
+            if (mSubjectComment.getStatus() != null) {
+                spinner.setSelection(mSubjectComment.getStatus().getId() - 1);
+            }
+        }
+
+        builder.setView(itemView);
+        builder.setTitle("我的评价");
+        builder.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        builder.setPositiveButton(getString(R.string.submit), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(final DialogInterface dialog, int which) {
+
+                String[] status = getResources().getStringArray(R.array.spinner_value);
+                int index = spinner.getSelectedItemPosition();
+                int rating = 0;
+                if(!TextUtils.isEmpty(mRatingNumber.getEditText().getText().toString().trim())) {
+                   rating = Integer.parseInt(mRatingNumber.getEditText().getText().toString().trim());
+                }
+                String comment = mRatingDetail.getEditText().getText().toString().trim();
+
+                sBangumi.updateComment(mBangumiId, status[index], rating, comment,
+                        LoginManager.getAuthString(BangumiDetailActivity.this)).enqueue(new Callback<SubjectComment>() {
+                    @Override
+                    public void onResponse(Call<SubjectComment> call, Response<SubjectComment> response) {
+                        if (response.isSuccessful() && response.body() != null) {
+                            mSubjectComment = response.body();
+                            ToastUtils.showShortToast(BangumiDetailActivity.this, R.string.update_comment);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<SubjectComment> call, Throwable t) {
+                        LogUtil.e(LogUtil.ZUBIN, t.toString());
+                        ToastUtils.showShortToast(BangumiDetailActivity.this, t.toString());
+                    }
+                });
+
+                dialog.dismiss();
+            }
+        });
+
+        builder.show();
     }
 }

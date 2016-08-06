@@ -8,6 +8,7 @@ import me.ewriter.bangumitv.api.response.BaseResponse;
 import me.ewriter.bangumitv.api.response.Calendar;
 import me.ewriter.bangumitv.api.response.MyCollection;
 import me.ewriter.bangumitv.api.response.SearchResponse;
+import me.ewriter.bangumitv.api.response.SubjectComment;
 import me.ewriter.bangumitv.api.response.Token;
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -51,8 +52,8 @@ public interface BangumiApi {
      * @return
      */
     @GET("collection/{subjectId}?source=onAir")
-    public Call<BaseResponse> getSubjectCollection(@Path("subjectId") int subjectId,
-                                                   @Query("auth") String auth);
+    public Call<SubjectComment> getSubjectComment(@Path("subjectId") int subjectId,
+                                                  @Query("auth") String auth);
 
 
     /**
@@ -109,7 +110,7 @@ public interface BangumiApi {
      */
     @FormUrlEncoded
     @POST("collection/{subjectId}/update?source=onAir")
-    public Call<BaseResponse> updateCollection(@Path("subjectId") int subjectId,
+    public Call<SubjectComment> updateComment(@Path("subjectId") int subjectId,
                                                @Field("status") String status,
                                                @Field("rating") int rating,
                                                @Field("comment") String comment,
