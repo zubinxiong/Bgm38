@@ -3,6 +3,7 @@ package me.ewriter.bangumitv.ui.adapter;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,8 +43,12 @@ public class CalendarItemAdapter extends RecyclerView.Adapter<CalendarItemAdapte
 
         final BangumiCalendar calendar = mList.get(position);
 
-        holder.mBangumiTitle.setText(calendar.getName_cn());
-
+        if (TextUtils.isEmpty(calendar.getName_cn())) {
+            holder.mBangumiTitle.setText(calendar.getName_jp());
+        } else {
+            holder.mBangumiTitle.setText(calendar.getName_cn());
+        }
+        
         String rank = "";
         if (calendar.getRank() != null && calendar.getRank() != 0) {
             rank = calendar.getRank() + "";
