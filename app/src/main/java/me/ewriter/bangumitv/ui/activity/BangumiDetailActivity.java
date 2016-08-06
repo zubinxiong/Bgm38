@@ -116,6 +116,14 @@ public class BangumiDetailActivity extends BaseActivity implements View.OnClickL
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (LoginManager.isLogin(this)) {
+            requestCommentData();
+        }
+    }
+
     private void requestDetailData() {
         sBangumi.getBangumiDetail(mBangumiId).enqueue(new Callback<BangumiDetail>() {
             @Override

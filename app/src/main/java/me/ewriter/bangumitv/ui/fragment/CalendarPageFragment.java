@@ -9,11 +9,7 @@ import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.util.Pair;
-import android.util.TypedValue;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 
 import org.greenrobot.eventbus.EventBus;
@@ -37,7 +33,6 @@ import me.ewriter.bangumitv.ui.activity.BangumiDetailActivity;
 import me.ewriter.bangumitv.ui.adapter.CalendarItemAdapter;
 import me.ewriter.bangumitv.utils.LogUtil;
 import me.ewriter.bangumitv.utils.PreferencesUtils;
-import me.ewriter.bangumitv.utils.ToastUtils;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -151,44 +146,6 @@ public class CalendarPageFragment extends BaseFragment {
 
 
     }
-
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        LogUtil.d(LogUtil.ZUBIN, "CalendarPagerFragment onCreateView" + mPosition);
-        return super.onCreateView(inflater, container, savedInstanceState);
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        LogUtil.d(LogUtil.ZUBIN, "CalendarPagerFragment onActivityCreated" + mPosition);
-    }
-
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        LogUtil.d(LogUtil.ZUBIN, "CalendarPagerFragment onViewCreated" +mPosition);
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        LogUtil.d(LogUtil.ZUBIN, "CalendarPagerFragment onStart" + mPosition);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        LogUtil.d(LogUtil.ZUBIN, "CalendarPagerFragment onResume" + mPosition);
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        LogUtil.d(LogUtil.ZUBIN, "CalendarPagerFragment onPause" + mPosition);
-    }
-
 
     private void loadDataFromDB() {
         DaoSession daoSession = BangumiApp.sAppCtx.getDaoSession();
@@ -322,31 +279,5 @@ public class CalendarPageFragment extends BaseFragment {
             PreferencesUtils.putLong(BangumiApp.sAppCtx, MyConstants.CALENDAR_REFRESH_KEY, System.currentTimeMillis());
         }
 
-    }
-
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        LogUtil.d(LogUtil.ZUBIN, "CalendarPageFragment onStop" + mPosition);
-    }
-
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        LogUtil.d(LogUtil.ZUBIN, "CalendarPageFragment onDestroyView" + mPosition);
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        LogUtil.d(LogUtil.ZUBIN, "CalendarPageFragment onDestroy" + mPosition);
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        LogUtil.d(LogUtil.ZUBIN, "CalendarPageFragment onAttach" + mPosition);
     }
 }

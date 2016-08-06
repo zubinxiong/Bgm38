@@ -59,6 +59,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         mAvatar = (CircleImageView) mNavigationView.getHeaderView(0).findViewById(R.id.profile_image);
         mUserName = (TextView) mNavigationView.getHeaderView(0).findViewById(R.id.username);
         mNavLogout.setOnClickListener(this);
+        mAvatar.setOnClickListener(this);
         mNavigationView.setNavigationItemSelectedListener(this);
         mFragmentManager = getSupportFragmentManager();
 
@@ -157,6 +158,14 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 }
                 break;
 
+            case R.id.profile_image:
+                if (LoginManager.isLogin(MainActivity.this)) {
+                    ToastUtils.showShortToast(MainActivity.this, R.string.already_login);
+                } else {
+                    startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                }
+                break;
+
             default:
                 break;
         }
@@ -194,9 +203,16 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     @Override
     protected void onResume() {
         super.onResume();
+        LogUtil.d(LogUtil.ZUBIN, "onresume main");
         if (LoginManager.isLogin(this)) {
             mUserName.setText(LoginManager.getUserNickName(this));
             Picasso.with(this).load(LoginManager.getLargeAvatar(this)).noFade().into(mAvatar);
         }
+    }
+
+    @Subscribe
+    public void onLogout(LogoutEvent event) {
+        mUserName.setText("");
+        Picasso.with(this).load(R.drawable.role_img_test_medium).noFade().into(mAvatar);
     }
 }

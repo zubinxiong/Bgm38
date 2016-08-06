@@ -48,7 +48,7 @@ public class CalendarItemAdapter extends RecyclerView.Adapter<CalendarItemAdapte
         } else {
             holder.mBangumiTitle.setText(calendar.getName_cn());
         }
-        
+
         String rank = "";
         if (calendar.getRank() != null && calendar.getRank() != 0) {
             rank = calendar.getRank() + "";

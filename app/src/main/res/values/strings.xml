@@ -44,6 +44,7 @@
     <string name="login_fail">登录失败</string>
     <string name="not_login_hint">还没登录呢！</string>
     <string name="login_doing">登录中.....</string>
+    <string name="already_login">已经登录了</string>
 
     <!-- collection -->
     <string name="get_retry">点击重试</string>
