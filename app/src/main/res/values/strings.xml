@@ -36,6 +36,10 @@
     <string name="rate_text_hint">我要吐槽</string>
     <string name="want_see">状态</string>
     <string name="update_comment">评论已提交</string>
+    <string name="queue">想看</string>
+    <string name="watched">看过</string>
+    <string name="drop">抛弃</string>
+    <string name="remove">撤销</string>
 
     <!-- 登录 -->
     <string name="login_email_hint">邮箱</string>
@@ -73,6 +77,8 @@
     <string name="open_source_list">abc\ndd\nadasdsa\nadadas\n</string>
 
     <string name="share">分享</string>
+
+    <string name="watch_progress">观看进度</string>
 
     <string-array name="spinner_name">
         <item>想看</item>

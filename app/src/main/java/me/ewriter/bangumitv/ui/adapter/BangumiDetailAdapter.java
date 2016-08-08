@@ -34,6 +34,8 @@ public class BangumiDetailAdapter extends RecyclerView.Adapter<RecyclerView.View
     /** 标题下的纯文字,和 TYPE_TITLE 只是文字颜色大小有些不同*/
     public static final int TYPE_CONTENT = 4;
 
+    private onGridClickListener mGridListener;
+
     public BangumiDetailAdapter(Context context, List list) {
         mContext = context;
         mList = list;
@@ -62,7 +64,7 @@ public class BangumiDetailAdapter extends RecyclerView.Adapter<RecyclerView.View
 
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         BangumiDetailEntity entity = mList.get(position);
         if (holder instanceof TitleHolder) {
             TitleHolder titleHolder = (TitleHolder) holder;
@@ -76,6 +78,14 @@ public class BangumiDetailAdapter extends RecyclerView.Adapter<RecyclerView.View
         } else if (holder instanceof GridHolder) {
             GridHolder gridHolder = (GridHolder) holder;
             gridHolder.title.setText(entity.getGirdName());
+            gridHolder.item.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // 这里的position 要的是eps 的位置，但实际上的是算上前面两种类型的位置
+                    mGridListener.onGridClick(v, position);
+                }
+            });
+
         } else if (holder instanceof CardHolder) {
             CardHolder cardHolder = (CardHolder) holder;
             cardHolder.roleName.setText(entity.getRoleName());
@@ -109,11 +119,21 @@ public class BangumiDetailAdapter extends RecyclerView.Adapter<RecyclerView.View
     class GridHolder extends RecyclerView.ViewHolder {
 
         TextView title;
+        View item;
 
         public GridHolder(View itemView) {
             super(itemView);
+            item = itemView;
             title = (TextView) itemView;
         }
+    }
+
+    public interface onGridClickListener {
+        void onGridClick(View view, int position);
+    }
+
+    public void setOnGridClickListener(onGridClickListener listener) {
+        mGridListener = listener;
     }
 
     class CardHolder extends RecyclerView.ViewHolder {

@@ -28,12 +28,13 @@ public class BangumiDetailEntity {
     private String status;
     private String girdName;
 
-
+    /**标题和内容*/
     public BangumiDetailEntity(int type, String titleName) {
         this.type = type;
         this.titleName = titleName;
     }
 
+    /** 卡片信息 stafff 和 角色*/
     public BangumiDetailEntity(int type, String roleName, String roleJob, String roleImageUrl) {
         this.type = type;
         this.roleName = roleName;
@@ -41,6 +42,7 @@ public class BangumiDetailEntity {
         this.roleJob = roleJob;
     }
 
+    /** grid 观看信息*/
     public BangumiDetailEntity(int type, int id, String url, String nameCn, String name, String airDate, String status, String girdName) {
         this.type = type;
         this.id = id;

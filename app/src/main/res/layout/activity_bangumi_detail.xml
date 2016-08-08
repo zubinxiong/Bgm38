@@ -40,7 +40,8 @@
         android:id="@+id/bangumi_detail_recyclerview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="@dimen/common_padding"
+        android:paddingLeft="@dimen/common_padding"
+        android:paddingRight="@dimen/common_padding"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
     <android.support.design.widget.FloatingActionButton
@@ -60,5 +61,8 @@
         android:layout_gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+
+    <!--<include-->
+        <!--layout="@layout/view_bottom_sheet" />-->
 
 </android.support.design.widget.CoordinatorLayout>

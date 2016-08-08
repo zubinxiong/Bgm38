@@ -6,8 +6,11 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Build;
+import android.support.annotation.NonNull;
 import android.support.customtabs.CustomTabsIntent;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.BottomSheetBehavior;
+import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TextInputLayout;
@@ -25,6 +28,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -105,7 +109,6 @@ public class BangumiDetailActivity extends BaseActivity implements View.OnClickL
         setUpCover();
         setUpToolbar();
         setUpRecyclerView();
-
         mCoverGroup.setOnClickListener(this);
         mFab.setOnClickListener(this);
 
@@ -120,6 +123,7 @@ public class BangumiDetailActivity extends BaseActivity implements View.OnClickL
     protected void onResume() {
         super.onResume();
         if (LoginManager.isLogin(this)) {
+            // 放在onResume 中是为了保证在此处登录后能够刷新
             requestCommentData();
         }
     }
@@ -145,6 +149,7 @@ public class BangumiDetailActivity extends BaseActivity implements View.OnClickL
         });
     }
 
+    /** 请求用户的评论信息*/
     private void requestCommentData() {
         sBangumi.getSubjectComment(mBangumiId, LoginManager.getAuthString(this)).enqueue(new Callback<SubjectComment>() {
             @Override
@@ -162,6 +167,7 @@ public class BangumiDetailActivity extends BaseActivity implements View.OnClickL
         });
     }
 
+    /**更新封面显示*/
     private void updateCover(BangumiDetail detail) {
         mCoverSummary.setText(String.format(getString(R.string.bangumi_detail_summary), detail.getSummary()));
         mCoverAirDay.setText(String.format(getString(R.string.bangumi_detail_air_day),detail.getAir_date()));
@@ -169,8 +175,10 @@ public class BangumiDetailActivity extends BaseActivity implements View.OnClickL
         mDetailUrl = detail.getUrl();
     }
 
-    private void updateList(BangumiDetail detail) {
+    private void updateList(final BangumiDetail detail) {
         mFab.setVisibility(View.VISIBLE);
+
+        mList.add(new BangumiDetailEntity(BangumiDetailAdapter.TYPE_TITLE, ""));
         // 作品类型
         mList.add(new BangumiDetailEntity(BangumiDetailAdapter.TYPE_TITLE, "类型"));
         int category_type = detail.getType();
@@ -249,13 +257,40 @@ public class BangumiDetailActivity extends BaseActivity implements View.OnClickL
             }
         }
 
-        // 放映eps
+        // 放映eps, 只显示 15 个grid，点击跳转到一个独立页面更新
+        if (detail.getEps() != null && detail.getEps().size() != 0) {
+            mList.add(new BangumiDetailEntity(BangumiDetailAdapter.TYPE_TITLE, ""));
+            mList.add(new BangumiDetailEntity(BangumiDetailAdapter.TYPE_TITLE, "观看进度"));
+            mList.add(new BangumiDetailEntity(BangumiDetailAdapter.TYPE_TITLE, ""));
 
+            for (int i = 0; i < detail.getEps().size(); i++) {
+                BangumiDetail.EpsBean entity = detail.getEps().get(i);
+                if (i <= 15) {
+                    // int type, int id, String url, String nameCn, String name, String airDate, String status, String girdName
+                    mList.add(new BangumiDetailEntity(BangumiDetailAdapter.TYPE_GRID, entity.getId(), entity.getUrl(),
+                            entity.getName_cn(), entity.getName(), entity.getAirdate(), entity.getStatus(),
+                            (int)entity.getSort() + ""));
+                } else {
+                    break;
+                }
+
+            }
+
+            adapter.setOnGridClickListener(new BangumiDetailAdapter.onGridClickListener() {
+                @Override
+                public void onGridClick(View view, int position) {
+                    Intent intent = new Intent(BangumiDetailActivity.this, MyProgressActivity.class);
+                    intent.putExtra("detail", detail);
+                    startActivity(intent);
+                }
+            });
+        }
 
 
         adapter.notifyDataSetChanged();
     }
 
+    /**初始化封面模糊效果*/
     private void setUpCover() {
         mCoverName.setText(mBangumiName);
         Picasso.with(this).load(mLargeImageUrl).into(mCoverImg);
@@ -284,7 +319,7 @@ public class BangumiDetailActivity extends BaseActivity implements View.OnClickL
         mRecyclerView.setAdapter(adapter);
         manager = new GridLayoutManager(this, 6);
         mRecyclerView.setLayoutManager(manager);
-        mRecyclerView.addItemDecoration(new GridSpacingItemDecoration(2, 20, false));
+//        mRecyclerView.addItemDecoration(new GridSpacingItemDecoration(2, 20, false));
 
         // spanCount 为 6，每个item 为 1，因此需要占一行则需要下面返回 6
         manager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {

@@ -12,4 +12,10 @@
         <item name="android:color">@color/colorAccent</item>
     </style>
 
+    <style name="divider_line">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1px</item>
+        <item name="android:background">@color/md_grey_200</item>
+    </style>
+
 </resources>

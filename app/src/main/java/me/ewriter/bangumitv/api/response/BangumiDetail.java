@@ -1,7 +1,9 @@
 package me.ewriter.bangumitv.api.response;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -9,7 +11,8 @@ import java.util.List;
  * 番剧详情 staff 信息的 info.alias 一部分返回 JsonArray，一部分返回JsonObject，移除掉了alias 信息
  * crt.info.alias 也有这个问题，真是跪了，不做处理了，crt这个出现的比较少
  */
-public class BangumiDetail {
+public class BangumiDetail implements Serializable{
+    private static final long serialVersionUID = 507697275449133999L;
     /**
      * id : 160124
      * url : http://bgm.tv/subject/160124
@@ -260,7 +263,8 @@ public class BangumiDetail {
         this.staff = staff;
     }
 
-    public static class RatingBean {
+    public static class RatingBean implements Serializable{
+        private static final long serialVersionUID = -1399374979736250181L;
         private int total;
         /**
          * 1 : 2
@@ -302,7 +306,8 @@ public class BangumiDetail {
             this.score = score;
         }
 
-        public static class CountBean {
+        public static class CountBean implements Serializable{
+            private static final long serialVersionUID = -4954935898198639482L;
             @SerializedName("1")
             private int value1;
             @SerializedName("2")
@@ -406,7 +411,8 @@ public class BangumiDetail {
         }
     }
 
-    public static class ImagesBean {
+    public static class ImagesBean implements Serializable{
+        private static final long serialVersionUID = -8771480176322011797L;
         private String large;
         private String common;
         private String medium;
@@ -454,7 +460,8 @@ public class BangumiDetail {
         }
     }
 
-    public static class CollectionBean {
+    public static class CollectionBean implements Serializable{
+        private static final long serialVersionUID = 193259044520041933L;
         private int wish;
         private int collect;
         private int doing;
@@ -502,7 +509,8 @@ public class BangumiDetail {
         }
     }
 
-    public static class EpsBean {
+    public static class EpsBean implements Serializable{
+        private static final long serialVersionUID = 7096218462913917695L;
         private int id;
         private String url;
         private int type;
@@ -604,7 +612,8 @@ public class BangumiDetail {
         }
     }
 
-    public static class CrtBean {
+    public static class CrtBean implements Serializable{
+        private static final long serialVersionUID = 7482029494659203652L;
         private int id;
         private String url;
         private String name;
@@ -716,7 +725,8 @@ public class BangumiDetail {
             this.actors = actors;
         }
 
-        public static class ImagesBean {
+        public static class ImagesBean implements Serializable{
+            private static final long serialVersionUID = -4806839760405201262L;
             private String large;
             private String medium;
             private String small;
@@ -755,7 +765,8 @@ public class BangumiDetail {
             }
         }
 
-        public static class InfoBean {
+        public static class InfoBean implements Serializable{
+            private static final long serialVersionUID = -434635837639008546L;
             private String name_cn;
             /**
              * jp : 薙切えりな
@@ -790,7 +801,8 @@ public class BangumiDetail {
                 this.gender = gender;
             }
 
-            public static class AliasBean {
+            public static class AliasBean implements Serializable{
+                private static final long serialVersionUID = 5718649594079125929L;
                 private String jp;
                 private String kana;
                 private String romaji;
@@ -821,7 +833,8 @@ public class BangumiDetail {
             }
         }
 
-        public static class ActorsBean {
+        public static class ActorsBean implements Serializable{
+            private static final long serialVersionUID = 6299915871972180041L;
             private int id;
             private String url;
             private String name;
@@ -866,7 +879,8 @@ public class BangumiDetail {
                 this.images = images;
             }
 
-            public static class ImagesBean {
+            public static class ImagesBean implements Serializable{
+                private static final long serialVersionUID = -8534159014030613270L;
                 private String large;
                 private String medium;
                 private String small;
@@ -907,7 +921,8 @@ public class BangumiDetail {
         }
     }
 
-    public static class StaffBean {
+    public static class StaffBean implements Serializable{
+        private static final long serialVersionUID = -3524824731139195533L;
         private int id;
         private String url;
         private String name;
@@ -997,7 +1012,8 @@ public class BangumiDetail {
             this.jobs = jobs;
         }
 
-        public static class ImagesBean {
+        public static class ImagesBean implements Serializable{
+            private static final long serialVersionUID = 9020492580362125355L;
             private String large;
             private String medium;
             private String small;
