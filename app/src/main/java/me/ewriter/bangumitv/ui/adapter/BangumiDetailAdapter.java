@@ -106,6 +106,17 @@ public class BangumiDetailAdapter extends RecyclerView.Adapter<RecyclerView.View
         return mList.size();
     }
 
+    /**获取 title 和 card 的个数，已保证 grid 的真实位置*/
+    public int getExpGridCount() {
+        int count = 0;
+        for (int i = 0; i < mList.size(); i++) {
+            if (mList.get(i).getType() != TYPE_GRID)
+                count++;
+        }
+
+        return count;
+    }
+
     class TitleHolder extends RecyclerView.ViewHolder {
 
         TextView title;

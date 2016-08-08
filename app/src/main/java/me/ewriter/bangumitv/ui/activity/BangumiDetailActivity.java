@@ -18,6 +18,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -46,6 +47,7 @@ import me.ewriter.bangumitv.api.response.BaseResponse;
 import me.ewriter.bangumitv.api.response.SubjectComment;
 import me.ewriter.bangumitv.base.BaseActivity;
 import me.ewriter.bangumitv.ui.adapter.BangumiDetailAdapter;
+import me.ewriter.bangumitv.ui.adapter.BottomSheetAdapter;
 import me.ewriter.bangumitv.utils.BlurUtil;
 import me.ewriter.bangumitv.utils.LogUtil;
 import me.ewriter.bangumitv.utils.ToastUtils;
@@ -60,20 +62,26 @@ import retrofit2.Response;
  */
 public class BangumiDetailActivity extends BaseActivity implements View.OnClickListener {
 
-    Toolbar mToolbar;
-    RecyclerView mRecyclerView;
-    AppBarLayout mAppbarLayout;
-    CollapsingToolbarLayout mCollapsingToolbarLayout;
-    ImageView mCoverImg;
-    ViewGroup mCoverGroup;
-    TextView mCoverName, mCoverSummary, mCoverAirDay, mCoverUrl;
-    ProgressBar mProgressbar;
-    FloatingActionButton mFab;
+    // Cover 和 详细信息
+    private Toolbar mToolbar;
+    private RecyclerView mRecyclerView;
+    private AppBarLayout mAppbarLayout;
+    private CollapsingToolbarLayout mCollapsingToolbarLayout;
+    private ImageView mCoverImg;
+    private ViewGroup mCoverGroup;
+    private TextView mCoverName, mCoverSummary, mCoverAirDay, mCoverUrl;
+    private ProgressBar mProgressbar;
+    private FloatingActionButton mFab;
 
-    BangumiDetailAdapter adapter;
-    GridLayoutManager manager;
-    List<BangumiDetailEntity> mList;
-    SubjectComment mSubjectComment;
+    private BangumiDetailAdapter adapter;
+    private  GridLayoutManager manager;
+    private  List<BangumiDetailEntity> mList;
+    private SubjectComment mSubjectComment;
+
+    // BottomSheet
+    private TextView mEpsTitle, mEpsSummary;
+    private BottomSheetAdapter mBottomSheetAdapter;
+    private BottomSheetDialog mBottomSheetDialog;
 
     int mBangumiId = -1;
     String mCommonImageUrl;
@@ -108,6 +116,7 @@ public class BangumiDetailActivity extends BaseActivity implements View.OnClickL
 
         setUpCover();
         setUpToolbar();
+        setUpBottomSheetDialog();
         setUpRecyclerView();
         mCoverGroup.setOnClickListener(this);
         mFab.setOnClickListener(this);
@@ -119,6 +128,39 @@ public class BangumiDetailActivity extends BaseActivity implements View.OnClickL
 
     }
 
+    /** 初始化 BottomSheetDialog */
+    private void setUpBottomSheetDialog() {
+        mBottomSheetDialog = new BottomSheetDialog(this);
+        View mContentView = LayoutInflater.from(this).inflate(R.layout.view_bottom_sheet, null, false);
+        RecyclerView mRecyclerView = (RecyclerView) mContentView.findViewById(R.id.bottom_recyclerView);
+        mBottomSheetAdapter = new BottomSheetAdapter(this);
+        mRecyclerView.setAdapter(mBottomSheetAdapter);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+
+        mBottomSheetDialog.setContentView(mContentView);
+
+        mEpsTitle = (TextView) mContentView.findViewById(R.id.eps_title);
+        mEpsSummary = (TextView) mContentView.findViewById(R.id.eps_summary);
+
+        // 解决BottomSheetDialog 滑动后无法再次显示
+        View view = mBottomSheetDialog.getDelegate().findViewById(android.support.design.R.id.design_bottom_sheet);
+        final BottomSheetBehavior behavior = BottomSheetBehavior.from(view);
+        behavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+            @Override
+            public void onStateChanged(@NonNull View bottomSheet, int newState) {
+                if (newState == BottomSheetBehavior.STATE_HIDDEN) {
+                    mBottomSheetDialog.dismiss();
+                    behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                }
+            }
+
+            @Override
+            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+
+            }
+        });
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -128,6 +170,7 @@ public class BangumiDetailActivity extends BaseActivity implements View.OnClickL
         }
     }
 
+    /**请求番剧详情接口*/
     private void requestDetailData() {
         sBangumi.getBangumiDetail(mBangumiId).enqueue(new Callback<BangumiDetail>() {
             @Override
@@ -175,6 +218,7 @@ public class BangumiDetailActivity extends BaseActivity implements View.OnClickL
         mDetailUrl = detail.getUrl();
     }
 
+    /**番剧详情接口完成后，更新显示的数据*/
     private void updateList(final BangumiDetail detail) {
         mFab.setVisibility(View.VISIBLE);
 
@@ -257,7 +301,7 @@ public class BangumiDetailActivity extends BaseActivity implements View.OnClickL
             }
         }
 
-        // 放映eps, 只显示 15 个grid，点击跳转到一个独立页面更新
+        // 放映eps, 只显示 24 个grid，点击跳转到一个独立页面更新
         if (detail.getEps() != null && detail.getEps().size() != 0) {
             mList.add(new BangumiDetailEntity(BangumiDetailAdapter.TYPE_TITLE, ""));
             mList.add(new BangumiDetailEntity(BangumiDetailAdapter.TYPE_TITLE, "观看进度"));
@@ -265,7 +309,7 @@ public class BangumiDetailActivity extends BaseActivity implements View.OnClickL
 
             for (int i = 0; i < detail.getEps().size(); i++) {
                 BangumiDetail.EpsBean entity = detail.getEps().get(i);
-                if (i <= 15) {
+                if (i <= 24) {
                     // int type, int id, String url, String nameCn, String name, String airDate, String status, String girdName
                     mList.add(new BangumiDetailEntity(BangumiDetailAdapter.TYPE_GRID, entity.getId(), entity.getUrl(),
                             entity.getName_cn(), entity.getName(), entity.getAirdate(), entity.getStatus(),
@@ -276,18 +320,48 @@ public class BangumiDetailActivity extends BaseActivity implements View.OnClickL
 
             }
 
+            // Grid 点击的处理
             adapter.setOnGridClickListener(new BangumiDetailAdapter.onGridClickListener() {
                 @Override
                 public void onGridClick(View view, int position) {
-                    Intent intent = new Intent(BangumiDetailActivity.this, MyProgressActivity.class);
-                    intent.putExtra("detail", detail);
-                    startActivity(intent);
+                    LogUtil.d(LogUtil.ZUBIN, "index = " + (position - adapter.getExpGridCount()));
+                    BangumiDetail.EpsBean entity = detail.getEps().get(position - adapter.getExpGridCount());
+
+                    if (detail.getEps().size() >= 24) {
+                        Intent intent = new Intent(BangumiDetailActivity.this, MyProgressActivity.class);
+                        intent.putExtra("detail", detail);
+                        startActivity(intent);
+                    } else {
+                        // 显示BottomSheet
+                        updateBottomSheet(entity);
+                        mBottomSheetDialog.show();
+                    }
                 }
             });
         }
-
-
         adapter.notifyDataSetChanged();
+    }
+
+    /** 更新 BottomSheet 显示 */
+    private void updateBottomSheet(BangumiDetail.EpsBean epsBean) {
+        if (!TextUtils.isEmpty(epsBean.getName_cn())) {
+            mEpsTitle.setText(epsBean.getName_cn() + "/" +  epsBean.getAirdate());
+        } else {
+            mEpsTitle.setText(epsBean.getName() + "/" + epsBean.getAirdate());
+        }
+        if (!TextUtils.isEmpty(epsBean.getDesc())) {
+            mEpsSummary.setVisibility(View.VISIBLE);
+            mEpsSummary.setText(epsBean.getDesc());
+        } else {
+            mEpsSummary.setVisibility(View.GONE);
+        }
+
+        mBottomSheetAdapter.setOnItemClickListener(new BottomSheetAdapter.onItemClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                mBottomSheetDialog.dismiss();
+            }
+        });
     }
 
     /**初始化封面模糊效果*/
@@ -313,6 +387,7 @@ public class BangumiDetailActivity extends BaseActivity implements View.OnClickL
         }).start();
     }
 
+    /** 初始化Recyclerview*/
     private void setUpRecyclerView() {
         mList = new ArrayList<>();
         adapter = new BangumiDetailAdapter(this, mList);
@@ -337,6 +412,7 @@ public class BangumiDetailActivity extends BaseActivity implements View.OnClickL
         });
     }
 
+    /** 初始化 Toolbar */
     private void setUpToolbar() {
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -399,6 +475,7 @@ public class BangumiDetailActivity extends BaseActivity implements View.OnClickL
         }
     }
 
+    /**显示评价的dialog*/
     private void showEvaluationDialog() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
