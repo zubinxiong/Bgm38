@@ -9,6 +9,7 @@ import me.ewriter.bangumitv.api.response.Calendar;
 import me.ewriter.bangumitv.api.response.MyCollection;
 import me.ewriter.bangumitv.api.response.SearchResponse;
 import me.ewriter.bangumitv.api.response.SubjectComment;
+import me.ewriter.bangumitv.api.response.SubjectProgress;
 import me.ewriter.bangumitv.api.response.Token;
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -72,9 +73,9 @@ public interface BangumiApi {
      * @return
      */
     @GET("user/{userId}/progress?source=onAir")
-    public Call<BaseResponse> getSubjectProgress(@Path("userId") int userId,
-                                                 @Query("auth") String auth,
-                                                 @Query("subject_id") int subject_id);
+    public Call<SubjectProgress> getSubjectProgress(@Path("userId") int userId,
+                                                    @Query("auth") String auth,
+                                                    @Query("subject_id") int subject_id);
 
     /**
      * 获取用户当前正在追的番 (我的进度)

@@ -45,6 +45,7 @@ import me.ewriter.bangumitv.api.entity.BangumiDetailEntity;
 import me.ewriter.bangumitv.api.response.BangumiDetail;
 import me.ewriter.bangumitv.api.response.BaseResponse;
 import me.ewriter.bangumitv.api.response.SubjectComment;
+import me.ewriter.bangumitv.api.response.SubjectProgress;
 import me.ewriter.bangumitv.base.BaseActivity;
 import me.ewriter.bangumitv.ui.adapter.BangumiDetailAdapter;
 import me.ewriter.bangumitv.ui.adapter.BottomSheetAdapter;
@@ -74,9 +75,11 @@ public class BangumiDetailActivity extends BaseActivity implements View.OnClickL
     private FloatingActionButton mFab;
 
     private BangumiDetailAdapter adapter;
-    private  GridLayoutManager manager;
-    private  List<BangumiDetailEntity> mList;
+    private GridLayoutManager manager;
+    // 页面详情数据，根据返回的结果自定义的 BangumiDetailEntity
+    private List<BangumiDetailEntity> mList;
     private SubjectComment mSubjectComment;
+    private SubjectProgress mSubjectProgress;
 
     // BottomSheet
     private TextView mEpsTitle, mEpsSummary;
@@ -122,9 +125,6 @@ public class BangumiDetailActivity extends BaseActivity implements View.OnClickL
         mFab.setOnClickListener(this);
 
         requestDetailData();
-        if (LoginManager.isLogin(this)) {
-            requestCommentData();
-        }
 
     }
 
@@ -167,6 +167,7 @@ public class BangumiDetailActivity extends BaseActivity implements View.OnClickL
         if (LoginManager.isLogin(this)) {
             // 放在onResume 中是为了保证在此处登录后能够刷新
             requestCommentData();
+            requestProgress();
         }
     }
 
@@ -204,6 +205,39 @@ public class BangumiDetailActivity extends BaseActivity implements View.OnClickL
 
             @Override
             public void onFailure(Call<SubjectComment> call, Throwable t) {
+                LogUtil.e(LogUtil.ZUBIN, t.toString());
+                ToastUtils.showShortToast(BangumiDetailActivity.this, t.toString());
+            }
+        });
+    }
+
+    /**获取每一集的信息*/
+    private void requestProgress() {
+        sBangumi.getSubjectProgress(LoginManager.getUserId(this),
+                LoginManager.getAuthString(this), mBangumiId).enqueue(new Callback<SubjectProgress>() {
+            @Override
+            public void onResponse(Call<SubjectProgress> call, Response<SubjectProgress> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    mSubjectProgress = response.body();
+                    for (int i = 0; i < mSubjectProgress.getEps().size(); i++) {
+                        int id = mSubjectProgress.getEps().get(i).getId();
+                        int status_id = mSubjectProgress.getEps().get(i).getStatus().getId();
+                        for (int j = 0; j < mList.size(); j++) {
+                            if (id == mList.get(j).getId()) {
+                                mList.get(j).setEpsType(status_id);
+                                if (status_id == 1 || status_id == 2 || status_id == 3) {
+                                    mList.get(j).setStatus("Air");
+                                }
+                                break;
+                            }
+                        }
+                        adapter.notifyDataSetChanged();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<SubjectProgress> call, Throwable t) {
                 LogUtil.e(LogUtil.ZUBIN, t.toString());
                 ToastUtils.showShortToast(BangumiDetailActivity.this, t.toString());
             }
@@ -312,7 +346,7 @@ public class BangumiDetailActivity extends BaseActivity implements View.OnClickL
                 if (i <= 24) {
                     // int type, int id, String url, String nameCn, String name, String airDate, String status, String girdName
                     mList.add(new BangumiDetailEntity(BangumiDetailAdapter.TYPE_GRID, entity.getId(), entity.getUrl(),
-                            entity.getName_cn(), entity.getName(), entity.getAirdate(), entity.getStatus(),
+                            entity.getName_cn(), entity.getName(), entity.getAirdate(), entity.getType(), entity.getStatus(),
                             (int)entity.getSort() + ""));
                 } else {
                     break;
@@ -327,15 +361,22 @@ public class BangumiDetailActivity extends BaseActivity implements View.OnClickL
                     LogUtil.d(LogUtil.ZUBIN, "index = " + (position - adapter.getExpGridCount()));
                     BangumiDetail.EpsBean entity = detail.getEps().get(position - adapter.getExpGridCount());
 
-                    if (detail.getEps().size() >= 24) {
-                        Intent intent = new Intent(BangumiDetailActivity.this, MyProgressActivity.class);
-                        intent.putExtra("detail", detail);
-                        startActivity(intent);
+                    if (LoginManager.isLogin(BangumiDetailActivity.this)) {
+                        if (detail.getEps().size() >= 24) {
+                            Intent intent = new Intent(BangumiDetailActivity.this, MyProgressActivity.class);
+                            intent.putExtra("detail", detail);
+                            startActivity(intent);
+                        } else {
+                            // 显示BottomSheet
+                            updateBottomSheet(entity);
+                            mBottomSheetDialog.show();
+                        }
                     } else {
-                        // 显示BottomSheet
-                        updateBottomSheet(entity);
-                        mBottomSheetDialog.show();
+                        ToastUtils.showShortToast(BangumiDetailActivity.this, R.string.not_login_hint);
+                        startActivity(new Intent(BangumiDetailActivity.this, LoginActivity.class));
                     }
+
+
                 }
             });
         }

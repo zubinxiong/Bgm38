@@ -521,6 +521,7 @@ public class BangumiDetail implements Serializable{
         private String airdate;
         private int comment;
         private String desc;
+        /**WISH 想看 ,WATCHED 看过, DROP 抛弃, NA/TODOY 都是不可点*/
         private String status;
 
         public int getId() {

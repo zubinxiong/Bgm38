@@ -27,6 +27,7 @@ public class BangumiDetailEntity {
     private String airDate;
     private String status;
     private String girdName;
+    private int epsType;
 
     /**标题和内容*/
     public BangumiDetailEntity(int type, String titleName) {
@@ -43,7 +44,7 @@ public class BangumiDetailEntity {
     }
 
     /** grid 观看信息*/
-    public BangumiDetailEntity(int type, int id, String url, String nameCn, String name, String airDate, String status, String girdName) {
+    public BangumiDetailEntity(int type, int id, String url, String nameCn, String name, String airDate, int epsType, String status, String girdName) {
         this.type = type;
         this.id = id;
         this.url = url;
@@ -51,6 +52,7 @@ public class BangumiDetailEntity {
         this.name = name;
         this.airDate = airDate;
         this.status = status;
+        this.epsType = epsType;
         this.girdName = girdName;
     }
 
@@ -148,5 +150,13 @@ public class BangumiDetailEntity {
 
     public void setGirdName(String girdName) {
         this.girdName = girdName;
+    }
+
+    public int getEpsType() {
+        return epsType;
+    }
+
+    public void setEpsType(int epsType) {
+        this.epsType = epsType;
     }
 }
