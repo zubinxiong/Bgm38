@@ -69,6 +69,36 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapter.My
                     .into(holder.image);
         }
 
+        int air_day = myCollection.getSubject().getAir_weekday();
+        String text = "放送时间: ";
+        if (air_day != 0) {
+            switch (air_day) {
+                case 1:
+                    text += "周一";
+                    break;
+                case 2:
+                    text += "周二";
+                    break;
+                case 3:
+                    text += "周三";
+                    break;
+                case 4:
+                    text += "周四";
+                    break;
+                case 5:
+                    text += "周五";
+                    break;
+                case 6:
+                    text += "周六";
+                    break;
+                case 7:
+                    text += "周日";
+                    break;
+
+            }
+        }
+        holder.airDayText.setText(text);
+
         holder.item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -97,6 +127,7 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapter.My
         private TextView progressText;
         private View item;
         private ProgressBar progressBar;
+        private TextView airDayText;
 
         public MyHolder(View itemView) {
             super(itemView);
@@ -105,6 +136,7 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapter.My
             name = (TextView) itemView.findViewById(R.id.collection_title);
             progressText = (TextView) itemView.findViewById(R.id.collection_progress_text);
             progressBar = (ProgressBar) itemView.findViewById(R.id.collection_progress);
+            airDayText = (TextView) itemView.findViewById(R.id.air_day);
         }
     }
 }
