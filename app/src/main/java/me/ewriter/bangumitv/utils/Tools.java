@@ -10,8 +10,12 @@ import android.support.annotation.NonNull;
 import android.support.customtabs.CustomTabsClient;
 import android.support.customtabs.CustomTabsServiceConnection;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+
+import me.ewriter.bangumitv.BangumiApp;
 
 /**
  * Created by Zubin on 2016/8/5.
@@ -79,4 +83,42 @@ public class Tools {
         }
         return versionName;
     }
+
+
+    /**
+     * px 转 dp
+     *
+     * @param aDipValue
+     * @return
+     */
+    public static final int getPixFromDip(float aDipValue) {
+
+        return (int) (aDipValue * getDensity()+0.5f);
+    }
+
+    /**
+     * px 转 dp
+     *
+     * @return
+     */
+    public static final int getDipFromPix(int aPixValue) {
+
+        return (int) (aPixValue / getDensity()+0.5f);
+    }
+
+    public static final float getDensity(){
+
+        return getMetrics().density;
+    }
+
+
+    public static final DisplayMetrics getMetrics(){
+
+        DisplayMetrics dm = new DisplayMetrics();
+        WindowManager wMgr = (WindowManager) BangumiApp.sAppCtx.getSystemService(Context.WINDOW_SERVICE);
+        wMgr.getDefaultDisplay().getMetrics(dm);
+
+        return dm;
+    }
+
 }

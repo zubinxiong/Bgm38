@@ -38,6 +38,8 @@ import me.ewriter.bangumitv.ui.activity.SearchActivity;
 import me.ewriter.bangumitv.ui.adapter.CollectionAdapter;
 import me.ewriter.bangumitv.utils.LogUtil;
 import me.ewriter.bangumitv.utils.ToastUtils;
+import me.ewriter.bangumitv.utils.Tools;
+import me.ewriter.bangumitv.widget.VertialSpacingItemDecoration;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -120,8 +122,10 @@ public class MyCollectionFragment extends BaseFragment implements View.OnClickLi
     private void setupRecyclerview() {
         adapter = new CollectionAdapter(getActivity(), mList);
         mRecyclerView.setAdapter(adapter);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(BangumiApp.sAppCtx,
-                LinearLayoutManager.VERTICAL, false));
+        RecyclerView.LayoutManager manager = new LinearLayoutManager(BangumiApp.sAppCtx,
+                LinearLayoutManager.VERTICAL, false);
+        mRecyclerView.setLayoutManager(manager);
+        mRecyclerView.addItemDecoration(new VertialSpacingItemDecoration(Tools.getPixFromDip(8)));
 
         adapter.setonCollectionClcik(new CollectionAdapter.onCollectionItemListener() {
             @Override

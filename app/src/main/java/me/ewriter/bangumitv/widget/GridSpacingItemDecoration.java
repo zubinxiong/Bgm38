@@ -21,7 +21,7 @@ public class GridSpacingItemDecoration extends RecyclerView.ItemDecoration {
 
     @Override
     public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
-
+        // outRect 负责存储 item 之间的间距
         int position = parent.getChildAdapterPosition(view); // item position
         int column = position % spanCount; // item column
 

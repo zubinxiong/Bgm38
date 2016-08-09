@@ -3,7 +3,8 @@
     android:orientation="horizontal"
     android:layout_marginRight="8dp"
     android:layout_marginBottom="8dp"
-    android:background="@drawable/shape_square_normal"
+    android:clickable="true"
+    android:background="@drawable/square_touch_bg"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
