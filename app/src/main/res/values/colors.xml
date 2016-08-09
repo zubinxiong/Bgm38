@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimary">#ff8a80</color>
+    <color name="colorPrimaryDark">#E57373</color>
+    <color name="colorAccent">#ff8a80</color>
+    <color name="primaryText">#212121</color>
+    <color name="secondPrimaryText">#757575</color>
+    <color name="border">#BDBDBD</color>
 
     <color name="refresh_progress_1">#e91e63</color>
     <color name="refresh_progress_2">#00b0ff</color>
@@ -11,7 +14,6 @@
 
     <color name="calendar_title_color">#424242</color>
     <color name="calendar_detail_color">#757575</color>
-    <color name="border">#e5e5e5</color>
 
     <color name="white">#ffffff</color>
 </resources>

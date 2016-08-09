@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="@drawable/shape_detail_square"
+    android:background="@drawable/shape_square_normal"
     android:layout_marginTop="@dimen/common_padding"
     android:paddingLeft="10dp"
     android:paddingRight="10dp"

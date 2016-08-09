@@ -369,7 +369,7 @@ public class BangumiDetailActivity extends BaseActivity implements View.OnClickL
 
             for (int i = 0; i < detail.getEps().size(); i++) {
                 BangumiDetail.EpsBean entity = detail.getEps().get(i);
-                if (i <= 24) {
+                if (i < 24) {
                     // int type, int id, String url, String nameCn, String name, String airDate, String status, String girdName
                     mList.add(new BangumiDetailEntity(BangumiDetailAdapter.TYPE_GRID, entity.getId(), entity.getUrl(),
                             entity.getName_cn(), entity.getName(), entity.getAirdate(), entity.getType(), entity.getStatus(),
@@ -388,7 +388,7 @@ public class BangumiDetailActivity extends BaseActivity implements View.OnClickL
                     BangumiDetail.EpsBean entity = detail.getEps().get(position - adapter.getExpGridCount());
 
                     if (LoginManager.isLogin(BangumiDetailActivity.this)) {
-                        if (detail.getEps().size() >= 24) {
+                        if (detail.getEps().size() > 24) {
                             Intent intent = new Intent(BangumiDetailActivity.this, MyProgressActivity.class);
                             intent.putExtra("detail", detail);
                             startActivity(intent);
@@ -430,29 +430,34 @@ public class BangumiDetailActivity extends BaseActivity implements View.OnClickL
             @Override
             public void onClick(View view, final int position) {
                 mBottomSheetDialog.dismiss();
-                showProgressDialog();
-                sBangumi.updateEp(epsBean.getId(), valueArray[position],
-                        LoginManager.getAuthString(BangumiDetailActivity.this)).enqueue(new Callback<BaseResponse>() {
-                    @Override
-                    public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
-                        if (response.isSuccessful() && response.body() != null) {
-                            if (response.body().getCode() == 200) {
-                                mList.get(detailPosition).setEpsType(type[position]);
-                                adapter.notifyItemChanged(detailPosition);
-                                dismissProgressDialog();
-                                ToastUtils.showShortToast(BangumiDetailActivity.this, "进度已更新");
+
+                if (epsBean.getStatus().equals("NA") || epsBean.getStatus().equals("TODAY")) {
+                    ToastUtils.showShortToast(BangumiDetailActivity.this, "还没放送哦！");
+                } else {
+                    showProgressDialog();
+                    sBangumi.updateEp(epsBean.getId(), valueArray[position],
+                            LoginManager.getAuthString(BangumiDetailActivity.this)).enqueue(new Callback<BaseResponse>() {
+                        @Override
+                        public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
+                            if (response.isSuccessful() && response.body() != null) {
+                                if (response.body().getCode() == 200) {
+                                    mList.get(detailPosition).setEpsType(type[position]);
+                                    adapter.notifyItemChanged(detailPosition);
+                                    dismissProgressDialog();
+                                    ToastUtils.showShortToast(BangumiDetailActivity.this, "进度已更新");
+                                }
                             }
+
                         }
 
-                    }
-
-                    @Override
-                    public void onFailure(Call<BaseResponse> call, Throwable t) {
-                        LogUtil.e(LogUtil.ZUBIN, t.toString());
-                        ToastUtils.showShortToast(BangumiDetailActivity.this, t.toString());
-                        dismissProgressDialog();
-                    }
-                });
+                        @Override
+                        public void onFailure(Call<BaseResponse> call, Throwable t) {
+                            LogUtil.e(LogUtil.ZUBIN, t.toString());
+                            ToastUtils.showShortToast(BangumiDetailActivity.this, t.toString());
+                            dismissProgressDialog();
+                        }
+                    });
+                }
             }
         });
     }
@@ -615,6 +620,11 @@ public class BangumiDetailActivity extends BaseActivity implements View.OnClickL
                 int rating = 0;
                 if(!TextUtils.isEmpty(mRatingNumber.getEditText().getText().toString().trim())) {
                    rating = Integer.parseInt(mRatingNumber.getEditText().getText().toString().trim());
+                }
+                if (rating > 10) {
+                    ToastUtils.showShortToast(BangumiDetailActivity.this, "评分不能大于10");
+                    mRatingNumber.getEditText().setText("");
+                    return;
                 }
                 String comment = mRatingDetail.getEditText().getText().toString().trim();
 

@@ -2,6 +2,7 @@ package me.ewriter.bangumitv.ui.adapter;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Paint;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -106,27 +107,39 @@ public class BangumiDetailAdapter extends RecyclerView.Adapter<RecyclerView.View
         int type = entity.getEpsType();
         String status = entity.getStatus();
 
+        textView.setText(entity.getGirdName());
+
         if (status.equals("Air")) {
             // AIR 又根据 type 分为 WISH, WATCHED,DROP 和默认
             textView.setEnabled(true);
             if (type == 1) {
                 //想看
-                textView.setText("想看");
+                textView.setTextColor(mContext.getResources().getColor(R.color.white));
+                textView.setBackground(mContext.getResources().getDrawable(R.drawable.shape_square_queue));
+                textView.getPaint().setFlags(0);
             } else if (type == 2) {
                 // 看过
-                textView.setText("看过");
+                textView.setTextColor(mContext.getResources().getColor(R.color.white));
+                textView.setBackground(mContext.getResources().getDrawable(R.drawable.shape_square_watched));
+                textView.getPaint().setFlags(0);
             } else if (type == 3) {
                 // 弃番
-                textView.setText("弃");
+                textView.setTextColor(mContext.getResources().getColor(R.color.white));
+                textView.setBackground(mContext.getResources().getDrawable(R.drawable.shape_square_watched));
+                textView.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
             } else if (type == 0){
                 // 剩下的都是默认状态
-                textView.setText("默认");
+                textView.setTextColor(mContext.getResources().getColor(R.color.calendar_title_color));
+                textView.setBackground(mContext.getResources().getDrawable(R.drawable.shape_square_normal));
+                textView.getPaint().setFlags(0);
             }
 
         } else if (status.equals("NA") || status.equals("TODAY")) {
             // 未放送，和今天放送 不可点
-            textView.setText("NA");
-            textView.setEnabled(false);
+//            textView.setEnabled(false);
+            textView.setTextColor(mContext.getResources().getColor(R.color.white));
+            textView.setBackground(mContext.getResources().getDrawable(R.drawable.shape_square_disable));
+            textView.getPaint().setFlags(0);
         }
     }
 

@@ -150,29 +150,34 @@ public class MyProgressActivity extends BaseActivity {
             @Override
             public void onClick(View view, final int position) {
                 mBottomSheetDialog.dismiss();
-                showProgressDialog();
-                sBangumi.updateEp(epsBean.getId(), valueArray[position],
-                        LoginManager.getAuthString(MyProgressActivity.this)).enqueue(new Callback<BaseResponse>() {
-                    @Override
-                    public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
-                        if (response.isSuccessful() && response.body() != null) {
-                            if (response.body().getCode() == 200) {
-                                mList.get(detailPostion).setType(type[position]);
-                                mProgressAdapter.notifyItemChanged(detailPostion);
-                                dismissProgressDialog();
-                                ToastUtils.showShortToast(MyProgressActivity.this, "进度已更新");
-                                isUpdate = true;
+                if (epsBean.getStatus().equals("NA") || epsBean.getStatus().equals("TODAY")) {
+                    ToastUtils.showShortToast(MyProgressActivity.this, "还没放送哦！");
+                } else {
+                    showProgressDialog();
+                    sBangumi.updateEp(epsBean.getId(), valueArray[position],
+                            LoginManager.getAuthString(MyProgressActivity.this)).enqueue(new Callback<BaseResponse>() {
+                        @Override
+                        public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
+                            if (response.isSuccessful() && response.body() != null) {
+                                if (response.body().getCode() == 200) {
+                                    mList.get(detailPostion).setType(type[position]);
+                                    mProgressAdapter.notifyItemChanged(detailPostion);
+                                    dismissProgressDialog();
+                                    ToastUtils.showShortToast(MyProgressActivity.this, "进度已更新");
+                                    isUpdate = true;
+                                }
                             }
                         }
-                    }
 
-                    @Override
-                    public void onFailure(Call<BaseResponse> call, Throwable t) {
-                        LogUtil.e(LogUtil.ZUBIN, t.toString());
-                        ToastUtils.showShortToast(MyProgressActivity.this, t.toString());
-                        dismissProgressDialog();
-                    }
-                });
+                        @Override
+                        public void onFailure(Call<BaseResponse> call, Throwable t) {
+                            LogUtil.e(LogUtil.ZUBIN, t.toString());
+                            ToastUtils.showShortToast(MyProgressActivity.this, t.toString());
+                            dismissProgressDialog();
+                        }
+                    });
+                }
+
             }
         });
     }
