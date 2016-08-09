@@ -1,5 +1,6 @@
 package me.ewriter.bangumitv.ui.activity;
 
+import android.app.ProgressDialog;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialog;
@@ -17,12 +18,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import me.ewriter.bangumitv.R;
+import me.ewriter.bangumitv.api.LoginManager;
 import me.ewriter.bangumitv.api.response.BangumiDetail;
+import me.ewriter.bangumitv.api.response.BaseResponse;
+import me.ewriter.bangumitv.api.response.SubjectProgress;
 import me.ewriter.bangumitv.base.BaseActivity;
 import me.ewriter.bangumitv.ui.adapter.BottomSheetAdapter;
 import me.ewriter.bangumitv.ui.adapter.MyProgressAdapter;
 import me.ewriter.bangumitv.utils.LogUtil;
 import me.ewriter.bangumitv.utils.ToastUtils;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by Zubin on 2016/8/8.
@@ -38,6 +45,8 @@ public class MyProgressActivity extends BaseActivity {
     private BottomSheetAdapter mBottomSheetAdapter;
     private List<BangumiDetail.EpsBean> mList = new ArrayList<>();
     private ProgressBar mProgressbar;
+    private ProgressDialog mProgressDialog;
+    private BangumiDetail mDetail;
 
     @Override
     protected int getContentViewResId() {
@@ -48,8 +57,44 @@ public class MyProgressActivity extends BaseActivity {
     protected void initViews() {
         mProgressbar = (ProgressBar) findViewById(R.id.progressbar);
         setUpToolbar();
+        requestProgressData();
+
         setUpBottomSheetDialog();
         setUpRecyclerView();
+    }
+
+    private void requestProgressData() {
+        sBangumi.getSubjectProgress(LoginManager.getUserId(this), LoginManager.getAuthString(this),
+                mDetail.getId()).enqueue(new Callback<SubjectProgress>() {
+            @Override
+            public void onResponse(Call<SubjectProgress> call, Response<SubjectProgress> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    SubjectProgress mSubjectProgress = response.body();
+                    for (int i = 0; i < mSubjectProgress.getEps().size(); i++) {
+                        int id = mSubjectProgress.getEps().get(i).getId();
+                        int status_id = mSubjectProgress.getEps().get(i).getStatus().getId();
+                        for (int j = 0; j < mList.size(); j++) {
+                            if (id == mList.get(j).getId()) {
+                                mList.get(j).setType(status_id);
+                                if (status_id == 1 || status_id == 2 || status_id == 3) {
+                                    mList.get(j).setStatus("Air");
+                                }
+                                break;
+                            }
+                        }
+                    }
+                }
+                mProgressAdapter.notifyDataSetChanged();
+                mProgressbar.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onFailure(Call<SubjectProgress> call, Throwable t) {
+                LogUtil.e(LogUtil.ZUBIN, t.toString());
+                ToastUtils.showShortToast(MyProgressActivity.this, t.toString());
+                mProgressbar.setVisibility(View.GONE);
+            }
+        });
     }
 
     private void setUpToolbar() {
@@ -72,18 +117,17 @@ public class MyProgressActivity extends BaseActivity {
         mRecyclerView.setLayoutManager(new GridLayoutManager(this, 6));
 
         mProgressAdapter.notifyDataSetChanged();
-        mProgressbar.setVisibility(View.GONE);
 
         mProgressAdapter.setOnGridClickListener(new MyProgressAdapter.onGridClick() {
             @Override
             public void onClick(View view, int position) {
-                updateBottomSheet(mList.get(position));
+                updateBottomSheet(mList.get(position), position);
                 mBottomSheetDialog.show();
             }
         });
     }
 
-    private void updateBottomSheet(BangumiDetail.EpsBean epsBean) {
+    private void updateBottomSheet(final BangumiDetail.EpsBean epsBean, final int detailPostion) {
         if (!TextUtils.isEmpty(epsBean.getName_cn())) {
             mEpsTitle.setText(epsBean.getName_cn() + "/" +  epsBean.getAirdate());
         } else {
@@ -96,10 +140,34 @@ public class MyProgressActivity extends BaseActivity {
             mEpsSummary.setVisibility(View.GONE);
         }
 
+        final String[] valueArray = getResources().getStringArray(R.array.bottom_sheet_value);
+        final int[] type = {1, 2, 3, 0};
         mBottomSheetAdapter.setOnItemClickListener(new BottomSheetAdapter.onItemClickListener() {
             @Override
-            public void onClick(View view, int position) {
+            public void onClick(View view, final int position) {
                 mBottomSheetDialog.dismiss();
+                showProgressDialog();
+                sBangumi.updateEp(epsBean.getId(), valueArray[position],
+                        LoginManager.getAuthString(MyProgressActivity.this)).enqueue(new Callback<BaseResponse>() {
+                    @Override
+                    public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
+                        if (response.isSuccessful() && response.body() != null) {
+                            if (response.body().getCode() == 200) {
+                                mList.get(detailPostion).setType(type[position]);
+                                mProgressAdapter.notifyItemChanged(detailPostion);
+                                dismissProgressDialog();
+                                ToastUtils.showShortToast(MyProgressActivity.this, "进度已更新");
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<BaseResponse> call, Throwable t) {
+                        LogUtil.e(LogUtil.ZUBIN, t.toString());
+                        ToastUtils.showShortToast(MyProgressActivity.this, t.toString());
+                        dismissProgressDialog();
+                    }
+                });
             }
         });
     }
@@ -144,7 +212,7 @@ public class MyProgressActivity extends BaseActivity {
     @Override
     protected void initBeforeCreate() {
         if (getIntent().getSerializableExtra("detail") != null) {
-            BangumiDetail mDetail = (BangumiDetail) getIntent().getSerializableExtra("detail");
+            mDetail = (BangumiDetail) getIntent().getSerializableExtra("detail");
             mList.addAll(mDetail.getEps());
             LogUtil.d(LogUtil.ZUBIN, "not null");
         } else {
@@ -155,5 +223,20 @@ public class MyProgressActivity extends BaseActivity {
     @Override
     protected boolean isSubscribeEvent() {
         return false;
+    }
+
+    private void showProgressDialog() {
+        if (mProgressDialog == null) {
+            mProgressDialog = new ProgressDialog(this);
+        }
+        mProgressDialog.setCancelable(false);
+        mProgressDialog.setMessage("进度更新中");
+        mProgressDialog.show();
+    }
+
+    private void dismissProgressDialog() {
+        if (mProgressDialog != null) {
+            mProgressDialog.dismiss();
+        }
     }
 }

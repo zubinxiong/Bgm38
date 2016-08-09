@@ -10,6 +10,10 @@
 
     <style name="Loading_ProgressBar" parent="Widget.AppCompat.ProgressBar">
         <item name="android:color">@color/colorAccent</item>
+        <item name="android:minHeight">50dp</item>
+        <item name="android:minWidth">50dp</item>
+        <item name="android:maxWidth">50dp</item>
+        <item name="android:maxHeight">50dp</item>
     </style>
 
     <style name="divider_line">
