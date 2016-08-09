@@ -74,6 +74,16 @@ public class LoginManager {
                 MyConstants.LOGIN_MANAGER_AVATAR_KEY, large_avatar_url);
     }
 
+    public static String getSign(Context context) {
+        return PreferencesUtils.getString(context, MyConstants.LOGIN_MANAGER_NAME,
+                MyConstants.LOGIN_MANAGER_SIGN_KEY, "");
+    }
+
+    public static boolean setSign(Context context, String sign) {
+        return PreferencesUtils.putString(context, MyConstants.LOGIN_MANAGER_NAME,
+                MyConstants.LOGIN_MANAGER_SIGN_KEY, sign);
+    }
+
     public static void saveToken(Context context, Token token) {
         setUserId(context, token.getId());
         setUserHomeUrl(context, token.getUrl());
@@ -83,6 +93,7 @@ public class LoginManager {
         }
         setAuthString(context, token.getAuth());
         setAuthEncode(context, token.getAuthEncode());
+        setSign(context, token.getSign());
     }
 
     public static boolean isLogin(Context context) {

@@ -18,13 +18,23 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/profile_image"
-        android:layout_marginLeft="25dp"
+        android:layout_marginLeft="28dp"
         android:layout_marginTop="15dp"
         android:gravity="left"
         android:paddingBottom="4dp"
         android:textColor="#FFF"
         android:textSize="14sp"
         android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/sign"
+        android:layout_below="@+id/username"
+        android:layout_marginLeft="28dp"
+        android:layout_marginTop="10dp"
+        android:textColor="#FFF"
+        android:textSize="14sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
     <ImageView
         android:id="@+id/nav_logout"

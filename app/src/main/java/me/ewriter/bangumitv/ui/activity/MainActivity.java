@@ -44,6 +44,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     FragmentManager mFragmentManager;
     CircleImageView mAvatar;
     TextView mUserName;
+    TextView mSign;
 
     @Override
     protected int getContentViewResId() {
@@ -58,6 +59,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         mNavLogout = (ImageView) mNavigationView.getHeaderView(0).findViewById(R.id.nav_logout);
         mAvatar = (CircleImageView) mNavigationView.getHeaderView(0).findViewById(R.id.profile_image);
         mUserName = (TextView) mNavigationView.getHeaderView(0).findViewById(R.id.username);
+        mSign = (TextView) mNavigationView.getHeaderView(0).findViewById(R.id.sign);
         mNavLogout.setOnClickListener(this);
         mAvatar.setOnClickListener(this);
         mNavigationView.setNavigationItemSelectedListener(this);
@@ -160,7 +162,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
             case R.id.profile_image:
                 if (LoginManager.isLogin(MainActivity.this)) {
-                    ToastUtils.showShortToast(MainActivity.this, R.string.already_login);
+                    CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
+                    CustomTabsIntent customTabsIntent = builder.build();
+                    customTabsIntent.launchUrl(this, Uri.parse(LoginManager.getUserHomeUrl(this)));
                 } else {
                     startActivity(new Intent(MainActivity.this, LoginActivity.class));
                 }
@@ -206,6 +210,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         LogUtil.d(LogUtil.ZUBIN, "onresume main");
         if (LoginManager.isLogin(this)) {
             mUserName.setText(LoginManager.getUserNickName(this));
+            mSign.setText(LoginManager.getSign(this));
             Picasso.with(this).load(LoginManager.getLargeAvatar(this)).noFade().into(mAvatar);
         }
     }
@@ -213,6 +218,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     @Subscribe
     public void onLogout(LogoutEvent event) {
         mUserName.setText("");
+        mSign.setText("");
         Picasso.with(this).load(R.drawable.role_img_test_medium).noFade().into(mAvatar);
     }
 }
