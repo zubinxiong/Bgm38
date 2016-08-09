@@ -14,6 +14,8 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +25,7 @@ import me.ewriter.bangumitv.api.response.BangumiDetail;
 import me.ewriter.bangumitv.api.response.BaseResponse;
 import me.ewriter.bangumitv.api.response.SubjectProgress;
 import me.ewriter.bangumitv.base.BaseActivity;
+import me.ewriter.bangumitv.event.ProgressUpdateEvent;
 import me.ewriter.bangumitv.ui.adapter.BottomSheetAdapter;
 import me.ewriter.bangumitv.ui.adapter.MyProgressAdapter;
 import me.ewriter.bangumitv.utils.LogUtil;
@@ -47,6 +50,7 @@ public class MyProgressActivity extends BaseActivity {
     private ProgressBar mProgressbar;
     private ProgressDialog mProgressDialog;
     private BangumiDetail mDetail;
+    private boolean isUpdate = false;
 
     @Override
     protected int getContentViewResId() {
@@ -57,10 +61,8 @@ public class MyProgressActivity extends BaseActivity {
     protected void initViews() {
         mProgressbar = (ProgressBar) findViewById(R.id.progressbar);
         setUpToolbar();
-        requestProgressData();
-
         setUpBottomSheetDialog();
-        setUpRecyclerView();
+        requestProgressData();
     }
 
     private void requestProgressData() {
@@ -84,6 +86,7 @@ public class MyProgressActivity extends BaseActivity {
                         }
                     }
                 }
+                setUpRecyclerView();
                 mProgressAdapter.notifyDataSetChanged();
                 mProgressbar.setVisibility(View.GONE);
             }
@@ -92,6 +95,7 @@ public class MyProgressActivity extends BaseActivity {
             public void onFailure(Call<SubjectProgress> call, Throwable t) {
                 LogUtil.e(LogUtil.ZUBIN, t.toString());
                 ToastUtils.showShortToast(MyProgressActivity.this, t.toString());
+                setUpRecyclerView();
                 mProgressbar.setVisibility(View.GONE);
             }
         });
@@ -157,6 +161,7 @@ public class MyProgressActivity extends BaseActivity {
                                 mProgressAdapter.notifyItemChanged(detailPostion);
                                 dismissProgressDialog();
                                 ToastUtils.showShortToast(MyProgressActivity.this, "进度已更新");
+                                isUpdate = true;
                             }
                         }
                     }
@@ -238,5 +243,11 @@ public class MyProgressActivity extends BaseActivity {
         if (mProgressDialog != null) {
             mProgressDialog.dismiss();
         }
+    }
+
+    @Override
+    protected void onPause() {
+        EventBus.getDefault().postSticky(new ProgressUpdateEvent(isUpdate));
+        super.onPause();
     }
 }

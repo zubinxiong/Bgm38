@@ -36,6 +36,9 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -48,6 +51,8 @@ import me.ewriter.bangumitv.api.response.BaseResponse;
 import me.ewriter.bangumitv.api.response.SubjectComment;
 import me.ewriter.bangumitv.api.response.SubjectProgress;
 import me.ewriter.bangumitv.base.BaseActivity;
+import me.ewriter.bangumitv.event.ProgressUpdateEvent;
+import me.ewriter.bangumitv.event.UserLoginEvent;
 import me.ewriter.bangumitv.ui.adapter.BangumiDetailAdapter;
 import me.ewriter.bangumitv.ui.adapter.BottomSheetAdapter;
 import me.ewriter.bangumitv.utils.BlurUtil;
@@ -127,6 +132,7 @@ public class BangumiDetailActivity extends BaseActivity implements View.OnClickL
         mFab.setOnClickListener(this);
 
         requestDetailData();
+        requestCommentData();
 
     }
 
@@ -171,11 +177,16 @@ public class BangumiDetailActivity extends BaseActivity implements View.OnClickL
     @Override
     protected void onResume() {
         super.onResume();
-        if (LoginManager.isLogin(this)) {
-            // 放在onResume 中是为了保证在此处登录后能够刷新
-            requestCommentData();
+        ProgressUpdateEvent event = EventBus.getDefault().removeStickyEvent(ProgressUpdateEvent.class);
+        if (event != null && event.isUpdate()) {
             requestProgress();
         }
+    }
+
+    @Subscribe
+    public void onLoginSuccess(UserLoginEvent event) {
+        requestCommentData();
+        requestProgress();
     }
 
     /**请求番剧详情接口*/
@@ -188,6 +199,7 @@ public class BangumiDetailActivity extends BaseActivity implements View.OnClickL
                     updateCover(detail);
                     updateList(detail);
                     mProgressbar.setVisibility(View.GONE);
+                    requestProgress();
                 }
             }
 
@@ -202,6 +214,9 @@ public class BangumiDetailActivity extends BaseActivity implements View.OnClickL
 
     /** 请求用户的评论信息*/
     private void requestCommentData() {
+        if (!LoginManager.isLogin(this))
+            return;
+
         sBangumi.getSubjectComment(mBangumiId, LoginManager.getAuthString(this)).enqueue(new Callback<SubjectComment>() {
             @Override
             public void onResponse(Call<SubjectComment> call, Response<SubjectComment> response) {
@@ -218,8 +233,11 @@ public class BangumiDetailActivity extends BaseActivity implements View.OnClickL
         });
     }
 
-    /**获取每一集的信息*/
+    /**获取每一集的信息, 为避免数据先于进度，要放在requestDetail之后*/
     private void requestProgress() {
+        if (!LoginManager.isLogin(this))
+            return;
+
         sBangumi.getSubjectProgress(LoginManager.getUserId(this),
                 LoginManager.getAuthString(this), mBangumiId).enqueue(new Callback<SubjectProgress>() {
             @Override
@@ -522,7 +540,7 @@ public class BangumiDetailActivity extends BaseActivity implements View.OnClickL
 
     @Override
     protected boolean isSubscribeEvent() {
-        return false;
+        return true;
     }
 
     @Override
