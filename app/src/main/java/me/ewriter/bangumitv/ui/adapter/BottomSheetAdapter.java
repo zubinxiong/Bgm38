@@ -21,12 +21,9 @@ public class BottomSheetAdapter extends RecyclerView.Adapter<BottomSheetAdapter.
     private List<String> mList = new ArrayList<>();
     private onItemClickListener listener;
 
-    public BottomSheetAdapter(Context mContext) {
+    public BottomSheetAdapter(Context mContext, List mList) {
         this.mContext = mContext;
-        mList.add(mContext.getResources().getString(R.string.queue));
-        mList.add(mContext.getResources().getString(R.string.watched));
-        mList.add(mContext.getResources().getString(R.string.drop));
-        mList.add(mContext.getResources().getString(R.string.remove));
+        this.mList = mList;
     }
 
     @Override

@@ -108,6 +108,7 @@ public class BangumiDetailAdapter extends RecyclerView.Adapter<RecyclerView.View
 
         if (status.equals("Air")) {
             // AIR 又根据 type 分为 WISH, WATCHED,DROP 和默认
+            textView.setEnabled(true);
             if (type == 1) {
                 //想看
                 textView.setText("想看");
@@ -117,7 +118,7 @@ public class BangumiDetailAdapter extends RecyclerView.Adapter<RecyclerView.View
             } else if (type == 3) {
                 // 弃番
                 textView.setText("弃");
-            } else  {
+            } else if (type == 0){
                 // 剩下的都是默认状态
                 textView.setText("默认");
             }

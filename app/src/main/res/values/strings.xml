@@ -36,10 +36,6 @@
     <string name="rate_text_hint">我要吐槽</string>
     <string name="want_see">状态</string>
     <string name="update_comment">评论已提交</string>
-    <string name="queue">想看</string>
-    <string name="watched">看过</string>
-    <string name="drop">抛弃</string>
-    <string name="remove">撤销</string>
 
     <!-- 登录 -->
     <string name="login_email_hint">邮箱</string>
@@ -94,6 +90,20 @@
         <item>do</item>
         <item>on_hold</item>
         <item>drop</item>
+    </string-array>
+
+    <string-array name="bottom_sheet_name">
+        <item>想看</item>
+        <item>看过</item>
+        <item>抛弃</item>
+        <item>撤销</item>
+    </string-array>
+
+    <string-array name="bottom_sheet_value">
+        <item>queue</item>
+        <item>watched</item>
+        <item>drop</item>
+        <item>remove</item>
     </string-array>
 
 </resources>

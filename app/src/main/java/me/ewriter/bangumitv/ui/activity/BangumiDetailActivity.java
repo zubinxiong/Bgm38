@@ -1,5 +1,6 @@
 package me.ewriter.bangumitv.ui.activity;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -85,6 +86,7 @@ public class BangumiDetailActivity extends BaseActivity implements View.OnClickL
     private TextView mEpsTitle, mEpsSummary;
     private BottomSheetAdapter mBottomSheetAdapter;
     private BottomSheetDialog mBottomSheetDialog;
+    private ProgressDialog mProgressDialog;
 
     int mBangumiId = -1;
     String mCommonImageUrl;
@@ -133,7 +135,12 @@ public class BangumiDetailActivity extends BaseActivity implements View.OnClickL
         mBottomSheetDialog = new BottomSheetDialog(this);
         View mContentView = LayoutInflater.from(this).inflate(R.layout.view_bottom_sheet, null, false);
         RecyclerView mRecyclerView = (RecyclerView) mContentView.findViewById(R.id.bottom_recyclerView);
-        mBottomSheetAdapter = new BottomSheetAdapter(this);
+        String[] nameArray = getResources().getStringArray(R.array.bottom_sheet_name);
+        List<String> mNameList = new ArrayList<>();
+        for (int i = 0; i < nameArray.length; i++) {
+            mNameList.add(nameArray[i]);
+        }
+        mBottomSheetAdapter = new BottomSheetAdapter(this, mNameList);
         mRecyclerView.setAdapter(mBottomSheetAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
 
@@ -219,6 +226,7 @@ public class BangumiDetailActivity extends BaseActivity implements View.OnClickL
             public void onResponse(Call<SubjectProgress> call, Response<SubjectProgress> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     mSubjectProgress = response.body();
+                    // 获取成功后，更新当前List 中的数据
                     for (int i = 0; i < mSubjectProgress.getEps().size(); i++) {
                         int id = mSubjectProgress.getEps().get(i).getId();
                         int status_id = mSubjectProgress.getEps().get(i).getStatus().getId();
@@ -368,7 +376,7 @@ public class BangumiDetailActivity extends BaseActivity implements View.OnClickL
                             startActivity(intent);
                         } else {
                             // 显示BottomSheet
-                            updateBottomSheet(entity);
+                            updateBottomSheet(entity, position);
                             mBottomSheetDialog.show();
                         }
                     } else {
@@ -384,7 +392,7 @@ public class BangumiDetailActivity extends BaseActivity implements View.OnClickL
     }
 
     /** 更新 BottomSheet 显示 */
-    private void updateBottomSheet(BangumiDetail.EpsBean epsBean) {
+    private void updateBottomSheet(final BangumiDetail.EpsBean epsBean, final int detailPosition) {
         if (!TextUtils.isEmpty(epsBean.getName_cn())) {
             mEpsTitle.setText(epsBean.getName_cn() + "/" +  epsBean.getAirdate());
         } else {
@@ -397,10 +405,36 @@ public class BangumiDetailActivity extends BaseActivity implements View.OnClickL
             mEpsSummary.setVisibility(View.GONE);
         }
 
+        final String[] valueArray = getResources().getStringArray(R.array.bottom_sheet_value);
+        final int[] type = {1, 2, 3, 0};
+
         mBottomSheetAdapter.setOnItemClickListener(new BottomSheetAdapter.onItemClickListener() {
             @Override
-            public void onClick(View view, int position) {
+            public void onClick(View view, final int position) {
                 mBottomSheetDialog.dismiss();
+                showProgressDialog();
+                sBangumi.updateEp(epsBean.getId(), valueArray[position],
+                        LoginManager.getAuthString(BangumiDetailActivity.this)).enqueue(new Callback<BaseResponse>() {
+                    @Override
+                    public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
+                        if (response.isSuccessful() && response.body() != null) {
+                            if (response.body().getCode() == 200) {
+                                mList.get(detailPosition).setEpsType(type[position]);
+                                adapter.notifyItemChanged(detailPosition);
+                                dismissProgressDialog();
+                                ToastUtils.showShortToast(BangumiDetailActivity.this, "进度已更新");
+                            }
+                        }
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<BaseResponse> call, Throwable t) {
+                        LogUtil.e(LogUtil.ZUBIN, t.toString());
+                        ToastUtils.showShortToast(BangumiDetailActivity.this, t.toString());
+                        dismissProgressDialog();
+                    }
+                });
             }
         });
     }
@@ -588,5 +622,20 @@ public class BangumiDetailActivity extends BaseActivity implements View.OnClickL
         });
 
         builder.show();
+    }
+
+    private void showProgressDialog() {
+        if (mProgressDialog == null) {
+            mProgressDialog = new ProgressDialog(this);
+        }
+        mProgressDialog.setCancelable(false);
+        mProgressDialog.setMessage("进度更新中");
+        mProgressDialog.show();
+    }
+
+    private void dismissProgressDialog() {
+        if (mProgressDialog != null) {
+            mProgressDialog.dismiss();
+        }
     }
 }

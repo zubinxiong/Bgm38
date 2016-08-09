@@ -108,7 +108,12 @@ public class MyProgressActivity extends BaseActivity {
         mBottomSheetDialog = new BottomSheetDialog(this);
         View mContentView = LayoutInflater.from(this).inflate(R.layout.view_bottom_sheet, null, false);
         RecyclerView mRecyclerView = (RecyclerView) mContentView.findViewById(R.id.bottom_recyclerView);
-        mBottomSheetAdapter = new BottomSheetAdapter(this);
+        String[] nameArray = getResources().getStringArray(R.array.bottom_sheet_name);
+        List<String> mNameList = new ArrayList<>();
+        for (int i = 0; i < nameArray.length; i++) {
+            mNameList.add(nameArray[i]);
+        }
+        mBottomSheetAdapter = new BottomSheetAdapter(this, mNameList);
         mRecyclerView.setAdapter(mBottomSheetAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
 
