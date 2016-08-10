@@ -6,7 +6,6 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -57,11 +56,11 @@ public class LoginActivity extends BaseActivity {
                 String password = mPasswordEdit.getEditText().getText().toString();
 
                 if (TextUtils.isEmpty(email)) {
-                    mNameEdit.setError("请输入邮箱");
+                    mNameEdit.setError(getString(R.string.email_input_hint));
                     return;
                 }
                 if (TextUtils.isEmpty(password)) {
-                    mPasswordEdit.setError("请输入密码");
+                    mPasswordEdit.setError(getString(R.string.password_input_hint));
                     return;
                 }
 

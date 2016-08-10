@@ -66,6 +66,12 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapter.My
                     .fit()
                     .centerCrop()
                     .config(Bitmap.Config.RGB_565)
+                    .placeholder(R.drawable.img_on_load)
+                    .error(R.drawable.img_on_error)
+                    .into(holder.image);
+        } else {
+            Picasso.with(mContext)
+                    .load(R.drawable.img_on_error)
                     .into(holder.image);
         }
 

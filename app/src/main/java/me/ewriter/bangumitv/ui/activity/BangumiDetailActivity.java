@@ -9,7 +9,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.customtabs.CustomTabsIntent;
-import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -30,7 +29,6 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -58,7 +56,6 @@ import me.ewriter.bangumitv.ui.adapter.BottomSheetAdapter;
 import me.ewriter.bangumitv.utils.BlurUtil;
 import me.ewriter.bangumitv.utils.LogUtil;
 import me.ewriter.bangumitv.utils.ToastUtils;
-import me.ewriter.bangumitv.widget.GridSpacingItemDecoration;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -72,7 +69,7 @@ public class BangumiDetailActivity extends BaseActivity implements View.OnClickL
     // Cover 和 详细信息
     private Toolbar mToolbar;
     private RecyclerView mRecyclerView;
-    private AppBarLayout mAppbarLayout;
+//    private AppBarLayout mAppbarLayout;
     private CollapsingToolbarLayout mCollapsingToolbarLayout;
     private ImageView mCoverImg;
     private ViewGroup mCoverGroup;
@@ -113,7 +110,7 @@ public class BangumiDetailActivity extends BaseActivity implements View.OnClickL
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mRecyclerView = (RecyclerView) findViewById(R.id.bangumi_detail_recyclerview);
-        mAppbarLayout = (AppBarLayout) findViewById(R.id.appbar);
+//        mAppbarLayout = (AppBarLayout) findViewById(R.id.appbar);
         mCollapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         mCoverImg = (ImageView) findViewById(R.id.cover_img);
         mCoverName = (TextView) findViewById(R.id.cover_name);
@@ -432,7 +429,7 @@ public class BangumiDetailActivity extends BaseActivity implements View.OnClickL
                 mBottomSheetDialog.dismiss();
 
                 if (epsBean.getStatus().equals("NA") || epsBean.getStatus().equals("TODAY")) {
-                    ToastUtils.showShortToast(BangumiDetailActivity.this, "还没放送哦！");
+                    ToastUtils.showShortToast(BangumiDetailActivity.this, R.string.not_display_yet);
                 } else {
                     showProgressDialog();
                     sBangumi.updateEp(epsBean.getId(), valueArray[position],
@@ -444,7 +441,7 @@ public class BangumiDetailActivity extends BaseActivity implements View.OnClickL
                                     mList.get(detailPosition).setEpsType(type[position]);
                                     adapter.notifyItemChanged(detailPosition);
                                     dismissProgressDialog();
-                                    ToastUtils.showShortToast(BangumiDetailActivity.this, "进度已更新");
+                                    ToastUtils.showShortToast(BangumiDetailActivity.this, R.string.progress_updated);
                                 }
                             }
 
@@ -530,8 +527,8 @@ public class BangumiDetailActivity extends BaseActivity implements View.OnClickL
     @Override
     protected void initBeforeCreate() {
 
-        getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
             getWindow().setExitTransition(new Fade());
         }
 
@@ -603,7 +600,7 @@ public class BangumiDetailActivity extends BaseActivity implements View.OnClickL
         }
 
         builder.setView(itemView);
-        builder.setTitle("我的评价");
+        builder.setTitle(R.string.my_comment);
         builder.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -622,7 +619,7 @@ public class BangumiDetailActivity extends BaseActivity implements View.OnClickL
                    rating = Integer.parseInt(mRatingNumber.getEditText().getText().toString().trim());
                 }
                 if (rating > 10) {
-                    ToastUtils.showShortToast(BangumiDetailActivity.this, "评分不能大于10");
+                    ToastUtils.showShortToast(BangumiDetailActivity.this, R.string.rating_number_max);
                     mRatingNumber.getEditText().setText("");
                     return;
                 }
@@ -657,7 +654,7 @@ public class BangumiDetailActivity extends BaseActivity implements View.OnClickL
             mProgressDialog = new ProgressDialog(this);
         }
         mProgressDialog.setCancelable(false);
-        mProgressDialog.setMessage("进度更新中");
+        mProgressDialog.setMessage(getString(R.string.progress_updating));
         mProgressDialog.show();
     }
 

@@ -1,17 +1,12 @@
 package me.ewriter.bangumitv.ui.fragment;
 
-import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -25,7 +20,6 @@ import java.util.List;
 import me.ewriter.bangumitv.BangumiApp;
 import me.ewriter.bangumitv.R;
 import me.ewriter.bangumitv.api.LoginManager;
-import me.ewriter.bangumitv.api.response.BaseResponse;
 import me.ewriter.bangumitv.api.response.MyCollection;
 import me.ewriter.bangumitv.base.BaseActivity;
 import me.ewriter.bangumitv.base.BaseFragment;
@@ -104,7 +98,7 @@ public class MyCollectionFragment extends BaseFragment implements View.OnClickLi
                 @Override
                 public void onFailure(Call<List<MyCollection>> call, Throwable t) {
                     LogUtil.d(LogUtil.ZUBIN, t.toString());
-                    ToastUtils.showShortToast(getActivity(), "获取失败");
+                    ToastUtils.showShortToast(getActivity(), R.string.collection_fail);
                     mEmptyButton.setText(getString(R.string.get_retry));
                     mEmptyButton.setVisibility(View.VISIBLE);
                     mEmptyText.setVisibility(View.VISIBLE);
@@ -142,7 +136,7 @@ public class MyCollectionFragment extends BaseFragment implements View.OnClickLi
 
     private void setupToolbar() {
         mToolbar.setNavigationIcon(R.drawable.ic_action_drawer);
-        mToolbar.setTitle("我的进度");
+        mToolbar.setTitle(getString(R.string.nav_my_collection));
         mToolbar.inflateMenu(R.menu.search_menu);
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override

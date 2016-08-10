@@ -92,13 +92,20 @@ public class BangumiDetailAdapter extends RecyclerView.Adapter<RecyclerView.View
             CardHolder cardHolder = (CardHolder) holder;
             cardHolder.roleName.setText(entity.getRoleName());
             cardHolder.roleJob.setText(entity.getRoleJob());
-            Picasso.with(mContext)
-                    .load(entity.getRoleImageUrl())
-                    .config(Bitmap.Config.RGB_565)
-                    .resize(200, 300)
-                    .centerInside()
-                    .noFade()
-                    .into(cardHolder.image);
+            if (entity.getRoleImageUrl() != null) {
+                Picasso.with(mContext)
+                        .load(entity.getRoleImageUrl())
+                        .config(Bitmap.Config.RGB_565)
+                        .placeholder(R.drawable.img_on_load)
+                        .error(R.drawable.img_on_error)
+                        .resize(200, 300)
+                        .centerInside()
+                        .noFade()
+                        .into(cardHolder.image);
+            } else {
+                Picasso.with(mContext).load(R.drawable.img_on_error).into(cardHolder.image);
+            }
+
         }
 
     }

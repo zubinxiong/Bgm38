@@ -36,6 +36,11 @@
     <string name="rate_text_hint">我要吐槽</string>
     <string name="want_see">状态</string>
     <string name="update_comment">评论已提交</string>
+    <string name="not_display_yet">还没放送哦！</string>
+    <string name="progress_updated">进度已更新</string>
+    <string name="my_comment">我的评价</string>
+    <string name="rating_number_max">评分不能大于10</string>
+    <string name="progress_updating">进度更新中</string>
 
     <!-- 登录 -->
     <string name="login_email_hint">邮箱</string>
@@ -45,9 +50,12 @@
     <string name="not_login_hint">还没登录呢！</string>
     <string name="login_doing">登录中.....</string>
     <string name="already_login">已经登录了</string>
+    <string name="email_input_hint">请输入邮箱</string>
+    <string name="password_input_hint">请输入密码</string>
 
     <!-- collection -->
     <string name="get_retry">点击重试</string>
+    <string name="collection_fail">获取失败</string>
 
     <!-- 搜索 -->
     <string name="search">搜索</string>
@@ -77,6 +85,7 @@
     <string name="share">分享</string>
 
     <string name="watch_progress">观看进度</string>
+    <string name="init_failed">初始化失败，请稍后重试</string>
 
     <string-array name="spinner_name">
         <item>想看</item>

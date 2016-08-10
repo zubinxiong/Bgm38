@@ -151,7 +151,7 @@ public class MyProgressActivity extends BaseActivity {
             public void onClick(View view, final int position) {
                 mBottomSheetDialog.dismiss();
                 if (epsBean.getStatus().equals("NA") || epsBean.getStatus().equals("TODAY")) {
-                    ToastUtils.showShortToast(MyProgressActivity.this, "还没放送哦！");
+                    ToastUtils.showShortToast(MyProgressActivity.this, R.string.not_display_yet);
                 } else {
                     showProgressDialog();
                     sBangumi.updateEp(epsBean.getId(), valueArray[position],
@@ -163,7 +163,7 @@ public class MyProgressActivity extends BaseActivity {
                                     mList.get(detailPostion).setType(type[position]);
                                     mProgressAdapter.notifyItemChanged(detailPostion);
                                     dismissProgressDialog();
-                                    ToastUtils.showShortToast(MyProgressActivity.this, "进度已更新");
+                                    ToastUtils.showShortToast(MyProgressActivity.this, R.string.progress_updated);
                                     isUpdate = true;
                                 }
                             }
@@ -226,7 +226,7 @@ public class MyProgressActivity extends BaseActivity {
             mList.addAll(mDetail.getEps());
             LogUtil.d(LogUtil.ZUBIN, "not null");
         } else {
-            ToastUtils.showShortToast(this, "初始化失败，请稍后重试");
+            ToastUtils.showShortToast(this, R.string.init_failed);
         }
     }
 
@@ -240,7 +240,7 @@ public class MyProgressActivity extends BaseActivity {
             mProgressDialog = new ProgressDialog(this);
         }
         mProgressDialog.setCancelable(false);
-        mProgressDialog.setMessage("进度更新中");
+        mProgressDialog.setMessage(getString(R.string.progress_updating));
         mProgressDialog.show();
     }
 

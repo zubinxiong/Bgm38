@@ -75,7 +75,6 @@ public class CalendarItemAdapter extends RecyclerView.Adapter<CalendarItemAdapte
         } else {
             Picasso.with(mContext)
                     .load(R.drawable.img_on_error)
-                    .placeholder(R.drawable.img_on_load)
                     .into(holder.mBangumiImg);
         }
 
