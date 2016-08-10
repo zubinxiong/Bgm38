@@ -65,12 +65,14 @@
     <!-- 关于-->
     <string name="about">关于</string>
     <string name="version_info">版本: %1$s</string>
-    <string name="about_detail">程序中所有内容由Bangumi.tv 提供，感谢axxxxxx</string>
+    <string name="about_detail">Bangumi 是由 Sai 于桂林发起的 ACG 分享与交流项目，致力于让阿宅们在欣赏ACG作品之余拥有一个轻松便捷独特的交流与沟通环境。\n \n 本 App 部分界面参考了 scarletsky 的  Bangumi-Android 项目，并使用了其中部分资源，感谢他的帮助。如果在使用过程中遇到什么问题，欢迎戳下面的微博反馈！\n\n</string>
     <string name="sina_weibo">新浪微博: \@熊胖胖x</string>
     <string name="visit_github_title">Github 源码</string>
-    <string name="visit_github_detail">本项目在 Github 以 GPL 协议开源，点击查看</string>
+    <string name="visit_github_detail">项目在 Github 以 Apache 协议开源，欢迎各位提 Issues 或者 Star </string>
     <string name="open_source_title">本项目用到了下列开源库</string>
     <string name="open_source_list">abc\ndd\nadasdsa\nadadas\n</string>
+    <string name="weibo_url">http://weibo.com/xiongzba</string>
+    <string name="github_url">https://github.com/zubinxiong/BangumiTV</string>
 
     <string name="share">分享</string>
 

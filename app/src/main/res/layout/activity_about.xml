@@ -50,8 +50,9 @@
 
             <LinearLayout
                 android:orientation="vertical"
-                android:background="@drawable/bg_card"
+                android:background="@drawable/card_touch_bg"
                 android:padding="@dimen/common_padding"
+                android:clickable="true"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -67,7 +68,7 @@
                     android:text="@string/sina_weibo"
                     android:textSize="@dimen/calender_item_outline_size"
                     android:textColor="@color/md_pink_400"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
             </LinearLayout>
@@ -81,8 +82,10 @@
                 android:layout_height="wrap_content" />
 
             <TextView
+                android:id="@+id/github_link"
                 android:padding="@dimen/common_padding"
-                android:background="@drawable/bg_card"
+                android:clickable="true"
+                android:background="@drawable/card_touch_bg"
                 android:text="@string/visit_github_detail"
                 android:textColor="@color/md_grey_500"
                 android:textSize="@dimen/calender_item_outline_size"
@@ -99,7 +102,8 @@
                 android:layout_height="wrap_content" />
 
             <RelativeLayout
-                android:background="@drawable/bg_card"
+                android:clickable="true"
+                android:background="@drawable/card_touch_bg"
                 android:padding="@dimen/common_padding"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">

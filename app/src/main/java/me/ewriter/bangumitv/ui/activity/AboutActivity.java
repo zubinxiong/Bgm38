@@ -1,5 +1,7 @@
 package me.ewriter.bangumitv.ui.activity;
 
+import android.net.Uri;
+import android.support.customtabs.CustomTabsIntent;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.view.GravityCompat;
 import android.support.v7.widget.RecyclerView;
@@ -8,17 +10,20 @@ import android.view.View;
 import android.widget.TextView;
 
 import me.ewriter.bangumitv.R;
+import me.ewriter.bangumitv.api.LoginManager;
 import me.ewriter.bangumitv.base.BaseActivity;
 import me.ewriter.bangumitv.utils.Tools;
 
 /**
  * Created by Zubin on 2016/8/5.
  */
-public class AboutActivity extends BaseActivity {
+public class AboutActivity extends BaseActivity implements View.OnClickListener {
 
     private Toolbar mToolbar;
     private TextView mVersionText;
     private CollapsingToolbarLayout mCollapsingToolbarLayout;
+    private TextView mWeibo;
+    private TextView mGithub;
 
     @Override
     protected int getContentViewResId() {
@@ -30,6 +35,11 @@ public class AboutActivity extends BaseActivity {
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mVersionText = (TextView) findViewById(R.id.version);
         mCollapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
+        mWeibo = (TextView) findViewById(R.id.weibo_link);
+        mGithub = (TextView) findViewById(R.id.github_link);
+
+        mWeibo.setOnClickListener(this);
+        mGithub.setOnClickListener(this);
 
         setupHeader();
     }
@@ -58,5 +68,23 @@ public class AboutActivity extends BaseActivity {
     @Override
     protected boolean isSubscribeEvent() {
         return false;
+    }
+
+    @Override
+    public void onClick(View v) {
+        CustomTabsIntent customTabsIntent = null;
+        switch (v.getId()) {
+            case R.id.weibo_link:
+                customTabsIntent = new CustomTabsIntent.Builder().build();
+                customTabsIntent.launchUrl(this, Uri.parse(getString(R.string.weibo_url)));
+                break;
+            case R.id.github_link:
+                customTabsIntent = new CustomTabsIntent.Builder().build();
+                customTabsIntent.launchUrl(this, Uri.parse(getString(R.string.github_url)));
+                break;
+
+            default:
+                break;
+        }
     }
 }
