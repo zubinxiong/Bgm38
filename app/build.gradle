@@ -1,15 +1,15 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.2"
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
+    buildToolsVersion rootProject.ext.android.buildToolsVersion
 
     defaultConfig {
         applicationId "me.ewriter.bangumitv"
-        minSdkVersion 17
-        targetSdkVersion 23
-        versionCode 1
-        versionName "1.0"
+        minSdkVersion rootProject.ext.android.minSdkVersion
+        targetSdkVersion  rootProject.ext.android.targetSdkVersion
+        versionCode rootProject.ext.android.versionCode
+        versionName rootProject.ext.android.versionName
     }
     buildTypes {
         release {
@@ -22,22 +22,18 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:23.4.0'
-    compile 'com.android.support:design:23.4.0'
-    compile 'com.android.support:recyclerview-v7:23.4.0'
+    compile rootProject.ext.dependencies["appcompat-v7"]
+    compile rootProject.ext.dependencies["design"]
+    compile rootProject.ext.dependencies["recyclerview"]
 
-    compile 'com.squareup.picasso:picasso:2.5.2'
-    compile 'com.squareup.retrofit2:retrofit:2.1.0'
-    compile 'com.squareup.retrofit2:converter-gson:2.1.0'
-    compile 'com.squareup.okhttp3:logging-interceptor:3.4.1'
+    compile rootProject.ext.dependencies["picasso"]
+    compile rootProject.ext.dependencies["retrofit"]
+    compile rootProject.ext.dependencies["convert-gson"]
+    compile rootProject.ext.dependencies["logging-interceptor"]
 
-//    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.4-beta2'
-//    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
-//    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
+    compile rootProject.ext.dependencies["greendao"]
+    compile rootProject.ext.dependencies["eventbus"]
 
-    compile 'org.greenrobot:greendao:3.0.1'
-    compile 'org.greenrobot:eventbus:3.0.0'
-
-    compile 'de.hdodenhof:circleimageview:2.1.0'
-    compile 'com.android.support:customtabs:23.3.0'
+    compile rootProject.ext.dependencies["circleimageview"]
+    compile rootProject.ext.dependencies["customtabs"]
 }

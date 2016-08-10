@@ -15,3 +15,54 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+
+#--------
+
+# Picasso
+-dontwarn com.squareup.okhttp.**
+
+#----------
+
+# retrofit2
+
+# Platform calls Class.forName on types which do not exist on Android to determine platform.
+-dontnote retrofit2.Platform
+# Platform used when running on RoboVM on iOS. Will not be used at runtime.
+-dontnote retrofit2.Platform$IOS$MainThreadExecutor
+# Platform used when running on Java 8 VMs. Will not be used at runtime.
+-dontwarn retrofit2.Platform$Java8
+# Retain generic type information for use by reflection by converters and adapters.
+-keepattributes Signature
+# Retain declared checked exceptions for use by a Proxy instance.
+-keepattributes Exceptions
+
+#-------------
+
+#Eventbus
+
+-keepattributes *Annotation*
+-keepclassmembers class ** {
+    @org.greenrobot.eventbus.Subscribe <methods>;
+}
+-keep enum org.greenrobot.eventbus.ThreadMode { *; }
+
+# Only required if you use AsyncExecutor
+-keepclassmembers class * extends org.greenrobot.eventbus.util.ThrowableFailureEvent {
+    <init>(java.lang.Throwable);
+}
+
+#-------------
+
+#GreenDao
+-keepclassmembers class * extends org.greenrobot.greendao.AbstractDao {
+public static java.lang.String TABLENAME;
+}
+-keep class **$Properties
+
+# If you do not use SQLCipher:
+-dontwarn org.greenrobot.greendao.database.**
+# If you do not use Rx:
+-dontwarn org.greenrobot.greendao.rx.**
+
+#-------------
+
