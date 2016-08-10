@@ -4,7 +4,7 @@
 
 A third part Android Client for  [Bangumi](http://bangumi.tv/)
 
-If you find problem about this application, feel free to contact me via [weibo](http://weibo.com/xiongzba) or [email](zubinxiong@gmail.com) or issuses. 
+If you find problem about this application, feel free to contact me via [weibo](http://weibo.com/xiongzba) or [email](mailto:zubinxiong@gmail.com) or issuses. 
 
 ### Preview
 
