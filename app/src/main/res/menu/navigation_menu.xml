@@ -8,13 +8,13 @@
         <item
             android:id="@+id/nav_daily"
             android:checked="true"
-            android:icon="@android:drawable/ic_menu_info_details"
+            android:icon="@drawable/ic_date_range_white_24dp"
             android:title="@string/nav_daily_calendar" />
 
         <item
             android:id="@+id/nav_collections"
             android:checked="false"
-            android:icon="@android:drawable/ic_menu_info_details"
+            android:icon="@drawable/ic_assessment_white_24dp"
             android:title="@string/nav_my_collection" />
 
 
@@ -22,7 +22,7 @@
             android:id="@+id/nav_search"
             android:checked="false"
             android:checkable="false"
-            android:icon="@android:drawable/ic_menu_info_details"
+            android:icon="@drawable/ic_find_in_page_white_24dp"
             android:title="@string/nav_search" />
 
 
@@ -30,7 +30,7 @@
             android:id="@+id/nav_ultra_expand"
             android:checked="false"
             android:checkable="false"
-            android:icon="@android:drawable/ic_menu_info_details"
+            android:icon="@drawable/ic_explore_white_24dp"
             android:title="@string/nav_ultra_expand" />
     </group>
 
@@ -42,7 +42,7 @@
             android:id="@+id/nav_about"
             android:checked="false"
             android:checkable="false"
-            android:icon="@android:drawable/ic_menu_compass"
+            android:icon="@drawable/ic_info_white_24dp"
             android:title="@string/nav_about"/>
 
         <!--<item-->

@@ -219,6 +219,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     public void onLogout(LogoutEvent event) {
         mUserName.setText("");
         mSign.setText("");
-        Picasso.with(this).load(R.drawable.role_img_test_medium).noFade().into(mAvatar);
+        Picasso.with(this).load(R.drawable.ic_drawer_login_default).noFade().into(mAvatar);
     }
 }

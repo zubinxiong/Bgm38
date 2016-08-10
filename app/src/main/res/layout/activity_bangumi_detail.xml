@@ -51,7 +51,7 @@
         android:layout_gravity="bottom|right"
         android:layout_margin="@dimen/common_padding"
         android:visibility="gone"
-        android:src="@android:drawable/ic_menu_edit"
+        android:src="@drawable/ic_write_white_24dp"
         app:layout_behavior="me.ewriter.bangumitv.widget.ScrollAwareFABBehavior"
         />
 
