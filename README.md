@@ -4,13 +4,15 @@
 
 A third part Android Client for  [Bangumi](http://bangumi.tv/)
 
+If you find problem about this application, feel free to contact me via [weibo](http://weibo.com/xiongzba) or [email](zubinxiong@gmail.com) or issuses. 
+
 ### Preview
 
-![](art/art1.jpg)![](art/art2.jpg)![](art/art3.jpg)![](art/art4.jpg)
+![](art/art1.jpg)![](art/art2.jpg)![](art/art3.jpg)![](art/art4.jpg)![](art/art5.jpg)![](art/art6.jpg)
 
 ### Notice
 
-- This project not containt a api resource
+- This project not contain a api resource, if you want to run this application,you can email me to get the api resource.
 
 ### Feature
 
@@ -32,4 +34,4 @@ A third part Android Client for  [Bangumi](http://bangumi.tv/)
 
 ### License
 
-Apache License(Apache for noew, because the project not complete yet, the license may changed after finished)
+Apache License(Apache for now, because the project not complete yet, the license may changed after finished)
