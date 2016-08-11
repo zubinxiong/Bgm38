@@ -4,6 +4,11 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <!-- bugly -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_LOGS" />
+
     <application
         android:name=".BangumiApp"
         android:allowBackup="true"
@@ -13,6 +18,8 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".ui.activity.MainActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"
             android:theme="@style/TransparentStatusTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,19 +30,43 @@
 
         <activity
             android:name=".ui.activity.BangumiDetailActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"
             android:theme="@style/TransparentStatusTheme">
 
         </activity>
 
-        <activity android:name=".ui.activity.LoginActivity">
+        <activity
+            android:name=".ui.activity.LoginActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait">
 
         </activity>
 
-        <activity android:name=".ui.activity.SearchActivity"></activity>
+        <activity
+            android:name=".ui.activity.SearchActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait">
 
-        <activity android:name=".ui.activity.AboutActivity"></activity>
+        </activity>
 
-        <activity android:name=".ui.activity.MyProgressActivity"></activity>
+        <activity
+            android:name=".ui.activity.AboutActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait">
+
+        </activity>
+
+        <activity
+            android:name=".ui.activity.MyProgressActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait">
+
+        </activity>
+
+
+        <meta-data android:name="BUGLY_APP_CHANNEL" android:value="${BUGLY_CHANNEL_VALUE}" />
+
     </application>
 
 </manifest>

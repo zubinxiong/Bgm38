@@ -3,8 +3,11 @@ package me.ewriter.bangumitv;
 import android.app.Application;
 import android.content.Context;
 
+import com.tencent.bugly.crashreport.CrashReport;
+
 import org.greenrobot.greendao.database.Database;
 
+import me.ewriter.bangumitv.constants.MyConstants;
 import me.ewriter.bangumitv.dao.DaoMaster;
 import me.ewriter.bangumitv.dao.DaoSession;
 
@@ -22,7 +25,14 @@ public class BangumiApp extends Application {
     public void onCreate() {
         super.onCreate();
         sAppCtx = this;
-//        LeakCanary.install(this);
+
+        // Bugly
+        if (BuildConfig.DEBUG) {
+            CrashReport.initCrashReport(getApplicationContext(), MyConstants.BUGLY_APPID, true);
+        } else {
+            CrashReport.initCrashReport(getApplicationContext(), MyConstants.BUGLY_APPID, false);
+        }
+
 
         DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, DB_NAME, null);
         // 不加密，加密的参考官方的demo

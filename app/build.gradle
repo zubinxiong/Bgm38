@@ -1,5 +1,9 @@
 apply plugin: 'com.android.application'
 
+def releaseTime() {
+    return new Date().format("yyyy-MM-dd_HH-mm", TimeZone.getDefault())
+}
+
 android {
     compileSdkVersion rootProject.ext.android.compileSdkVersion
     buildToolsVersion rootProject.ext.android.buildToolsVersion
@@ -11,12 +15,61 @@ android {
         versionCode rootProject.ext.android.versionCode
         versionName rootProject.ext.android.versionName
     }
-    buildTypes {
+
+    signingConfigs {
+
+        def Properties localProps = new Properties();
+        localProps.load(new FileInputStream(file("../local.properties")))
+        def Properties keyProps = new Properties()
+
+        // 读取不到local.properties 中的 信息后就使用debug 信息
+
+        if (localProps['store']) {
+            keyProps["store"] = localProps['store']
+            keyProps['storePass'] = localProps['storePass']
+            keyProps['alias'] = localProps['alias']
+            keyProps['aliasPass'] = localProps['aliasPass']
+        }
+
         release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            assert localProps['store']
+            storeFile file(keyProps['store'])
+            storePassword keyProps['storePass']
+            keyAlias keyProps['alias']
+            keyPassword keyProps['aliasPass']
         }
     }
+
+    productFlavors {
+        QQ {
+            manifestPlaceholders = [BUGLY_CHANNEL_VALUE : "QQ"]
+        }
+        GooglePlay {
+            manifestPlaceholders = [BUGLY_CHANNEL_VALUE : "GooglePlay"]
+        }
+
+    }
+
+    buildTypes {
+        release {
+            shrinkResources true
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+    }
+
+    android.applicationVariants.all { variant ->
+        variant.outputs.each {output ->
+            def outputFile = output.outputFile
+            if (outputFile != null && outputFile.name.endsWith('release.apk')) {
+                // 输出apk名称为BangumiTV_v1.0_2015-01-15_wandoujia.apk
+                def fileName = "BangumiTV_v${defaultConfig.versionName}_${releaseTime()}_${variant.productFlavors[0].name}.apk"
+                output.outputFile = new File(outputFile.parent, fileName)
+            }
+        }
+    }
+
 }
 
 dependencies {
@@ -36,4 +89,6 @@ dependencies {
 
     compile rootProject.ext.dependencies["circleimageview"]
     compile rootProject.ext.dependencies["customtabs"]
+
+    compile rootProject.ext.dependencies["bugly"]
 }
