@@ -22,4 +22,8 @@
         <item name="android:background">@color/md_grey_200</item>
     </style>
 
+    <style name="TransparentStatusTheme" parent="AppTheme">
+
+    </style>
+
 </resources>
