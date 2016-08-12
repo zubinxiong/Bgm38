@@ -467,14 +467,17 @@ public class BangumiDetailActivity extends BaseActivity implements View.OnClickL
             @Override
             public void run() {
                 try {
-                    final Bitmap bitmap = BlurUtil.blur(BangumiDetailActivity.this, Picasso.with(BangumiDetailActivity.this).load(mCommonImageUrl).get());
 
-                    BangumiDetailActivity.this.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            mCoverGroup.setBackground(new BitmapDrawable(getResources(), bitmap));
-                        }
-                    });
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
+                        final Bitmap bitmap = BlurUtil.blur(BangumiDetailActivity.this, Picasso.with(BangumiDetailActivity.this).load(mCommonImageUrl).get());
+
+                        BangumiDetailActivity.this.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                mCoverGroup.setBackground(new BitmapDrawable(getResources(), bitmap));
+                            }
+                        });
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
