@@ -73,13 +73,17 @@ public class AboutActivity extends BaseActivity implements View.OnClickListener 
     @Override
     public void onClick(View v) {
         CustomTabsIntent customTabsIntent = null;
+        CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
+        builder.setToolbarColor(getResources().getColor(R.color.colorPrimary));
+        builder.setShowTitle(true);
+
         switch (v.getId()) {
             case R.id.weibo_link:
-                customTabsIntent = new CustomTabsIntent.Builder().build();
+                customTabsIntent = builder.build();
                 customTabsIntent.launchUrl(this, Uri.parse(getString(R.string.weibo_url)));
                 break;
             case R.id.github_link:
-                customTabsIntent = new CustomTabsIntent.Builder().build();
+                customTabsIntent = builder.build();
                 customTabsIntent.launchUrl(this, Uri.parse(getString(R.string.github_url)));
                 break;
 

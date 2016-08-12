@@ -11,6 +11,7 @@
     <ImageView
         android:id="@+id/role_img"
         android:padding="5dp"
+        android:transitionName="card_img"
         android:layout_width="65dp"
         android:layout_height="65dp" />
 

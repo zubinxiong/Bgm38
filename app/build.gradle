@@ -91,4 +91,6 @@ dependencies {
     compile rootProject.ext.dependencies["customtabs"]
 
     compile rootProject.ext.dependencies["bugly"]
+
+    compile rootProject.ext.dependencies["easypermissions"]
 }

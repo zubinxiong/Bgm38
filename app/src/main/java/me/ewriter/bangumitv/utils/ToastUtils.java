@@ -1,6 +1,8 @@
 package me.ewriter.bangumitv.utils;
 
+import android.app.Activity;
 import android.content.Context;
+import android.os.Looper;
 import android.widget.Toast;
 
 /**
@@ -15,11 +17,21 @@ public class ToastUtils {
      * @param context
      * @param msg
      */
-    public static void showShortToast(Context context, String msg) {
+    public static void showShortToast(final Activity context, final String msg) {
         if (toast != null)
             toast.cancel();
-        toast = Toast.makeText(context, msg, Toast.LENGTH_SHORT);
-        toast.show();
+        if (Thread.currentThread() == Looper.getMainLooper().getThread()) {
+            toast = Toast.makeText(context, msg, Toast.LENGTH_SHORT);
+            toast.show();
+        } else {
+            context.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    toast = Toast.makeText(context, msg, Toast.LENGTH_SHORT);
+                    toast.show();
+                }
+            });
+        }
     }
 
     /**
@@ -28,10 +40,21 @@ public class ToastUtils {
      * @param context
      * @param resId
      */
-    public static void showShortToast(Context context, int resId) {
+    public static void showShortToast(final Activity context, final int resId) {
         if (toast != null)
             toast.cancel();
-        toast = Toast.makeText(context, resId, Toast.LENGTH_SHORT);
-        toast.show();
+        if (Thread.currentThread() == Looper.getMainLooper().getThread()) {
+            toast = Toast.makeText(context, resId, Toast.LENGTH_SHORT);
+            toast.show();
+        } else {
+            context.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    toast = Toast.makeText(context, resId, Toast.LENGTH_SHORT);
+                    toast.show();
+                }
+            });
+        }
+
     }
 }

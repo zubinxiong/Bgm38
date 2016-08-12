@@ -3,8 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/toolbar_share"
-        android:icon="@drawable/ic_share_white_24dp"
-        android:title="@string/share"
+        android:id="@+id/action_save"
+        android:icon="@drawable/ic_save_white_24dp"
+        android:title="@string/save_picture"
+        android:orderInCategory="100"
         app:showAsAction="always" />
+
 </menu>

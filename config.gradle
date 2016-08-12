@@ -21,6 +21,7 @@ ext {
             "eventbus" : "org.greenrobot:eventbus:3.0.0",
             "circleimageview" : "de.hdodenhof:circleimageview:2.1.0",
             "customtabs" : "com.android.support:customtabs:23.3.0",
-            "bugly" : "com.tencent.bugly:crashreport:latest.release"
+            "bugly" : "com.tencent.bugly:crashreport:latest.release",
+            "easypermissions" : "pub.devrel:easypermissions:0.1.9"
     ]
 }

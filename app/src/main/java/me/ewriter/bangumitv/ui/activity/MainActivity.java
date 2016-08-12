@@ -102,6 +102,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 LogUtil.d(LogUtil.ZUBIN, "is chrome installed? = " + Tools.isChromeCustomTabsSupported(this));
                 mDrawLayout.closeDrawers();
                 CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
+                builder.setToolbarColor(getResources().getColor(R.color.colorPrimary));
+                builder.setShowTitle(true);
                 CustomTabsIntent customTabsIntent = builder.build();
                 customTabsIntent.launchUrl(this, Uri.parse(BangumiApi.ULTRA_EXPAND_URL));
                 return true;
@@ -163,6 +165,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             case R.id.profile_image:
                 if (LoginManager.isLogin(MainActivity.this)) {
                     CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
+                    builder.setToolbarColor(getResources().getColor(R.color.colorPrimary));
+                    builder.setShowTitle(true);
                     CustomTabsIntent customTabsIntent = builder.build();
                     customTabsIntent.launchUrl(this, Uri.parse(LoginManager.getUserHomeUrl(this)));
                 } else {

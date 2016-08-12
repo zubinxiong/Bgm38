@@ -36,6 +36,7 @@ public class BangumiDetailAdapter extends RecyclerView.Adapter<RecyclerView.View
     public static final int TYPE_CONTENT = 4;
 
     private onGridClickListener mGridListener;
+    private onCardClickListener mCardListener;
 
     public BangumiDetailAdapter(Context context, List list) {
         mContext = context;
@@ -89,7 +90,7 @@ public class BangumiDetailAdapter extends RecyclerView.Adapter<RecyclerView.View
             });
 
         } else if (holder instanceof CardHolder) {
-            CardHolder cardHolder = (CardHolder) holder;
+            final CardHolder cardHolder = (CardHolder) holder;
             cardHolder.roleName.setText(entity.getRoleName());
             cardHolder.roleJob.setText(entity.getRoleJob());
             if (entity.getRoleImageUrl() != null) {
@@ -105,6 +106,13 @@ public class BangumiDetailAdapter extends RecyclerView.Adapter<RecyclerView.View
             } else {
                 Picasso.with(mContext).load(R.drawable.img_on_error).into(cardHolder.image);
             }
+
+            cardHolder.item.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mCardListener.onCardClick(cardHolder.image, position);
+                }
+            });
 
         }
 
@@ -196,13 +204,23 @@ public class BangumiDetailAdapter extends RecyclerView.Adapter<RecyclerView.View
         mGridListener = listener;
     }
 
+    public interface onCardClickListener {
+        void onCardClick(View view, int position);
+    }
+
+    public void setonCardClickListener(onCardClickListener listener) {
+        mCardListener = listener;
+    }
+
     class CardHolder extends RecyclerView.ViewHolder {
         ImageView image;
         TextView roleName;
         TextView roleJob;
+        View item;
 
         public CardHolder(View itemView) {
             super(itemView);
+            item = itemView;
             image = (ImageView) itemView.findViewById(R.id.role_img);
             roleName = (TextView) itemView.findViewById(R.id.role_name);
             roleJob = (TextView) itemView.findViewById(R.id.role_job);

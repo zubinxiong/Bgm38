@@ -14,6 +14,7 @@ import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.AppCompatSpinner;
@@ -24,6 +25,8 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.transition.Fade;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -95,6 +98,7 @@ public class BangumiDetailActivity extends BaseActivity implements View.OnClickL
     String mLargeImageUrl;
     String mBangumiName;
     String mDetailUrl;
+    String mSummary = "";
 
     @Override
     protected int getContentViewResId() {
@@ -273,6 +277,7 @@ public class BangumiDetailActivity extends BaseActivity implements View.OnClickL
         mCoverAirDay.setText(String.format(getString(R.string.bangumi_detail_air_day),detail.getAir_date()));
         mCoverUrl.setVisibility(View.VISIBLE);
         mDetailUrl = detail.getUrl();
+        mSummary = detail.getSummary();
     }
 
     /**番剧详情接口完成后，更新显示的数据*/
@@ -326,8 +331,8 @@ public class BangumiDetailActivity extends BaseActivity implements View.OnClickL
                 if (detail.getCrt().get(i).getActors() != null) {
                     role_cv = detail.getCrt().get(i).getActors().get(0).getName();
                 }
-                if (detail.getCrt().get(i).getImages()!= null && detail.getCrt().get(i).getImages().getMedium() != null) {
-                    role_img = detail.getCrt().get(i).getImages().getMedium();
+                if (detail.getCrt().get(i).getImages()!= null && detail.getCrt().get(i).getImages().getLarge() != null) {
+                    role_img = detail.getCrt().get(i).getImages().getLarge();
                 }
                 mList.add(new BangumiDetailEntity(BangumiDetailAdapter.TYPE_CARD, role_name, role_cv, role_img));
             }
@@ -351,12 +356,24 @@ public class BangumiDetailActivity extends BaseActivity implements View.OnClickL
                     staff_job = list.toString().substring(1, list.toString().length() - 1);
                 }
 
-                if (detail.getStaff().get(i).getImages()!= null && detail.getStaff().get(i).getImages().getMedium() != null) {
-                    staff_img = detail.getStaff().get(i).getImages().getMedium();
+                if (detail.getStaff().get(i).getImages()!= null && detail.getStaff().get(i).getImages().getLarge() != null) {
+                    staff_img = detail.getStaff().get(i).getImages().getLarge();
                 }
                 mList.add(new BangumiDetailEntity(BangumiDetailAdapter.TYPE_CARD, staff_name, staff_job, staff_img));
             }
         }
+
+        adapter.setonCardClickListener(new BangumiDetailAdapter.onCardClickListener() {
+            @Override
+            public void onCardClick(View view, int position) {
+                Intent intent = new Intent(BangumiDetailActivity.this, PictureViewActivity.class);
+                intent.putExtra(PictureViewActivity.EXTRA_IMAGE_URL, mList.get(position).getRoleImageUrl());
+                intent.putExtra(PictureViewActivity.EXTRA_IMAGE_TEXT, mList.get(position).getRoleName() + "\n"
+                        + mList.get(position).getRoleJob());
+                startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(BangumiDetailActivity.this, view, "card_img").toBundle());
+            }
+        });
+
 
         // 放映eps, 只显示 24 个grid，点击跳转到一个独立页面更新
         if (detail.getEps() != null && detail.getEps().size() != 0) {
@@ -398,11 +415,10 @@ public class BangumiDetailActivity extends BaseActivity implements View.OnClickL
                         ToastUtils.showShortToast(BangumiDetailActivity.this, R.string.not_login_hint);
                         startActivity(new Intent(BangumiDetailActivity.this, LoginActivity.class));
                     }
-
-
                 }
             });
         }
+
         adapter.notifyDataSetChanged();
     }
 
@@ -528,6 +544,33 @@ public class BangumiDetailActivity extends BaseActivity implements View.OnClickL
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.share_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.toolbar_share:
+                if (!TextUtils.isEmpty(mDetailUrl)) {
+                    String shareText = mBangumiName +  "\n" + mSummary  + mDetailUrl;
+                    Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                    shareIntent.setType("text/plain");
+                    shareIntent.putExtra(Intent.EXTRA_TEXT, shareText);
+                    startActivity(Intent.createChooser(shareIntent, getString(R.string.send_intent_title)));
+                } else {
+                    ToastUtils.showShortToast(BangumiDetailActivity.this, R.string.wait_for_loading);
+                }
+
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
     protected void initBeforeCreate() {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -553,9 +596,13 @@ public class BangumiDetailActivity extends BaseActivity implements View.OnClickL
         switch (v.getId()) {
             case R.id.cover_group:
                 // 启动url
-                CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
-                CustomTabsIntent customTabsIntent = builder.build();
-                customTabsIntent.launchUrl(this, Uri.parse(mDetailUrl));
+                if (!TextUtils.isEmpty(mDetailUrl)) {
+                    CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
+                    builder.setToolbarColor(getResources().getColor(R.color.colorPrimary));
+                    builder.setShowTitle(true);
+                    CustomTabsIntent customTabsIntent = builder.build();
+                    customTabsIntent.launchUrl(this, Uri.parse(mDetailUrl));
+                }
                 break;
 
             case R.id.edit_fab:

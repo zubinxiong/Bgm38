@@ -87,6 +87,17 @@
     <string name="watch_progress">观看进度</string>
     <string name="init_failed">初始化失败，请稍后重试</string>
 
+    <string name="save_picture">保存</string>
+    <string name="save_disable">默认图片不能保存 = =</string>
+    <string name="write_to_sdcard">保存图片到 SD 卡</string>
+    <string name="save_ok">图片已保存在 SD 卡 Download 目录</string>
+    <string name="save_failed">图片保存失败</string>
+    <string name="image_already_exist">图片已保存在 SD 卡 Download 目录</string>
+    <string name="permission_retry_title">保存图片到 SD 卡需要存储权限</string>
+    <string name="permission_go">去开启</string>
+
+    <string name="send_intent_title">分享给</string>
+    <string name="wait_for_loading">请加载完成后再试</string>
     <string-array name="spinner_name">
         <item>想看</item>
         <item>看过</item>
