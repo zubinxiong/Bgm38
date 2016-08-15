@@ -6,14 +6,10 @@
     <include
         layout="@layout/toolbar" />
 
-    <ImageView
-        android:id="@+id/image_title"
-        android:background="@android:color/holo_purple"
-        android:layout_width="match_parent"
-        android:layout_height="100dp" />
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/emaiInput"
+        android:layout_marginTop="100dp"
         android:padding="@dimen/common_padding"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -47,6 +43,16 @@
         android:textColor="@color/white"
         android:background="@color/colorPrimary"
         android:layout_margin="@dimen/common_padding"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/login_hint"
+        android:gravity="right"
+        android:textColor="@color/light_grey"
+        android:textSize="@dimen/calender_item_outline_size"
+        android:padding="@dimen/common_padding"
+        android:text="@string/login_hint"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

@@ -1,11 +1,14 @@
 package me.ewriter.bangumitv.ui.activity;
 
 import android.app.ProgressDialog;
+import android.net.Uri;
+import android.support.customtabs.CustomTabsIntent;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -23,13 +26,14 @@ import retrofit2.Response;
 /**
  * Created by Zubin on 2016/8/1.
  */
-public class LoginActivity extends BaseActivity {
+public class LoginActivity extends BaseActivity implements View.OnClickListener {
 
     Toolbar mToolbar;
     TextInputLayout mNameEdit;
     TextInputLayout mPasswordEdit;
     Button mLoginButton;
     ProgressDialog mProgressDialog;
+    TextView mLoginHint;
 
     @Override
     protected int getContentViewResId() {
@@ -42,6 +46,9 @@ public class LoginActivity extends BaseActivity {
         mNameEdit = (TextInputLayout) findViewById(R.id.emaiInput);
         mPasswordEdit = (TextInputLayout) findViewById(R.id.passwordInput);
         mLoginButton = (Button) findViewById(R.id.login_button);
+        mLoginHint = (TextView) findViewById(R.id.login_hint);
+
+        mLoginHint.setOnClickListener(this);
 
         setupToolbar();
         setupLogin();
@@ -115,5 +122,17 @@ public class LoginActivity extends BaseActivity {
     @Override
     protected boolean isSubscribeEvent() {
         return false;
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == R.id.login_hint) {
+            String signup = "http://bangumi.tv/signup";
+            CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
+            builder.setToolbarColor(getResources().getColor(R.color.colorPrimary));
+            builder.setShowTitle(true);
+            CustomTabsIntent customTabsIntent = builder.build();
+            customTabsIntent.launchUrl(this, Uri.parse(signup));
+        }
     }
 }
