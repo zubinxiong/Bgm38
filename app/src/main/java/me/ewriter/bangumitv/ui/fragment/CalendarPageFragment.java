@@ -189,16 +189,19 @@ public class CalendarPageFragment extends BaseFragment {
             public void onFailure(Call<List<Calendar>> call, Throwable t) {
                 LogUtil.d(LogUtil.ZUBIN, "CalendarPagerFragment onFailure");
                 mSwipeRefreshLayout.setRefreshing(false);
-                final Snackbar snackbar = Snackbar.make(mRecyclerView, getString(R.string.update_failed), Snackbar.LENGTH_SHORT);
-                snackbar.show();
-                snackbar.setAction(getString(R.string.update_retry), new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        mSwipeRefreshLayout.setRefreshing(true);
-                        requestDataRefresh();
-                        snackbar.dismiss();
-                    }
-                });
+                // 避免Fragment 还没有 attach 到 activity 就调用了下面 getstring 报错
+                if (isAdded()) {
+                    final Snackbar snackbar = Snackbar.make(mRecyclerView, getString(R.string.update_failed), Snackbar.LENGTH_SHORT);
+                    snackbar.show();
+                    snackbar.setAction(getString(R.string.update_retry), new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            mSwipeRefreshLayout.setRefreshing(true);
+                            requestDataRefresh();
+                            snackbar.dismiss();
+                        }
+                    });
+                }
             }
         });
     }
