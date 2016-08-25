@@ -77,8 +77,6 @@ public class MyCollectionFragment extends BaseFragment implements View.OnClickLi
         LogUtil.d(LogUtil.ZUBIN, "cf initview");
         setupToolbar();
         setupRecyclerview();
-
-        requestDataRefresh();
     }
 
     private void requestDataRefresh() {
@@ -193,11 +191,7 @@ public class MyCollectionFragment extends BaseFragment implements View.OnClickLi
     }
 
     private void checkLoginEvent() {
-        // 登录成功后的 event
-        UserLoginEvent stickyEvent = EventBus.getDefault().removeStickyEvent(UserLoginEvent.class);
-        if (stickyEvent != null) {
-            mProgreebar.setVisibility(View.VISIBLE);
-            requestDataRefresh();
-        }
+        mProgreebar.setVisibility(View.VISIBLE);
+        requestDataRefresh();
     }
 }
