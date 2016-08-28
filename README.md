@@ -28,10 +28,8 @@ If you find problem about this application, feel free to contact me via [weibo](
 
 - thanks scarletsky's project [Bangumi-Android](https://github.com/scarletsky/Bangumi-Android), some activity use his design
 
-- drakeet meizhi
-
-- more infomation wait for supply
+- the icon design by [scarletsky](https://github.com/scarletsky/Bangumi-Android)
 
 ### License
 
-Apache License(Apache for now, because the project not complete yet, the license may changed after finished)
+Apache License
