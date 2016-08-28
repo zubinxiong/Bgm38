@@ -28,7 +28,7 @@ If you find problem about this application, feel free to contact me via [weibo](
 
 - thanks scarletsky's project [Bangumi-Android](https://github.com/scarletsky/Bangumi-Android), some activity use his design
 
-- the icon design by [scarletsky](https://github.com/scarletsky/Bangumi-Android)
+- the icon design by [奈白不弍](http://bangumi.tv/user/buernia)
 
 ### License
 
