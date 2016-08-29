@@ -191,7 +191,9 @@ public class MyCollectionFragment extends BaseFragment implements View.OnClickLi
     }
 
     private void checkLoginEvent() {
-        mProgreebar.setVisibility(View.VISIBLE);
-        requestDataRefresh();
+        if (mList.size() == 0) {
+            mProgreebar.setVisibility(View.VISIBLE);
+            requestDataRefresh();
+        }
     }
 }
