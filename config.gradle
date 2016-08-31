@@ -5,7 +5,7 @@ ext {
             buildToolsVersion : "23.0.2",
             minSdkVersion : 17,
             targetSdkVersion : 23,
-            versionCode : 3,
+            versionCode : 4,
             versionName : "1.1.1"
     ]
 
@@ -22,6 +22,9 @@ ext {
             "circleimageview" : "de.hdodenhof:circleimageview:2.1.0",
             "customtabs" : "com.android.support:customtabs:23.3.0",
             "bugly" : "com.tencent.bugly:crashreport:latest.release",
-            "easypermissions" : "pub.devrel:easypermissions:0.1.9"
+            "easypermissions" : "pub.devrel:easypermissions:0.1.9",
+            "rxjava" : "io.reactivex:rxjava:1.1.6",
+            "rxandroid" : "io.reactivex:rxandroid:1.2.1",
+            "rxjavaAdapter" : "com.squareup.retrofit2:adapter-rxjava:2.1.0"
     ]
 }
