@@ -2,6 +2,7 @@ package me.ewriter.bangumitv.ui.fragment;
 
 import android.content.Intent;
 import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -48,6 +49,7 @@ public class MyCollectionFragment extends BaseFragment implements View.OnClickLi
     private TextView mEmptyText;
     private Button mEmptyButton;
     private ProgressBar mProgreebar;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
 
     private List<MyCollection> mList = new ArrayList<>();
     private CollectionAdapter adapter;
@@ -72,15 +74,18 @@ public class MyCollectionFragment extends BaseFragment implements View.OnClickLi
         mEmptyText = (TextView) getRootView().findViewById(R.id.empty_text);
         mEmptyButton = (Button) getRootView().findViewById(R.id.empty_button);
         mProgreebar = (ProgressBar) getRootView().findViewById(R.id.progressbar);
+        mSwipeRefreshLayout = (SwipeRefreshLayout) getRootView().findViewById(R.id.swipe_refresh_layout);
 
         mEmptyButton.setOnClickListener(this);
         LogUtil.d(LogUtil.ZUBIN, "cf initview");
         setupToolbar();
         setupRecyclerview();
+        setupRefreshLayout();
     }
 
     private void requestDataRefresh() {
         if (LoginManager.isLogin(getActivity())) {
+            mSwipeRefreshLayout.setEnabled(true);
             mEmptyButton.setVisibility(View.GONE);
             mEmptyText.setVisibility(View.GONE);
             BaseActivity.sBangumi.getUserCollection(LoginManager.getUserId(getActivity())).enqueue(new Callback<List<MyCollection>>() {
@@ -154,6 +159,40 @@ public class MyCollectionFragment extends BaseFragment implements View.OnClickLi
         });
     }
 
+    private void setupRefreshLayout() {
+        mSwipeRefreshLayout.setColorSchemeResources(R.color.refresh_progress_1);
+
+        if (!LoginManager.isLogin(getActivity())) {
+            mSwipeRefreshLayout.setEnabled(false);
+        } else {
+            mSwipeRefreshLayout.setEnabled(true);
+        }
+
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                BaseActivity.sBangumi.getUserCollection(LoginManager.getUserId(getActivity())).enqueue(new Callback<List<MyCollection>>() {
+
+                    @Override
+                    public void onResponse(Call<List<MyCollection>> call, Response<List<MyCollection>> response) {
+                        if (response.isSuccessful() && response.body() != null) {
+                            mList.clear();
+                            mList.addAll(response.body());
+                            adapter.notifyDataSetChanged();
+                        }
+                        mSwipeRefreshLayout.setRefreshing(false);
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<MyCollection>> call, Throwable t) {
+                        mSwipeRefreshLayout.setRefreshing(false);
+//                        ToastUtils.showShortToast(getActivity(), R.string.update_failed);
+                    }
+                });
+            }
+        });
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -180,6 +219,8 @@ public class MyCollectionFragment extends BaseFragment implements View.OnClickLi
         mList.clear();
         adapter.notifyDataSetChanged();
         mProgreebar.setVisibility(View.VISIBLE);
+        mSwipeRefreshLayout.setRefreshing(false);
+        mSwipeRefreshLayout.setEnabled(false);
         requestDataRefresh();
     }
 

@@ -122,8 +122,7 @@ public class CalendarPageFragment extends BaseFragment {
     }
 
     private void setupSwipeRefreshLayout() {
-        mSwipeRefreshLayout.setColorSchemeResources(R.color.refresh_progress_1,
-                R.color.refresh_progress_2, R.color.refresh_progress_3);
+        mSwipeRefreshLayout.setColorSchemeResources(R.color.refresh_progress_1);
 
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
