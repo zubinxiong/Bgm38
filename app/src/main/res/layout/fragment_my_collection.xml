@@ -9,13 +9,22 @@
     <include
         layout="@layout/toolbar" />
     
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/collection_recyclerview"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh_layout"
         android:layout_below="@+id/toolbar"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/collection_recyclerview"
+            android:layout_below="@+id/toolbar"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+
+    </android.support.v4.widget.SwipeRefreshLayout>
 
     <!--用来显示空白是的按钮，包括未登录时的按钮文字，空白是的按钮文字 -->
     <TextView

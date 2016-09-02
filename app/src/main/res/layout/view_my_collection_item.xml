@@ -17,6 +17,7 @@
         android:textColor="@color/calendar_title_color"
         android:paddingTop="10dp"
         android:paddingLeft="10dp"
+        android:paddingRight="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 

@@ -7,9 +7,7 @@
     <color name="secondPrimaryText">#757575</color>
     <color name="border">#BDBDBD</color>
 
-    <color name="refresh_progress_1">#e91e63</color>
-    <color name="refresh_progress_2">#00b0ff</color>
-    <color name="refresh_progress_3">@color/colorPrimary</color>
+    <color name="refresh_progress_1">@color/colorPrimary</color>
 
 
     <color name="calendar_title_color">#424242</color>

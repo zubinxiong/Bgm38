@@ -93,4 +93,5 @@ dependencies {
     compile rootProject.ext.dependencies["bugly"]
 
     compile rootProject.ext.dependencies["easypermissions"]
+    compile rootProject.ext.dependencies["discrete-seekbar"]
 }
