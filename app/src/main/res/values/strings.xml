@@ -33,7 +33,7 @@
     <string name="bangumi_detail_air_day">放送日期: %1$s</string>
     <string name="cancel">取消</string>
     <string name="submit">提交</string>
-    <string name="rate_number_hint">评分(0-10分)</string>
+    <string name="rate_number_hint">评分</string>
     <string name="rate_text_hint">我要吐槽</string>
     <string name="want_see">状态</string>
     <string name="update_comment">评论已提交</string>

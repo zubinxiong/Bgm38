@@ -17,6 +17,7 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.AppCompatSeekBar;
 import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -37,6 +38,7 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import org.adw.library.widgets.discreteseekbar.DiscreteSeekBar;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
@@ -633,16 +635,35 @@ public class BangumiDetailActivity extends BaseActivity implements View.OnClickL
         spinner.setAdapter(spinnerAdapter);
 
         // 评分
-        final TextInputLayout mRatingNumber = (TextInputLayout) itemView.findViewById(R.id.rate_number);
+        final TextView mSeekBarTitle = (TextView) itemView.findViewById(R.id.rating_title);
+        final DiscreteSeekBar mSeekBar = (DiscreteSeekBar) itemView.findViewById(R.id.rating_seekbar);
+        mSeekBar.setOnProgressChangeListener(new DiscreteSeekBar.OnProgressChangeListener() {
+            @Override
+            public void onProgressChanged(DiscreteSeekBar seekBar, int value, boolean fromUser) {
+                String text = getString(R.string.rate_number_hint) + ": " + value;
+                mSeekBarTitle.setText(text);
+            }
+
+            @Override
+            public void onStartTrackingTouch(DiscreteSeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(DiscreteSeekBar seekBar) {
+
+            }
+        });
 
         // 详情
         final TextInputLayout mRatingDetail = (TextInputLayout) itemView.findViewById(R.id.rate_detail);
 
         if (mSubjectComment != null) {
             if (mSubjectComment.getRating() != 0) {
-                mRatingNumber.getEditText().setText(mSubjectComment.getRating() + "");
+                mSeekBar.setProgress(mSubjectComment.getRating());
             }
             mRatingDetail.getEditText().setText(mSubjectComment.getComment());
+
 
             if (mSubjectComment.getStatus() != null) {
                 spinner.setSelection(mSubjectComment.getStatus().getId() - 1);
@@ -664,15 +685,8 @@ public class BangumiDetailActivity extends BaseActivity implements View.OnClickL
 
                 String[] status = getResources().getStringArray(R.array.spinner_value);
                 int index = spinner.getSelectedItemPosition();
-                int rating = 0;
-                if(!TextUtils.isEmpty(mRatingNumber.getEditText().getText().toString().trim())) {
-                   rating = Integer.parseInt(mRatingNumber.getEditText().getText().toString().trim());
-                }
-                if (rating > 10) {
-                    ToastUtils.showShortToast(BangumiDetailActivity.this, R.string.rating_number_max);
-                    mRatingNumber.getEditText().setText("");
-                    return;
-                }
+                int rating = mSeekBar.getProgress();
+                LogUtil.d(LogUtil.ZUBIN, "rating = " + rating);
                 String comment = mRatingDetail.getEditText().getText().toString().trim();
 
                 sBangumi.updateComment(mBangumiId, status[index], rating, comment,

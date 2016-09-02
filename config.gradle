@@ -22,6 +22,7 @@ ext {
             "circleimageview" : "de.hdodenhof:circleimageview:2.1.0",
             "customtabs" : "com.android.support:customtabs:23.3.0",
             "bugly" : "com.tencent.bugly:crashreport:latest.release",
-            "easypermissions" : "pub.devrel:easypermissions:0.1.9"
+            "easypermissions" : "pub.devrel:easypermissions:0.1.9",
+            "discrete-seekbar" : "org.adw.library:discrete-seekbar:1.0.1"
     ]
 }
