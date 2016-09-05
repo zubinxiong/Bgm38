@@ -36,6 +36,7 @@ public class ToastUtils {
 
     /**
      * 弹出duration为 LENGTH_SHORT的提示
+     * 需要判断是不是小米？ 部分小米机型 type_toast 没有权限直接崩溃
      *
      * @param context
      * @param resId
