@@ -6,6 +6,12 @@ A third part Android Client for  [Bangumi](http://bangumi.tv/)
 
 If you find problem about this application, feel free to contact me via [weibo](http://weibo.com/xiongzba) or [email](mailto:zubinxiong@gmail.com) or issuses. 
 
+## Download
+
+[Google Play](https://play.google.com/store/apps/details?id=me.ewriter.bangumitv)
+
+[CoolApk](http://coolapk.com/apk/me.ewriter.bangumitv)
+
 ### Preview
 
 ![](art/art1.jpg)![](art/art2.jpg)![](art/art3.jpg)![](art/art4.jpg)![](art/art5.jpg)![](art/art6.jpg)
