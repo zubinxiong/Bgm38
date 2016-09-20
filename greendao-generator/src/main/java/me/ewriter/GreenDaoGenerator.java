@@ -11,12 +11,36 @@ public class GreenDaoGenerator {
 
     public static void main(String[] args) throws Exception{
 
-        Schema schema = new Schema(3, "me.ewriter.bangumitv.dao");
+        Schema schema = new Schema(4, "me.ewriter.bangumitv.dao");
 
         // 新建每日放送表
         addCalendar(schema);
 
+        // 新建我的进度表
+        addCollection(schema);
+
         new DaoGenerator().generateAll(schema, WINDOW_PATH);
+    }
+
+    private static void addCollection(Schema schema) {
+        Entity entity = schema.addEntity("MyCollection");
+        entity.addIdProperty();
+        // 类型，在看，看过 等 共5 种
+        entity.addStringProperty("collection_type");
+        entity.addStringProperty("link_url");
+        entity.addStringProperty("image_url");
+        entity.addStringProperty("large_image_url");
+        // 网页上的中文名
+        entity.addStringProperty("normal_name");
+        // 网页上的日文名,不一定有
+        entity.addStringProperty("small_name");
+        // 介绍信息
+        entity.addStringProperty("info");
+        // 分数
+        entity.addStringProperty("rate_number");
+        // 评分人数
+        entity.addStringProperty("rate_total");
+
     }
 
     private static void addCalendar(Schema schema) {
