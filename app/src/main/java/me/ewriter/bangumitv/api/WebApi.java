@@ -68,6 +68,6 @@ public interface WebApi {
 
     /**网页动画吐槽*/
     @GET("subject/{subject_id}/comments")
-    Observable<String> getAnimecomments(@Path("subject_id") String subject_id);
+    Observable<String> getAnimecomments(@Path("subject_id") String subject_id, @Query("page") int page);
 
 }
