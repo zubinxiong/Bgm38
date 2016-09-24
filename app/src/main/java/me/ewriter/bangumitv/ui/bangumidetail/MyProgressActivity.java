@@ -1,4 +1,4 @@
-package me.ewriter.bangumitv.ui.activity;
+package me.ewriter.bangumitv.ui.bangumidetail;
 
 import android.app.ProgressDialog;
 import android.support.annotation.NonNull;

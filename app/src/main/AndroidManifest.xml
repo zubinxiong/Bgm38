@@ -29,20 +29,16 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.activity.BangumiDetailActivity"
+            android:name=".ui.bangumidetail.BangumiDetailActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
             android:theme="@style/TransparentStatusTheme"></activity>
         <activity
-            android:name=".ui.activity.AboutActivity"
+            android:name=".ui.bangumidetail.MyProgressActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait"></activity>
         <activity
-            android:name=".ui.activity.MyProgressActivity"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait"></activity>
-        <activity
-            android:name=".ui.activity.PictureViewActivity"
+            android:name=".ui.bangumidetail.PictureViewActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait"></activity>
 

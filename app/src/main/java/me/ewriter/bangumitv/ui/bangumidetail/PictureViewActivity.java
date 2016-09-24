@@ -1,4 +1,4 @@
-package me.ewriter.bangumitv.ui.activity;
+package me.ewriter.bangumitv.ui.bangumidetail;
 
 import android.Manifest;
 import android.content.Intent;
@@ -28,7 +28,6 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
