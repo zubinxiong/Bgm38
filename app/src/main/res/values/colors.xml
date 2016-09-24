@@ -18,4 +18,8 @@
     <color name="light_grey">#D7D7D7</color>
     <color name="white">#ffffff</color>
     <color name="shadow_color">#6c000000</color>
+
+    <!-- footer -->
+    <color name="color_ff">#F0F0F0</color>
+    <color name="color_00">#8A000000</color>
 </resources>

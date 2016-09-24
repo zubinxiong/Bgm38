@@ -130,4 +130,10 @@
         <item>remove</item>
     </string-array>
 
+
+    <!--footer-->
+    <string name="list_footer_loading">正在加载下一页_(:з”∠)_</string>
+    <string name="list_footer_network_error">点击重新加载</string>
+    <string name="list_footer_end">已经没有更多数据了_(:з”∠)_</string>
+
 </resources>
