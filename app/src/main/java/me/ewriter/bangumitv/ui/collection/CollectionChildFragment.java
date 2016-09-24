@@ -158,7 +158,10 @@ public class CollectionChildFragment extends BaseFragment implements CollectionC
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mPresenter.unsubscribe();
+        if (mPresenter != null) {
+            LogUtil.d(LogUtil.ZUBIN, "CollectionChildFragment onDestroy");
+            mPresenter.unsubscribe();
+        }
     }
 
     @Override
