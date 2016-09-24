@@ -97,4 +97,9 @@ dependencies {
     compile rootProject.ext.dependencies["rxjava"]
     compile rootProject.ext.dependencies["rxandroid"]
     compile rootProject.ext.dependencies["rxjavaAdapter"]
+    compile rootProject.ext.dependencies["rxbinding"]
+    compile rootProject.ext.dependencies["jsoup"]
+
+    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.4-beta2'
+    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
 }

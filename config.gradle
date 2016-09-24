@@ -25,6 +25,8 @@ ext {
             "easypermissions" : "pub.devrel:easypermissions:0.1.9",
             "rxjava" : "io.reactivex:rxjava:1.1.6",
             "rxandroid" : "io.reactivex:rxandroid:1.2.1",
-            "rxjavaAdapter" : "com.squareup.retrofit2:adapter-rxjava:2.1.0"
+            "rxjavaAdapter" : "com.squareup.retrofit2:adapter-rxjava:2.1.0",
+            "rxbinding" : "com.jakewharton.rxbinding:rxbinding:0.4.0",
+            "jsoup" : "org.jsoup:jsoup:1.9.2"
     ]
 }
