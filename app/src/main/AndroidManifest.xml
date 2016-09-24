@@ -34,14 +34,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/TransparentStatusTheme"></activity>
         <activity
-            android:name=".ui.activity.LoginActivity"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait"></activity>
-        <activity
-            android:name=".ui.activity.SearchActivity"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait"></activity>
-        <activity
             android:name=".ui.activity.AboutActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait"></activity>
