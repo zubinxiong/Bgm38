@@ -16,10 +16,10 @@ import me.ewriter.bangumitv.api.response.SearchItemEntity;
 import me.ewriter.bangumitv.base.BaseActivity;
 import me.ewriter.bangumitv.utils.LogUtil;
 import me.ewriter.bangumitv.utils.Tools;
-import me.ewriter.bangumitv.widget.EndlessRecyclerOnScrollListener;
-import me.ewriter.bangumitv.widget.HeaderAndFooterAdapter;
-import me.ewriter.bangumitv.widget.LoadingFooter;
-import me.ewriter.bangumitv.widget.RecyclerViewStateUtils;
+import me.ewriter.bangumitv.widget.headerfooter.EndlessRecyclerOnScrollListener;
+import me.ewriter.bangumitv.widget.headerfooter.HeaderAndFooterAdapter;
+import me.ewriter.bangumitv.widget.headerfooter.LoadingFooter;
+import me.ewriter.bangumitv.widget.headerfooter.RecyclerViewStateUtils;
 import me.ewriter.bangumitv.widget.VertialSpacingItemDecoration;
 
 /**

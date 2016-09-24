@@ -1,22 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="@drawable/bg_card"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:clickable="true"
     android:layout_margin="4dp"
+    android:background="@drawable/square_touch_bg"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <ImageView
         android:id="@+id/search_img"
-        android:transitionName="img"
-        android:scaleType="fitXY"
-        android:adjustViewBounds="true"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_width="110dp"
+        android:layout_height="110dp" />
 
     <TextView
         android:id="@+id/search_title"
+        android:layout_toRightOf="@+id/search_img"
         android:textColor="@color/calendar_title_color"
         android:textSize="@dimen/calender_item_title_size"
         android:paddingTop="10dp"
@@ -27,6 +25,8 @@
 
     <TextView
         android:id="@+id/search_outline"
+        android:layout_toRightOf="@+id/search_img"
+        android:layout_below="@+id/search_title"
         android:textSize="@dimen/calender_item_outline_size"
         android:paddingLeft="4dp"
         android:paddingBottom="10dp"
@@ -34,4 +34,4 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
-</LinearLayout>
+</RelativeLayout>

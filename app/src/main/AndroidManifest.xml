@@ -28,25 +28,30 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".ui.bangumidetail.BangumiDetailActivity"
+
+        <activity android:name=".ui.search.SearchActivity"
             android:configChanges="orientation"
-            android:screenOrientation="portrait"
-            android:theme="@style/TransparentStatusTheme"></activity>
-        <activity
-            android:name=".ui.bangumidetail.MyProgressActivity"
+            android:screenOrientation="portrait">
+
+        </activity>
+
+        <activity android:name=".ui.login.LoginActivity"
             android:configChanges="orientation"
-            android:screenOrientation="portrait"></activity>
-        <activity
-            android:name=".ui.bangumidetail.PictureViewActivity"
+            android:screenOrientation="portrait">
+
+        </activity>
+
+        <activity android:name=".ui.about.AboutActivity"
             android:configChanges="orientation"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait">
+
+        </activity>
+
 
         <meta-data
             android:name="BUGLY_APP_CHANNEL"
             android:value="${BUGLY_CHANNEL_VALUE}" />
 
-        <activity android:name=".dailyOnAir.HomeActivity"></activity>
     </application>
 
 </manifest>

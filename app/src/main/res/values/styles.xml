@@ -26,4 +26,8 @@
 
     </style>
 
+    <style name="MyCustomTabLayout" parent="Widget.Design.TabLayout">
+        <item name="tabIndicatorColor">@color/md_white_1000</item>
+    </style>
+
 </resources>

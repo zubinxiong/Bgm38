@@ -11,7 +11,7 @@ public class GreenDaoGenerator {
 
     public static void main(String[] args) throws Exception{
 
-        Schema schema = new Schema(5, "me.ewriter.bangumitv.dao");
+        Schema schema = new Schema(6, "me.ewriter.bangumitv.dao");
 
         // 新建每日放送表
         addCalendar(schema);
@@ -28,6 +28,7 @@ public class GreenDaoGenerator {
         entity.addIdProperty();
         // 类型，在看，看过 等 共5 种
         entity.addStringProperty("collection_type");
+        entity.addStringProperty("category");
         entity.addStringProperty("link_url");
         entity.addStringProperty("image_url");
         entity.addStringProperty("large_image_url");

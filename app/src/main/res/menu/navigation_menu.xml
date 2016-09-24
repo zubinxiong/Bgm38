@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <group
         android:id="@+id/first_group"
@@ -39,6 +40,12 @@
         android:checkableBehavior="none">
 
         <item
+            android:id="@+id/night_mode"
+            app:actionLayout="@layout/night_switch"
+            android:title="@string/nav_night_mode"
+            android:icon="@drawable/ic_info_white_24dp"/>
+
+        <item
             android:id="@+id/nav_about"
             android:checked="false"
             android:checkable="false"
@@ -46,11 +53,11 @@
             android:title="@string/nav_about"/>
 
         <!--<item-->
-            <!--android:id="@+id/nav_setting"-->
-            <!--android:checked="false"-->
-            <!--android:checkable="false"-->
-            <!--android:icon="@android:drawable/ic_menu_compass"-->
-            <!--android:title="@string/nav_setting"/>-->
+        <!--android:id="@+id/nav_setting"-->
+        <!--android:checked="false"-->
+        <!--android:checkable="false"-->
+        <!--android:icon="@android:drawable/ic_menu_compass"-->
+        <!--android:title="@string/nav_setting"/>-->
 
     </group>
 </menu>

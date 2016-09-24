@@ -3,7 +3,7 @@ package me.ewriter.bangumitv.base;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-import me.ewriter.bangumitv.api.ApiManagers;
+import me.ewriter.bangumitv.api.ApiManager;
 import me.ewriter.bangumitv.api.BangumiApi;
 
 /**
@@ -11,7 +11,7 @@ import me.ewriter.bangumitv.api.BangumiApi;
  */
 public abstract class BaseActivity extends AppCompatActivity {
 
-    public static final BangumiApi sBangumi = ApiManagers.getBangumiInstance();
+    public static final BangumiApi sBangumi = ApiManager.getBangumiInstance();
 
     protected abstract int getContentViewResId();
 

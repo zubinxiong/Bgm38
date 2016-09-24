@@ -10,6 +10,7 @@
     <string name="nav_about">关于</string>
     <string name="nav_logout">退出登录</string>
     <string name="nav_setting">设置</string>
+    <string name="nav_night_mode">夜间模式</string>
     <string name="calender_bangumi_img">calender_bangumi_img</string>
 
     <!-- 每日放送 -->

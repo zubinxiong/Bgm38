@@ -12,6 +12,7 @@ public class MyCollection {
     @Id
     private Long id;
     private String collection_type;
+    private String category;
     private String link_url;
     private String image_url;
     private String large_image_url;
@@ -32,9 +33,10 @@ public class MyCollection {
     }
 
     @Generated
-    public MyCollection(Long id, String collection_type, String link_url, String image_url, String large_image_url, String normal_name, String small_name, String info, String rate_number, String rate_total, String comment, String air_day) {
+    public MyCollection(Long id, String collection_type, String category, String link_url, String image_url, String large_image_url, String normal_name, String small_name, String info, String rate_number, String rate_total, String comment, String air_day) {
         this.id = id;
         this.collection_type = collection_type;
+        this.category = category;
         this.link_url = link_url;
         this.image_url = image_url;
         this.large_image_url = large_image_url;
@@ -61,6 +63,14 @@ public class MyCollection {
 
     public void setCollection_type(String collection_type) {
         this.collection_type = collection_type;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     public String getLink_url() {

@@ -73,8 +73,7 @@ public class CollectionFragment extends BaseFragment {
 
     private void setupViewPager() {
         // 因为 setAdapter 是
-        String[] tabNameArray = {getString(R.string.watching), getString(R.string.watched)
-                , getString(R.string.wanted), "搁置", "抛弃"};
+        String[] tabNameArray = {"在看", "看过", "想看", "搁置", "抛弃"};
 
         final CollectionAdapter adapter = new CollectionAdapter(getChildFragmentManager());
         for (int i = 0; i < tabNameArray.length; i++) {

@@ -12,7 +12,7 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 /**
  * Created by Zubin on 2016/7/25.
  */
-public class ApiManagers {
+public class ApiManager {
 
     public static final String BANGUMI_BASE_URL = "http://api.bgm.tv/";
     /** 网页地址 */
