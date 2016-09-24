@@ -1,5 +1,7 @@
 package me.ewriter.bangumitv.ui.calendar;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -12,6 +14,7 @@ import me.ewriter.bangumitv.constants.MyConstants;
 import me.ewriter.bangumitv.dao.BangumiCalendar;
 import me.ewriter.bangumitv.dao.BangumiCalendarDao;
 import me.ewriter.bangumitv.dao.DaoSession;
+import me.ewriter.bangumitv.ui.bangumidetail.BangumiDetailActivity;
 import me.ewriter.bangumitv.utils.LogUtil;
 import me.ewriter.bangumitv.utils.PreferencesUtils;
 import rx.Observable;
@@ -50,8 +53,8 @@ public class CalendarPresenter implements CalendarContract.Presenter {
     }
 
     @Override
-    public void openBangumiDetail() {
-
+    public void openBangumiDetail(Activity activity) {
+        activity.startActivity(new Intent(activity, BangumiDetailActivity.class));
     }
 
     @Override

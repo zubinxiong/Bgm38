@@ -47,6 +47,11 @@
 
         </activity>
 
+        <activity android:name=".ui.bangumidetail.BangumiDetailActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait">
+
+        </activity>
 
         <meta-data
             android:name="BUGLY_APP_CHANNEL"

@@ -47,4 +47,27 @@ public interface WebApi {
     @GET("mono_search/{keyword}")
     Observable<String> searchPerson(@Path("keyword") String keyword,
                                     @Query("cat") String category, @Query("page") int page);
+
+
+    /**网页动画详情*/
+    @GET("subject/{subject_id}")
+    Observable<String> getAnimeDetail(@Path("subject_id") String subject_id);
+
+
+    /**网页动画章节*/
+    @GET("subject/{subject_id}/ep")
+    Observable<String> getAnimeEp(@Path("subject_id") String subject_id);
+
+    /**网页动画角色*/
+    @GET("subject/{subject_id}/characters")
+    Observable<String> getAnimeCharacters(@Path("subject_id") String subject_id);
+
+    /**网页动画制作人员*/
+    @GET("subject/{subject_id}/persons")
+    Observable<String> getAnimePersons(@Path("subject_id") String subject_id);
+
+    /**网页动画吐槽*/
+    @GET("subject/{subject_id}/comments")
+    Observable<String> getAnimecomments(@Path("subject_id") String subject_id);
+
 }

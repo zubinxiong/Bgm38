@@ -1,5 +1,7 @@
 package me.ewriter.bangumitv.ui.calendar;
 
+import android.app.Activity;
+
 import java.util.List;
 
 import me.ewriter.bangumitv.base.BasePresenter;
@@ -14,7 +16,7 @@ public interface CalendarContract {
 
     interface Presenter extends BasePresenter {
         /**打开番剧详情*/
-        void openBangumiDetail();
+        void openBangumiDetail(Activity activity);
 
         /**加载数据，从本地数据库缓存和网络数据取，超过6小时的本地缓存会强制网络刷新*/
         void loadData(int position);
