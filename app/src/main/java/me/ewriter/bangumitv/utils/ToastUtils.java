@@ -1,9 +1,11 @@
 package me.ewriter.bangumitv.utils;
 
 import android.app.Activity;
-import android.content.Context;
 import android.os.Looper;
+import android.util.Log;
 import android.widget.Toast;
+
+import me.ewriter.bangumitv.BangumiApp;
 
 /**
  * Created by zubin on 16/7/30.
@@ -55,6 +57,26 @@ public class ToastUtils {
                     toast.show();
                 }
             });
+        }
+
+    }
+
+    /***/
+    public static void showShortToast(final int resId) {
+        if (toast != null)
+            toast.cancel();
+        if (Thread.currentThread() == Looper.getMainLooper().getThread()) {
+            toast = Toast.makeText(BangumiApp.sAppCtx, resId, Toast.LENGTH_SHORT);
+            toast.show();
+        } else {
+            LogUtil.e(LogUtil.ZUBIN, "这个方法不要在非主线程中使用");
+//            context.runOnUiThread(new Runnable() {
+//                @Override
+//                public void run() {
+//                    toast = Toast.makeText(BangumiApp.sAppCtx, resId, Toast.LENGTH_SHORT);
+//                    toast.show();
+//                }
+//            });
         }
 
     }

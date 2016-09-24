@@ -7,26 +7,27 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import org.greenrobot.eventbus.EventBus;
+import me.ewriter.bangumitv.utils.LogUtil;
 
 /**
- * Created by zubin on 16/7/30.
+ * Created by Zubin on 2016/9/6.
  */
 public abstract class BaseFragment extends Fragment {
-
-    /** 子类Fragment 中是否有订阅 EventBus 事件*/
-    protected abstract boolean isSubscribe();
-
     /** 获取布局id，以便初始化*/
     protected abstract int getContentLayoutId();
 
     /**onViewCreated创建后的回调*/
-    protected abstract void initView(boolean resued);
+    protected abstract void initView(boolean reused);
 
     private View viewCache;
 
     private boolean reused;
 
+    /**控件是否初始化完成*/
+    private boolean isViewCreated;
+    /**数据是否已加载完毕*/
+    private boolean isLoadDataCompleted;
+    private boolean isVisibleToUser;
 
     @Nullable
     @Override
@@ -34,7 +35,7 @@ public abstract class BaseFragment extends Fragment {
         reused = true;
 
         if (viewCache == null) {
-            viewCache = inflater.inflate(getContentLayoutId(), container, false);
+            viewCache = inflater.inflate(getContentLayoutId(), null);
             reused = false;
         } else {
             ViewGroup viewGroup = (ViewGroup) viewCache.getParent();
@@ -42,14 +43,39 @@ public abstract class BaseFragment extends Fragment {
                 viewGroup.removeView(viewCache);
             }
         }
-
+        isViewCreated = true;
         return viewCache;
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
         initView(reused);
+        LogUtil.d(LogUtil.ZUBIN, "onActivityCreated");
+//        if (getUserVisibleHint()) {
+//            isLoadDataCompleted = true;
+//            loadData();
+//        }
+        prepareFetchData();
+    }
+
+    public boolean prepareFetchData() {
+        return prepareFetchData(true);
+    }
+
+    public boolean prepareFetchData(boolean forceUpdate) {
+        if (isVisibleToUser && isViewCreated && (!isLoadDataCompleted || forceUpdate)) {
+            loadData();
+            isLoadDataCompleted = true;
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
     }
 
     /** 获取根视图 view */
@@ -57,19 +83,18 @@ public abstract class BaseFragment extends Fragment {
         return viewCache;
     }
 
+    // 实现懒加载, 在 onCreateView 前运行
     @Override
-    public void onStart() {
-        super.onStart();
-        if (isSubscribe()) {
-            EventBus.getDefault().register(this);
-        }
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        this.isVisibleToUser = isVisibleToUser;
+        prepareFetchData();
+//        if (isVisibleToUser && isViewCreated && !isLoadDataCompleted) {
+//            isLoadDataCompleted = true;
+//            loadData();
+//        }
     }
 
-    @Override
-    public void onStop() {
-        if (isSubscribe()) {
-            EventBus.getDefault().unregister(this);
-        }
-        super.onStop();
-    }
+    /**子类用于加载数据*/
+    protected abstract void loadData();
 }
