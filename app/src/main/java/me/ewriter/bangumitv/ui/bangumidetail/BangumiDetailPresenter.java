@@ -1,9 +1,15 @@
 package me.ewriter.bangumitv.ui.bangumidetail;
 
+import android.text.TextUtils;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 import me.ewriter.bangumitv.api.ApiManager;
 import rx.Subscriber;
@@ -42,12 +48,14 @@ public class BangumiDetailPresenter implements BangumiDetailContract.Presenter {
     @Override
     public void requestWebDetail(String subjectId) {
         Subscription subscription = ApiManager.getWebInstance()
-                .getAnimeDetail(subjectId)
+//                .getAnimeDetail(subjectId)
+                .getAnimeEp(subjectId)
                 .subscribeOn(Schedulers.io())
                 .map(new Func1<String, String>() {
                     @Override
                     public String call(String s) {
-                        return parseAnimeDetail(s);
+//                        return parseAnimeDetail(s);
+                        return parseAnimeEP(s);
                     }
                 })
                 .observeOn(AndroidSchedulers.mainThread())
@@ -175,4 +183,137 @@ public class BangumiDetailPresenter implements BangumiDetailContract.Presenter {
 
         return "parse_anime_detail";
     }
+
+
+    /** 解析网页章节 */
+    private String parseAnimeEP(String html) {
+        Document document = Jsoup.parse(html);
+
+        Elements line_list = document.select("ul.line_list>li");
+
+        int catNumber = document.select("li.cat").size();
+
+        // key 是 cat， value 是 list，list 里面是 item，这里先以 string 代替
+        HashMap<String, List<String>> hashMap = new HashMap<>();
+        List<String> itemList = new ArrayList<>();
+
+        String key = "";
+
+        for (int i = 0; i < line_list.size(); i++) {
+            Element element = line_list.get(i);
+
+            String cat = element.attr("class");
+
+            if (cat.startsWith("line")) {
+                // 已放送
+                String epAirStatusStr = element.select("h6>span.epAirStatus").attr("title");
+                //Air
+                String epAirStatus = element.select("h6>span.epAirStatus>span").attr("class");
+
+                String epUrl = element.select("h6>a").attr("href");
+                String name_jp = element.select("h6>a").text();
+                String name_cn = element.select("h6>span.tip").text();
+                String info = element.select("small").text();
+
+                itemList.add(name_cn);
+            } else {
+                key = element.text();
+            }
+
+            // 最后一个
+            if (i == line_list.size() -1) {
+                hashMap.put(key, itemList);
+            } else {
+                // 中间
+                String nextCat = line_list.get(i + 1).attr("class");
+                if (!nextCat.startsWith("line")) {
+                    List<String> copyList = new ArrayList<>();
+                    copyList.addAll(itemList);
+                    hashMap.put(key, copyList);
+                    itemList.clear();
+                }
+            }
+
+        }
+
+        return "parseEP";
+    }
+
+
+    /** 解析网页人物介绍 一页到底，不翻页*/
+    private String parseAnimeCharacters(String html) {
+        Document document = Jsoup.parse(html);
+
+        Elements elements = document.select("div#columnInSubjectA>div");
+
+        for (int i = 0; i < elements.size(); i++) {
+
+            Element element = elements.get(i);
+
+            String avatar_url = element.select("a").attr("href");
+            String avatar_image_url = element.select("a>img").attr("src");
+
+            String role_name_cn = element.select("div.clearit>h2>span").text();
+            String role_name_jp = element.select("div.clearit>h2>a").text();
+
+            String info = element.select("div.clearit>div.crt_info").text();
+
+            String cv_url = element.select("div.actorBadge clearit>a").attr("href");
+            String cv_image_url = element.select("div.actorBadge clearit>a>img").attr("src");
+            String cv_name_jp = element.select("div.actorBadge clearit>p>a").text();
+            String cv_name_cn = element.select("div.actorBadge clearit>p>small").text();
+        }
+
+        return "parseAnimeCharacters";
+    }
+
+
+    /** 解析网页制作人员 不翻页*/
+    private String parseAnimePersons(String html) {
+
+        Document document = Jsoup.parse(html);
+
+        Elements elements = document.select("div#columnInSubjectA>div");
+
+        for (int i = 0; i < elements.size(); i++) {
+
+            Element element = elements.get(i);
+
+            String avatar_url = element.select("a").attr("href");
+            String avatar_image_url = element.select("a>img").attr("src");
+
+            String name = element.select("div>h2>a").text();
+            String info = element.select("div>div.prsn_info").text();
+
+        }
+
+
+        return "parseAnimePersons";
+    }
+
+
+    /** 解析网页评论 会翻页*/
+    private String parseAnimeComments(String html) {
+
+        Document document = Jsoup.parse(html);
+
+        Elements comments = document.select("div#comment_box>div");
+
+        for (int i = 0; i < comments.size(); i++) {
+            Element element = comments.get(i);
+
+            String userLink = element.select("a").attr("href");
+            // TODO: 2016/9/24  style 还需要再处理
+            //background-image:url('//lain.bgm.tv/pic/user/s/000/30/28/302862.jpg?r=1472368595')
+            String originImage = element.select("a>span").attr("style").replace("\'", "");
+            String userAvatar = originImage.substring(originImage.indexOf("(") + 1, originImage.indexOf(")"));
+
+            String userName = element.select("div>div>a").text();
+            String userComment = element.select("div>div>p").text();
+            String commentDate = element.select("div>div>small").text();
+        }
+
+        return "parseAnimeComments";
+    }
+
 }
