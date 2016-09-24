@@ -8,11 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import me.ewriter.bangumitv.R;
-import me.ewriter.bangumitv.api.response.BangumiDetail;
 
 /**
  * Created by Zubin on 2016/8/8.

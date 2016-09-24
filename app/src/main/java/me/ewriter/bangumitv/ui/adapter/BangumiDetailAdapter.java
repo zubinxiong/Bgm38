@@ -15,7 +15,6 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import me.ewriter.bangumitv.R;
-import me.ewriter.bangumitv.api.entity.BangumiDetailEntity;
 
 /**
  * Created by Zubin on 2016/8/1.
