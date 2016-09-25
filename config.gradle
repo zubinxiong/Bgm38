@@ -28,6 +28,9 @@ ext {
             "rxjavaAdapter" : "com.squareup.retrofit2:adapter-rxjava:2.1.0",
             "rxbinding" : "com.jakewharton.rxbinding:rxbinding:0.4.0",
             "jsoup" : "org.jsoup:jsoup:1.9.2",
-            "convert-scalars" : "com.squareup.retrofit2:converter-scalars:2.1.0"
+            "convert-scalars" : "com.squareup.retrofit2:converter-scalars:2.1.0",
+            "multitype" : "me.drakeet.multitype:multitype:2.0.0",
+            "debug-leakcanary" : "com.squareup.leakcanary:leakcanary-android:1.4-beta2",
+            "release-leakcanary" : "com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2"
     ]
 }
