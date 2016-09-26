@@ -6,12 +6,12 @@ import org.greenrobot.greendao.generator.Schema;
 
 public class GreenDaoGenerator {
 
-//    private static final String WINDOW_PATH = "E:/BangumiTV/app/src/main/java";
-    private static final String MAC_PATH = "/Users/zubin/documents/AndroidWorkspace/Bangumitv/app/src/main/java";
+    private static final String WINDOW_PATH = "E:/BangumiTV/app/src/main/java";
+//    private static final String MAC_PATH = "/Users/zubin/documents/AndroidWorkspace/Bangumitv/app/src/main/java";
 
     public static void main(String[] args) throws Exception{
 
-        Schema schema = new Schema(6, "me.ewriter.bangumitv.dao");
+        Schema schema = new Schema(7, "me.ewriter.bangumitv.dao");
 
         // 新建每日放送表
         addCalendar(schema);
@@ -19,7 +19,8 @@ public class GreenDaoGenerator {
         // 新建我的进度表
         addCollection(schema);
 
-        new DaoGenerator().generateAll(schema, MAC_PATH);
+        new DaoGenerator().generateAll(schema, WINDOW_PATH);
+//        new DaoGenerator().generateAll(schema, MAC_PATH);
     }
 
     private static void addCollection(Schema schema) {
@@ -30,6 +31,7 @@ public class GreenDaoGenerator {
         entity.addStringProperty("collection_type");
         entity.addStringProperty("category");
         entity.addStringProperty("link_url");
+        entity.addStringProperty("bangumi_id");
         entity.addStringProperty("image_url");
         entity.addStringProperty("large_image_url");
         // 网页上的中文名

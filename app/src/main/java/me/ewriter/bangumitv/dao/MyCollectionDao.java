@@ -26,15 +26,16 @@ public class MyCollectionDao extends AbstractDao<MyCollection, Long> {
         public final static Property Collection_type = new Property(1, String.class, "collection_type", false, "COLLECTION_TYPE");
         public final static Property Category = new Property(2, String.class, "category", false, "CATEGORY");
         public final static Property Link_url = new Property(3, String.class, "link_url", false, "LINK_URL");
-        public final static Property Image_url = new Property(4, String.class, "image_url", false, "IMAGE_URL");
-        public final static Property Large_image_url = new Property(5, String.class, "large_image_url", false, "LARGE_IMAGE_URL");
-        public final static Property Normal_name = new Property(6, String.class, "normal_name", false, "NORMAL_NAME");
-        public final static Property Small_name = new Property(7, String.class, "small_name", false, "SMALL_NAME");
-        public final static Property Info = new Property(8, String.class, "info", false, "INFO");
-        public final static Property Rate_number = new Property(9, String.class, "rate_number", false, "RATE_NUMBER");
-        public final static Property Rate_total = new Property(10, String.class, "rate_total", false, "RATE_TOTAL");
-        public final static Property Comment = new Property(11, String.class, "comment", false, "COMMENT");
-        public final static Property Air_day = new Property(12, String.class, "air_day", false, "AIR_DAY");
+        public final static Property Bangumi_id = new Property(4, String.class, "bangumi_id", false, "BANGUMI_ID");
+        public final static Property Image_url = new Property(5, String.class, "image_url", false, "IMAGE_URL");
+        public final static Property Large_image_url = new Property(6, String.class, "large_image_url", false, "LARGE_IMAGE_URL");
+        public final static Property Normal_name = new Property(7, String.class, "normal_name", false, "NORMAL_NAME");
+        public final static Property Small_name = new Property(8, String.class, "small_name", false, "SMALL_NAME");
+        public final static Property Info = new Property(9, String.class, "info", false, "INFO");
+        public final static Property Rate_number = new Property(10, String.class, "rate_number", false, "RATE_NUMBER");
+        public final static Property Rate_total = new Property(11, String.class, "rate_total", false, "RATE_TOTAL");
+        public final static Property Comment = new Property(12, String.class, "comment", false, "COMMENT");
+        public final static Property Air_day = new Property(13, String.class, "air_day", false, "AIR_DAY");
     };
 
 
@@ -54,15 +55,16 @@ public class MyCollectionDao extends AbstractDao<MyCollection, Long> {
                 "\"COLLECTION_TYPE\" TEXT," + // 1: collection_type
                 "\"CATEGORY\" TEXT," + // 2: category
                 "\"LINK_URL\" TEXT," + // 3: link_url
-                "\"IMAGE_URL\" TEXT," + // 4: image_url
-                "\"LARGE_IMAGE_URL\" TEXT," + // 5: large_image_url
-                "\"NORMAL_NAME\" TEXT," + // 6: normal_name
-                "\"SMALL_NAME\" TEXT," + // 7: small_name
-                "\"INFO\" TEXT," + // 8: info
-                "\"RATE_NUMBER\" TEXT," + // 9: rate_number
-                "\"RATE_TOTAL\" TEXT," + // 10: rate_total
-                "\"COMMENT\" TEXT," + // 11: comment
-                "\"AIR_DAY\" TEXT);"); // 12: air_day
+                "\"BANGUMI_ID\" TEXT," + // 4: bangumi_id
+                "\"IMAGE_URL\" TEXT," + // 5: image_url
+                "\"LARGE_IMAGE_URL\" TEXT," + // 6: large_image_url
+                "\"NORMAL_NAME\" TEXT," + // 7: normal_name
+                "\"SMALL_NAME\" TEXT," + // 8: small_name
+                "\"INFO\" TEXT," + // 9: info
+                "\"RATE_NUMBER\" TEXT," + // 10: rate_number
+                "\"RATE_TOTAL\" TEXT," + // 11: rate_total
+                "\"COMMENT\" TEXT," + // 12: comment
+                "\"AIR_DAY\" TEXT);"); // 13: air_day
     }
 
     /** Drops the underlying database table. */
@@ -95,49 +97,54 @@ public class MyCollectionDao extends AbstractDao<MyCollection, Long> {
             stmt.bindString(4, link_url);
         }
  
+        String bangumi_id = entity.getBangumi_id();
+        if (bangumi_id != null) {
+            stmt.bindString(5, bangumi_id);
+        }
+ 
         String image_url = entity.getImage_url();
         if (image_url != null) {
-            stmt.bindString(5, image_url);
+            stmt.bindString(6, image_url);
         }
  
         String large_image_url = entity.getLarge_image_url();
         if (large_image_url != null) {
-            stmt.bindString(6, large_image_url);
+            stmt.bindString(7, large_image_url);
         }
  
         String normal_name = entity.getNormal_name();
         if (normal_name != null) {
-            stmt.bindString(7, normal_name);
+            stmt.bindString(8, normal_name);
         }
  
         String small_name = entity.getSmall_name();
         if (small_name != null) {
-            stmt.bindString(8, small_name);
+            stmt.bindString(9, small_name);
         }
  
         String info = entity.getInfo();
         if (info != null) {
-            stmt.bindString(9, info);
+            stmt.bindString(10, info);
         }
  
         String rate_number = entity.getRate_number();
         if (rate_number != null) {
-            stmt.bindString(10, rate_number);
+            stmt.bindString(11, rate_number);
         }
  
         String rate_total = entity.getRate_total();
         if (rate_total != null) {
-            stmt.bindString(11, rate_total);
+            stmt.bindString(12, rate_total);
         }
  
         String comment = entity.getComment();
         if (comment != null) {
-            stmt.bindString(12, comment);
+            stmt.bindString(13, comment);
         }
  
         String air_day = entity.getAir_day();
         if (air_day != null) {
-            stmt.bindString(13, air_day);
+            stmt.bindString(14, air_day);
         }
     }
 
@@ -165,49 +172,54 @@ public class MyCollectionDao extends AbstractDao<MyCollection, Long> {
             stmt.bindString(4, link_url);
         }
  
+        String bangumi_id = entity.getBangumi_id();
+        if (bangumi_id != null) {
+            stmt.bindString(5, bangumi_id);
+        }
+ 
         String image_url = entity.getImage_url();
         if (image_url != null) {
-            stmt.bindString(5, image_url);
+            stmt.bindString(6, image_url);
         }
  
         String large_image_url = entity.getLarge_image_url();
         if (large_image_url != null) {
-            stmt.bindString(6, large_image_url);
+            stmt.bindString(7, large_image_url);
         }
  
         String normal_name = entity.getNormal_name();
         if (normal_name != null) {
-            stmt.bindString(7, normal_name);
+            stmt.bindString(8, normal_name);
         }
  
         String small_name = entity.getSmall_name();
         if (small_name != null) {
-            stmt.bindString(8, small_name);
+            stmt.bindString(9, small_name);
         }
  
         String info = entity.getInfo();
         if (info != null) {
-            stmt.bindString(9, info);
+            stmt.bindString(10, info);
         }
  
         String rate_number = entity.getRate_number();
         if (rate_number != null) {
-            stmt.bindString(10, rate_number);
+            stmt.bindString(11, rate_number);
         }
  
         String rate_total = entity.getRate_total();
         if (rate_total != null) {
-            stmt.bindString(11, rate_total);
+            stmt.bindString(12, rate_total);
         }
  
         String comment = entity.getComment();
         if (comment != null) {
-            stmt.bindString(12, comment);
+            stmt.bindString(13, comment);
         }
  
         String air_day = entity.getAir_day();
         if (air_day != null) {
-            stmt.bindString(13, air_day);
+            stmt.bindString(14, air_day);
         }
     }
 
@@ -223,15 +235,16 @@ public class MyCollectionDao extends AbstractDao<MyCollection, Long> {
             cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // collection_type
             cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // category
             cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // link_url
-            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // image_url
-            cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // large_image_url
-            cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // normal_name
-            cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7), // small_name
-            cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8), // info
-            cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9), // rate_number
-            cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10), // rate_total
-            cursor.isNull(offset + 11) ? null : cursor.getString(offset + 11), // comment
-            cursor.isNull(offset + 12) ? null : cursor.getString(offset + 12) // air_day
+            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // bangumi_id
+            cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // image_url
+            cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // large_image_url
+            cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7), // normal_name
+            cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8), // small_name
+            cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9), // info
+            cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10), // rate_number
+            cursor.isNull(offset + 11) ? null : cursor.getString(offset + 11), // rate_total
+            cursor.isNull(offset + 12) ? null : cursor.getString(offset + 12), // comment
+            cursor.isNull(offset + 13) ? null : cursor.getString(offset + 13) // air_day
         );
         return entity;
     }
@@ -242,15 +255,16 @@ public class MyCollectionDao extends AbstractDao<MyCollection, Long> {
         entity.setCollection_type(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
         entity.setCategory(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
         entity.setLink_url(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
-        entity.setImage_url(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
-        entity.setLarge_image_url(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
-        entity.setNormal_name(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
-        entity.setSmall_name(cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7));
-        entity.setInfo(cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8));
-        entity.setRate_number(cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9));
-        entity.setRate_total(cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10));
-        entity.setComment(cursor.isNull(offset + 11) ? null : cursor.getString(offset + 11));
-        entity.setAir_day(cursor.isNull(offset + 12) ? null : cursor.getString(offset + 12));
+        entity.setBangumi_id(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
+        entity.setImage_url(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
+        entity.setLarge_image_url(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
+        entity.setNormal_name(cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7));
+        entity.setSmall_name(cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8));
+        entity.setInfo(cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9));
+        entity.setRate_number(cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10));
+        entity.setRate_total(cursor.isNull(offset + 11) ? null : cursor.getString(offset + 11));
+        entity.setComment(cursor.isNull(offset + 12) ? null : cursor.getString(offset + 12));
+        entity.setAir_day(cursor.isNull(offset + 13) ? null : cursor.getString(offset + 13));
      }
     
     @Override
