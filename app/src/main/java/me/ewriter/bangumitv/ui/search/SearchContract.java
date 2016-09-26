@@ -4,7 +4,7 @@ import android.widget.EditText;
 
 import java.util.List;
 
-import me.ewriter.bangumitv.api.response.SearchItemEntity;
+import me.ewriter.bangumitv.api.entity.SearchItemEntity;
 import me.ewriter.bangumitv.base.BasePresenter;
 import me.ewriter.bangumitv.base.BaseView;
 

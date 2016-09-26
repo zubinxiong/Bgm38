@@ -9,9 +9,12 @@ import com.tencent.bugly.crashreport.CrashReport;
 
 import org.greenrobot.greendao.database.Database;
 
+import me.drakeet.multitype.MultiTypePool;
 import me.ewriter.bangumitv.constants.MyConstants;
 import me.ewriter.bangumitv.dao.DaoMaster;
 import me.ewriter.bangumitv.dao.DaoSession;
+import me.ewriter.bangumitv.ui.bangumidetail.TextItem;
+import me.ewriter.bangumitv.ui.bangumidetail.TextItemViewProvider;
 import me.ewriter.bangumitv.utils.PreferencesUtils;
 
 /**
@@ -28,15 +31,22 @@ public class BangumiApp extends Application {
 
         sAppCtx = this;
 
-//        CrashReport.initCrashReport(getApplicationContext(), MyConstants.BUGLY_APPID, true);
-        LeakCanary.install(this);
 
         initTheme();
+
+        registerMutiType();
+
+//        CrashReport.initCrashReport(getApplicationContext(), MyConstants.BUGLY_APPID, true);
+        LeakCanary.install(this);
 
         DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, MyConstants.DB_NAME, null);
         // 不加密，加密的参考官方的demo
         Database db = helper.getWritableDb();
         daoSession = new DaoMaster(db).newSession();
+    }
+
+    private void registerMutiType() {
+        MultiTypePool.register(TextItem.class, new TextItemViewProvider());
     }
 
     @SuppressWarnings("WrongConstant")

@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import me.ewriter.bangumitv.R;
-import me.ewriter.bangumitv.api.response.SearchItemEntity;
+import me.ewriter.bangumitv.api.entity.SearchItemEntity;
 import me.ewriter.bangumitv.base.BaseActivity;
 import me.ewriter.bangumitv.utils.LogUtil;
 import me.ewriter.bangumitv.utils.Tools;

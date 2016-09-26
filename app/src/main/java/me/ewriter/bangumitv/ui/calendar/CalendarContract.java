@@ -16,7 +16,7 @@ public interface CalendarContract {
 
     interface Presenter extends BasePresenter {
         /**打开番剧详情*/
-        void openBangumiDetail(Activity activity);
+        void openBangumiDetail(Activity activity, BangumiCalendar calendar);
 
         /**加载数据，从本地数据库缓存和网络数据取，超过6小时的本地缓存会强制网络刷新*/
         void loadData(int position);

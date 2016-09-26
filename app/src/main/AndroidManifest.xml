@@ -48,6 +48,7 @@
         </activity>
 
         <activity android:name=".ui.bangumidetail.BangumiDetailActivity"
+            android:theme="@style/TransparentStatusTheme"
             android:configChanges="orientation"
             android:screenOrientation="portrait">
 
