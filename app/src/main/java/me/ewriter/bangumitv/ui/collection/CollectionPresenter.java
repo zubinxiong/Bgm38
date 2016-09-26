@@ -223,6 +223,7 @@ public class CollectionPresenter implements CollectionContract.Presenter {
             Element element = li.get(i);
 
             String linkUrl = "http://bgm.tv" + element.select("a").attr("href");
+            String bangumiId = element.select("a").attr("href").replace("/subject/", "").trim();
             String imageUrl = "https:" + element.select("a>span>img").attr("src");
             String normalName = element.select("div>h3>a").text();
             String smallName = element.select("div>h3>small").text();
@@ -240,6 +241,7 @@ public class CollectionPresenter implements CollectionContract.Presenter {
             entity.setCollection_type(type);
             entity.setCategory(category);
             entity.setLink_url(linkUrl);
+            entity.setBangumi_id(bangumiId);
             entity.setImage_url(imageUrl);
             entity.setNormal_name(normalName);
             entity.setSmall_name(smallName);

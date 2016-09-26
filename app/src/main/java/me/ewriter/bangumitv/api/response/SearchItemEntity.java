@@ -30,6 +30,9 @@ public class SearchItemEntity {
     /** 返回的数据类型，是漫画还是游戏*/
     private String type;
 
+    /**  番剧 id */
+    private String bangumiId;
+
     public String getLinkUrl() {
         return linkUrl;
     }
@@ -108,5 +111,13 @@ public class SearchItemEntity {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getBangumiId() {
+        return bangumiId;
+    }
+
+    public void setBangumiId(String bangumiId) {
+        this.bangumiId = bangumiId;
     }
 }
