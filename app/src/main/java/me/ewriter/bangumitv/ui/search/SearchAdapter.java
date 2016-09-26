@@ -23,6 +23,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyHolder> 
 
     List<SearchItemEntity> mList;
     Context mContext;
+    onItemClickListener listener;
 
     public SearchAdapter(List<SearchItemEntity> mList, Context mContext) {
         this.mList = mList;
@@ -36,8 +37,8 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyHolder> 
     }
 
     @Override
-    public void onBindViewHolder(MyHolder holder, int position) {
-        SearchItemEntity item = mList.get(position);
+    public void onBindViewHolder(final MyHolder holder, int position) {
+        final SearchItemEntity item = mList.get(position);
         holder.mSearchTitle.setText(item.getNormalName());
         holder.mSearchOutline.setText(item.getInfo());
 
@@ -48,6 +49,21 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyHolder> 
                 .centerCrop()
                 .error(R.drawable.img_on_error)
                 .into(holder.mSearchImg);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onItemClick(holder.mSearchImg, item);
+            }
+        });
+    }
+
+    public interface onItemClickListener {
+        void onItemClick(View view, SearchItemEntity entity);
+    }
+
+    public void setOnItemClickListener(onItemClickListener listener) {
+        this.listener = listener;
     }
 
     @Override

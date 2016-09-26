@@ -22,6 +22,7 @@ public class CollectionItemAdapter extends RecyclerView.Adapter<CollectionItemAd
 
     List<MyCollection> mList;
     Context mContext;
+    onItemClickListener listener;
 
     public CollectionItemAdapter(Context mContext, List<MyCollection> mList) {
         this.mContext = mContext;
@@ -35,8 +36,8 @@ public class CollectionItemAdapter extends RecyclerView.Adapter<CollectionItemAd
     }
 
     @Override
-    public void onBindViewHolder(MyHolder holder, int position) {
-        MyCollection item = mList.get(position);
+    public void onBindViewHolder(final MyHolder holder, int position) {
+        final MyCollection item = mList.get(position);
 
         holder.name.setText(item.getNormal_name());
 
@@ -45,12 +46,27 @@ public class CollectionItemAdapter extends RecyclerView.Adapter<CollectionItemAd
 //        holder.comment.setText(item.getComment());
 
         Picasso.with(mContext)
-                .load(item.getLarge_image_url())
+                .load(item.getCover_image_url())
                 .fit()
                 .centerCrop()
                 .placeholder(R.drawable.img_on_load)
                 .error(R.drawable.img_on_error)
                 .into(holder.image);
+
+        holder.item.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onItemClick(holder.image, item);
+            }
+        });
+    }
+
+    public interface onItemClickListener {
+        void onItemClick(View view, MyCollection collection);
+    }
+
+    public void setOnItemClickListener(onItemClickListener listener) {
+        this.listener = listener;
     }
 
     @Override

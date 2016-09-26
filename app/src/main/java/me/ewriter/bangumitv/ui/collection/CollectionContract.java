@@ -26,7 +26,11 @@ public interface CollectionContract {
         /**下拉刷新时用于强制从网络更新*/
         void forceRefresh(String category, String type);
 
+        /** 未登录，跳转登录界面 */
         void openLogin(Activity activity);
+
+        /** 打开详情页面 */
+        void openBangumiDetail(Activity activity, android.view.View view, MyCollection collection);
     }
 
     interface View extends BaseView<Presenter> {

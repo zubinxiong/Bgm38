@@ -9,6 +9,7 @@
 
     <ImageView
         android:id="@+id/search_img"
+        android:transitionName="img"
         android:layout_width="110dp"
         android:layout_height="110dp" />
 

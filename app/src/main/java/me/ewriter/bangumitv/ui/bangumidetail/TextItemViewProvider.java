@@ -1,22 +1,24 @@
 package me.ewriter.bangumitv.ui.bangumidetail;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import me.drakeet.multitype.ItemViewProvider;
+import me.ewriter.bangumitv.BangumiApp;
 import me.ewriter.bangumitv.R;
+import me.ewriter.bangumitv.ui.login.LoginActivity;
 
 /**
  * Created by Zubin on 2016/9/26.
  */
 
 public class TextItemViewProvider extends ItemViewProvider<TextItem, TextItemViewProvider.TextHolder> {
-
-    private onTextClickListener mTextListener;
 
     @NonNull
     @Override
@@ -26,15 +28,8 @@ public class TextItemViewProvider extends ItemViewProvider<TextItem, TextItemVie
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull TextHolder holder, @NonNull TextItem textItem) {
+    protected void onBindViewHolder(@NonNull TextHolder holder, @NonNull final TextItem textItem) {
         holder.textView.setText(textItem.text);
-
-        holder.textView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mTextListener.onTextClickListener(v);
-            }
-        });
     }
 
     static class TextHolder extends RecyclerView.ViewHolder {
@@ -44,13 +39,5 @@ public class TextItemViewProvider extends ItemViewProvider<TextItem, TextItemVie
             super(itemView);
             textView = (TextView) itemView;
         }
-    }
-
-    public interface onTextClickListener {
-        void onTextClickListener(View view);
-    }
-
-    public void setOnTextClickListener(onTextClickListener listener) {
-        mTextListener = listener;
     }
 }

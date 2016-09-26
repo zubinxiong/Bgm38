@@ -13,6 +13,8 @@ public class SearchItemEntity {
     private String imageUrl;
     /** 自行拼接的 cover 封面图片地址，可能无效*/
     private String coverImageUrl;
+    /** 自行拼接的 large 封面图片地址，可能无效*/
+    private String largeImageUrl;
     /** 中文名 */
     private String normalName;
     /** 日文名 */
@@ -119,5 +121,13 @@ public class SearchItemEntity {
 
     public void setBangumiId(String bangumiId) {
         this.bangumiId = bangumiId;
+    }
+
+    public String getLargeImageUrl() {
+        return largeImageUrl;
+    }
+
+    public void setLargeImageUrl(String largeImageUrl) {
+        this.largeImageUrl = largeImageUrl;
     }
 }

@@ -1,5 +1,6 @@
 package me.ewriter.bangumitv.ui.search;
 
+import android.app.Activity;
 import android.widget.EditText;
 
 import java.util.List;
@@ -28,6 +29,10 @@ public interface SearchContract {
          * @param page
          */
         void searchPerson(String keyword, String type, int page);
+
+
+        /** 打开详情页面 */
+        void openBangumiDetail(Activity activity, android.view.View view, SearchItemEntity entity);
     }
 
     interface View extends BaseView<Presenter> {

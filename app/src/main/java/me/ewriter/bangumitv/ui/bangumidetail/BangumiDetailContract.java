@@ -17,6 +17,8 @@ public interface BangumiDetailContract {
         void requestWebDetail(String subjectId);
 
         void setUpCover(Activity activity, ViewGroup coverGroup, String imageUrl);
+
+        void clickFab(Activity activity, String bangumiId);
     }
 
 
@@ -25,6 +27,6 @@ public interface BangumiDetailContract {
 
         void hideProgress();
 
-        void showError(String error);
+        void showToast(String msg);
     }
 }

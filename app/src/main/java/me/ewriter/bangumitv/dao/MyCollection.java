@@ -15,7 +15,8 @@ public class MyCollection {
     private String category;
     private String link_url;
     private String bangumi_id;
-    private String image_url;
+    private String normal_image_url;
+    private String cover_image_url;
     private String large_image_url;
     private String normal_name;
     private String small_name;
@@ -34,13 +35,14 @@ public class MyCollection {
     }
 
     @Generated
-    public MyCollection(Long id, String collection_type, String category, String link_url, String bangumi_id, String image_url, String large_image_url, String normal_name, String small_name, String info, String rate_number, String rate_total, String comment, String air_day) {
+    public MyCollection(Long id, String collection_type, String category, String link_url, String bangumi_id, String normal_image_url, String cover_image_url, String large_image_url, String normal_name, String small_name, String info, String rate_number, String rate_total, String comment, String air_day) {
         this.id = id;
         this.collection_type = collection_type;
         this.category = category;
         this.link_url = link_url;
         this.bangumi_id = bangumi_id;
-        this.image_url = image_url;
+        this.normal_image_url = normal_image_url;
+        this.cover_image_url = cover_image_url;
         this.large_image_url = large_image_url;
         this.normal_name = normal_name;
         this.small_name = small_name;
@@ -91,12 +93,20 @@ public class MyCollection {
         this.bangumi_id = bangumi_id;
     }
 
-    public String getImage_url() {
-        return image_url;
+    public String getNormal_image_url() {
+        return normal_image_url;
     }
 
-    public void setImage_url(String image_url) {
-        this.image_url = image_url;
+    public void setNormal_image_url(String normal_image_url) {
+        this.normal_image_url = normal_image_url;
+    }
+
+    public String getCover_image_url() {
+        return cover_image_url;
+    }
+
+    public void setCover_image_url(String cover_image_url) {
+        this.cover_image_url = cover_image_url;
     }
 
     public String getLarge_image_url() {

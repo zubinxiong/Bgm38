@@ -85,6 +85,13 @@ public class SearchActivity extends BaseActivity implements SearchContract.View{
                 }
             }
         });
+
+        mDataAdapter.setOnItemClickListener(new SearchAdapter.onItemClickListener() {
+            @Override
+            public void onItemClick(View view, SearchItemEntity entity) {
+                mPresenter.openBangumiDetail(SearchActivity.this, view, entity);
+            }
+        });
     }
 
     private void setupSearchEdit() {

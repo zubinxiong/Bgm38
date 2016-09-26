@@ -2,8 +2,11 @@ package me.ewriter.bangumitv.ui.calendar;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,13 +57,13 @@ public class CalendarPresenter implements CalendarContract.Presenter {
     }
 
     @Override
-    public void openBangumiDetail(Activity activity, BangumiCalendar calendar) {
+    public void openBangumiDetail(Activity activity, View view, BangumiCalendar calendar) {
         Intent intent = new Intent(activity, BangumiDetailActivity.class);
         intent.putExtra("bangumiId", calendar.getBangumi_id()+"");
         intent.putExtra("name", !TextUtils.isEmpty(calendar.getName_cn()) ? calendar.getName_cn() : calendar.getName_jp());
         intent.putExtra("common_url", calendar.getCommon_image());
         intent.putExtra("large_url", calendar.getLarge_image());
-        activity.startActivity(intent);
+        activity.startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(activity, view, "img").toBundle());
     }
 
     @Override

@@ -2,6 +2,9 @@ package me.ewriter.bangumitv.ui.collection;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.text.TextUtils;
+import android.view.View;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -20,6 +23,7 @@ import me.ewriter.bangumitv.dao.MyCollection;
 import me.ewriter.bangumitv.dao.MyCollectionDao;
 import me.ewriter.bangumitv.event.UserLoginEvent;
 import me.ewriter.bangumitv.event.UserLogoutEvent;
+import me.ewriter.bangumitv.ui.bangumidetail.BangumiDetailActivity;
 import me.ewriter.bangumitv.ui.login.LoginActivity;
 import me.ewriter.bangumitv.utils.LogUtil;
 import me.ewriter.bangumitv.utils.PreferencesUtils;
@@ -236,13 +240,16 @@ public class CollectionPresenter implements CollectionContract.Presenter {
 
             // 这个是自己做的，这张图不一定存在
             String coverImageUrl = imageUrl.replace("/s/", "/c/");
+            String largeImageUrl = imageUrl.replace("/s/", "/l/");
 //            LogUtil.d(LogUtil.ZUBIN, "coverImage = " + coverImageUrl);
 
             entity.setCollection_type(type);
             entity.setCategory(category);
             entity.setLink_url(linkUrl);
             entity.setBangumi_id(bangumiId);
-            entity.setImage_url(imageUrl);
+            entity.setNormal_image_url(imageUrl);
+            entity.setCover_image_url(coverImageUrl);
+            entity.setLarge_image_url(largeImageUrl);
             entity.setNormal_name(normalName);
             entity.setSmall_name(smallName);
             entity.setInfo(info);
@@ -250,7 +257,6 @@ public class CollectionPresenter implements CollectionContract.Presenter {
             entity.setAir_day(airDay);
             entity.setRate_number(rateNumber);
             entity.setRate_total(rateTotal);
-            entity.setLarge_image_url(coverImageUrl);
 
             mList.add(entity);
         }
@@ -316,5 +322,15 @@ public class CollectionPresenter implements CollectionContract.Presenter {
     @Override
     public void openLogin(Activity activity) {
         activity.startActivity(new Intent(activity, LoginActivity.class));
+    }
+
+    @Override
+    public void openBangumiDetail(Activity activity, View view, MyCollection collection) {
+        Intent intent = new Intent(activity, BangumiDetailActivity.class);
+        intent.putExtra("bangumiId", collection.getBangumi_id()+"");
+        intent.putExtra("name", !TextUtils.isEmpty(collection.getNormal_name()) ? collection.getNormal_name() : collection.getSmall_name());
+        intent.putExtra("common_url", collection.getCover_image_url());
+        intent.putExtra("large_url", collection.getLarge_image_url());
+        activity.startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(activity, view, "img").toBundle());
     }
 }

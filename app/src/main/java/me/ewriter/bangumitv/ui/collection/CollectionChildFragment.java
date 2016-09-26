@@ -40,7 +40,7 @@ public class CollectionChildFragment extends BaseFragment implements CollectionC
     private int MAX_ONEPAGE = 24;
 
     HeaderAndFooterAdapter mHeaderFooterAdapter;
-    CollectionItemAdapter mAdapter;
+    CollectionItemAdapter mDataAdapter;
 
     private CollectionContract.Presenter mPresenter;
     private boolean isNoMoreData = false;
@@ -99,12 +99,12 @@ public class CollectionChildFragment extends BaseFragment implements CollectionC
     }
 
     private void setupRecyclerView() {
-        mAdapter = new CollectionItemAdapter(getActivity(), mList);
+        mDataAdapter = new CollectionItemAdapter(getActivity(), mList);
         LinearLayoutManager manager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(manager);
         mRecyclerView.setHasFixedSize(true);
 
-        mHeaderFooterAdapter = new HeaderAndFooterAdapter(mAdapter);
+        mHeaderFooterAdapter = new HeaderAndFooterAdapter(mDataAdapter);
 
         mRecyclerView.addItemDecoration(new VertialSpacingItemDecoration(Tools.getPixFromDip(8)));
         mRecyclerView.setAdapter(mHeaderFooterAdapter);
@@ -122,25 +122,15 @@ public class CollectionChildFragment extends BaseFragment implements CollectionC
                     String category = mPresenter.getCategory();
                     mPresenter.requestData(type, category);
                 }
-
-//                if (mList.size() % MAX_ONEPAGE == 0) {
-//                    // 都是24 的整数，说明还有下一页，如果刚好是24个下一页又为空的情况就在refresh 中处理
-//                    RecyclerViewStateUtils.setFooterViewState(getActivity(), mRecyclerView, MAX_ONEPAGE,
-//                            LoadingFooter.State.Loading, null);
-//                    // 当前非刷新状态下加载下一页，避免出现重复请求的情况
-//                    String type = mPresenter.getType(mPosition);
-//                    String category = mPresenter.getCategory();
-//                    mPresenter.requestData(type, category);
-//                } else {
-//                    // 第一页都不足24条就不用显示了，这里虽然设置了显示到底，但是实际不会显示
-//                    // 在setFooterViewState 中限制了不足一页的情况是不会显示的
-//                    RecyclerViewStateUtils.setFooterViewState(getActivity(), mRecyclerView, MAX_ONEPAGE,
-//                            LoadingFooter.State.TheEnd, null);
-//                }
             }
         });
 
-
+        mDataAdapter.setOnItemClickListener(new CollectionItemAdapter.onItemClickListener() {
+            @Override
+            public void onItemClick(View view, MyCollection collection) {
+                mPresenter.openBangumiDetail(getActivity(), view, collection);
+            }
+        });
     }
 
     @Override
@@ -184,7 +174,7 @@ public class CollectionChildFragment extends BaseFragment implements CollectionC
         LogUtil.d(LogUtil.ZUBIN, "return list = " + list.size());
         mList.addAll(list);
         // 这里需要调用数据的adapter 通知更新而不是调用包裹的adapter
-        mAdapter.notifyDataSetChanged();
+        mDataAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -239,7 +229,7 @@ public class CollectionChildFragment extends BaseFragment implements CollectionC
         LogUtil.d(LogUtil.ZUBIN, "onLogoutEvent + " + mPosition);
         if (mList != null) {
             mList.clear();
-            mAdapter.notifyDataSetChanged();
+            mDataAdapter.notifyDataSetChanged();
         }
         isNoMoreData = false;
         loadData();

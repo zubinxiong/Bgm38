@@ -13,6 +13,8 @@ import me.drakeet.multitype.MultiTypePool;
 import me.ewriter.bangumitv.constants.MyConstants;
 import me.ewriter.bangumitv.dao.DaoMaster;
 import me.ewriter.bangumitv.dao.DaoSession;
+import me.ewriter.bangumitv.ui.bangumidetail.CharacterItem;
+import me.ewriter.bangumitv.ui.bangumidetail.CharacterItemViewProvider;
 import me.ewriter.bangumitv.ui.bangumidetail.TextItem;
 import me.ewriter.bangumitv.ui.bangumidetail.TextItemViewProvider;
 import me.ewriter.bangumitv.utils.PreferencesUtils;
@@ -47,6 +49,7 @@ public class BangumiApp extends Application {
 
     private void registerMutiType() {
         MultiTypePool.register(TextItem.class, new TextItemViewProvider());
+        MultiTypePool.register(CharacterItem.class, new CharacterItemViewProvider());
     }
 
     @SuppressWarnings("WrongConstant")

@@ -1,6 +1,7 @@
 package me.ewriter.bangumitv.ui.bangumidetail;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
@@ -17,11 +18,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import me.ewriter.bangumitv.BangumiApp;
+import me.ewriter.bangumitv.R;
 import me.ewriter.bangumitv.api.ApiManager;
+import me.ewriter.bangumitv.api.LoginManager;
 import me.ewriter.bangumitv.api.entity.AnimeCharacterEntity;
 import me.ewriter.bangumitv.api.entity.AnimeDetailEntity;
 import me.ewriter.bangumitv.api.entity.CommentEntity;
 import me.ewriter.bangumitv.api.entity.TagEntity;
+import me.ewriter.bangumitv.ui.login.LoginActivity;
 import me.ewriter.bangumitv.utils.BlurUtil;
 import me.ewriter.bangumitv.utils.LogUtil;
 import rx.Observable;
@@ -80,7 +85,7 @@ public class BangumiDetailPresenter implements BangumiDetailContract.Presenter {
                     public void onError(Throwable e) {
                         LogUtil.d(LogUtil.ZUBIN, "requestWebDetail onError ;" + e.getMessage());
                         mDetailView.hideProgress();
-                        mDetailView.showError(e.getMessage());
+                        mDetailView.showToast(e.getMessage());
                     }
 
                     @Override
@@ -134,7 +139,19 @@ public class BangumiDetailPresenter implements BangumiDetailContract.Presenter {
         mSubscriptions.add(subscription);
     }
 
+    @Override
+    public void clickFab(Activity activity, String bangumiId) {
+        if (!LoginManager.isLogin(BangumiApp.sAppCtx)) {
+            mDetailView.showToast(BangumiApp.sAppCtx.getString(R.string.not_login_hint));
+            Intent intent = new Intent(activity, LoginActivity.class);
+            activity.startActivity(intent);
+        } else {
+
+        }
+    }
+
     /** 解析网页动画概览 */
+    // FIXME: 2016/9/26 这里应该直接返回items 类型的数据，供 adapter 直接调用
     private AnimeDetailEntity parseAnimeDetail(String html) {
 
         AnimeDetailEntity animeDetailEntity = new AnimeDetailEntity();
@@ -219,7 +236,7 @@ public class BangumiDetailPresenter implements BangumiDetailContract.Presenter {
             AnimeCharacterEntity entity = new AnimeCharacterEntity();
 
             // 角色小头像图片
-            String role_image_url = element.select("div>strong>a>span>img").attr("src");
+            String role_image_url = "https:" + element.select("div>strong>a>span>img").attr("src");
             entity.setRoleImageUrl(role_image_url);
 
             // 日文名字

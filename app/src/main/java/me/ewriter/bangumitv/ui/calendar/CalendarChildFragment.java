@@ -90,7 +90,7 @@ public class CalendarChildFragment extends BaseFragment implements CalendarContr
         mAdapter.setOnCalendarItemClickListener(new CalendarItemAdapter.onCalendarItemListener() {
             @Override
             public void onCalendarClick(View view, BangumiCalendar calendar) {
-                mPresenter.openBangumiDetail(getActivity(), calendar);
+                mPresenter.openBangumiDetail(getActivity(), view, calendar);
             }
         });
     }
