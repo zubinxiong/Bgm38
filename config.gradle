@@ -10,7 +10,6 @@ ext {
             "convert-gson" : "com.squareup.retrofit2:converter-gson:2.1.0",
             "logging-interceptor" : "com.squareup.okhttp3:logging-interceptor:3.4.1",
             "greendao" : "org.greenrobot:greendao:3.0.1",
-            "eventbus" : "org.greenrobot:eventbus:3.0.0",
             "circleimageview" : "de.hdodenhof:circleimageview:2.1.0",
             "bugly" : "com.tencent.bugly:crashreport:latest.release",
             "easypermissions" : "pub.devrel:easypermissions:0.1.9",
@@ -22,8 +21,10 @@ ext {
             "convert-scalars" : "com.squareup.retrofit2:converter-scalars:2.1.0",
             "multitype" : "me.drakeet.multitype:multitype:2.0.0",
             "debug-leakcanary" : "com.squareup.leakcanary:leakcanary-android:1.4-beta2",
-            "release-leakcanary" : "com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2"
+            "release-leakcanary" : "com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2",
+            "discrete-seekbar" : "org.adw.library:discrete-seekbar:1.0.1"
     ]
+
     android = [
             compileSdkVersion : 23,
             buildToolsVersion : "23.0.2",

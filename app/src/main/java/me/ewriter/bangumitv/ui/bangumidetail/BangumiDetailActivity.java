@@ -1,30 +1,46 @@
 package me.ewriter.bangumitv.ui.bangumidetail;
 
+import android.content.DialogInterface;
 import android.os.Build;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.view.GravityCompat;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.AppCompatSpinner;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.transition.Fade;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import org.adw.library.widgets.discreteseekbar.DiscreteSeekBar;
+
 import me.drakeet.multitype.Items;
 import me.drakeet.multitype.MultiTypeAdapter;
 import me.ewriter.bangumitv.R;
+import me.ewriter.bangumitv.api.ApiManager;
+import me.ewriter.bangumitv.api.LoginManager;
+import me.ewriter.bangumitv.api.response.SubjectComment;
+import me.ewriter.bangumitv.api.response.SubjectProgress;
 import me.ewriter.bangumitv.base.BaseActivity;
+import me.ewriter.bangumitv.utils.LogUtil;
 import me.ewriter.bangumitv.utils.ToastUtils;
 import me.ewriter.bangumitv.utils.Tools;
 import me.ewriter.bangumitv.widget.HorizonSpacingItemDecoration;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by zubin on 2016/9/24.
@@ -143,23 +159,85 @@ public class BangumiDetailActivity extends BaseActivity implements BangumiDetail
     }
 
     @Override
-    public void setSummary(String text) {
-        mCoverSummary.setText(text);
-    }
-
-    @Override
-    public void setScore(String score) {
-        mCoverScore.setText(String.format(getString(R.string.score), score));
-    }
-
-    @Override
-    public void setTag(String tag) {
-        mCoverTag.setText(String.format(getString(R.string.tags), tag));
-    }
-
-    @Override
     public void setFabVisible(int visible) {
         mFab.setVisibility(visible);
+    }
+
+    @Override
+    public void showEvaluationDialog() {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        View itemView = LayoutInflater.from(this).inflate(R.layout.view_evaluation, null);
+        // spinner
+        final AppCompatSpinner spinner = (AppCompatSpinner) itemView.findViewById(R.id.spanner);
+        String[] mItems = getResources().getStringArray(R.array.spinner_name);
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_dropdown_item ,mItems);
+        spinner.setAdapter(spinnerAdapter);
+
+        // 评分
+        final TextView mSeekBarTitle = (TextView) itemView.findViewById(R.id.rating_title);
+        final DiscreteSeekBar mSeekBar = (DiscreteSeekBar) itemView.findViewById(R.id.rating_seekbar);
+        mSeekBar.setOnProgressChangeListener(new DiscreteSeekBar.OnProgressChangeListener() {
+            @Override
+            public void onProgressChanged(DiscreteSeekBar seekBar, int value, boolean fromUser) {
+                String text = getString(R.string.rate_number_hint) + ": " + value;
+                mSeekBarTitle.setText(text);
+            }
+
+            @Override
+            public void onStartTrackingTouch(DiscreteSeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(DiscreteSeekBar seekBar) {
+
+            }
+        });
+
+        // 详情
+        final TextInputLayout mRatingDetail = (TextInputLayout) itemView.findViewById(R.id.rate_detail);
+
+        // TODO: 2016/9/27 插入旧的数据
+//        if (mSubjectComment != null) {
+//            if (mSubjectComment.getRating() != 0) {
+//                mSeekBar.setProgress(mSubjectComment.getRating());
+//            }
+//            mRatingDetail.getEditText().setText(mSubjectComment.getComment());
+//
+//
+//            if (mSubjectComment.getStatus() != null) {
+//                spinner.setSelection(mSubjectComment.getStatus().getId() - 1);
+//            }
+//        }
+
+        builder.setView(itemView);
+        builder.setTitle(R.string.my_comment);
+        builder.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        builder.setPositiveButton(getString(R.string.submit), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(final DialogInterface dialog, int which) {
+
+                String[] status = getResources().getStringArray(R.array.spinner_value);
+                int index = spinner.getSelectedItemPosition();
+                int rating = mSeekBar.getProgress();
+                LogUtil.d(LogUtil.ZUBIN, "rating = " + rating);
+                String comment = mRatingDetail.getEditText().getText().toString().trim();
+
+                mPresenter.updateComment(mBangumiId, status[index], rating, comment);
+                dialog.dismiss();
+            }
+        });
+
+        builder.show();
+
     }
 
     @Override
@@ -172,6 +250,13 @@ public class BangumiDetailActivity extends BaseActivity implements BangumiDetail
     @Override
     public void showToast(String msg) {
         ToastUtils.showShortToast(this, msg);
+    }
+
+    @Override
+    public void updateHeader(String summary, String tag, String score) {
+        mCoverSummary.setText(summary);
+        mCoverTag.setText(String.format(getString(R.string.tags), tag));
+        mCoverScore.setText(String.format(getString(R.string.score), score));
     }
 
     @Override

@@ -20,6 +20,8 @@ public interface BangumiDetailContract {
         void setUpCover(Activity activity, ViewGroup coverGroup, String imageUrl);
 
         void clickFab(Activity activity, String bangumiId);
+
+        void updateComment(String mBangumiID, String status, int rating, String comment);
     }
 
 
@@ -30,12 +32,10 @@ public interface BangumiDetailContract {
 
         void showToast(String msg);
 
-        void setSummary(String text);
-
-        void setScore(String score);
-
-        void setTag(String tag);
+        void updateHeader(String summary, String tag, String score);
 
         void setFabVisible(int visible);
+
+        void showEvaluationDialog();
     }
 }

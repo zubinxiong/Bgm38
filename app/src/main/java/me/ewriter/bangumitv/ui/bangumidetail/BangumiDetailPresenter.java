@@ -28,6 +28,7 @@ import me.ewriter.bangumitv.api.entity.AnimeCharacterEntity;
 import me.ewriter.bangumitv.api.entity.AnimeDetailEntity;
 import me.ewriter.bangumitv.api.entity.CommentEntity;
 import me.ewriter.bangumitv.api.entity.TagEntity;
+import me.ewriter.bangumitv.api.response.SubjectComment;
 import me.ewriter.bangumitv.ui.bangumidetail.adapter.CharacterList;
 import me.ewriter.bangumitv.ui.bangumidetail.adapter.TextItem;
 import me.ewriter.bangumitv.ui.bangumidetail.adapter.TitleItem;
@@ -97,9 +98,7 @@ public class BangumiDetailPresenter implements BangumiDetailContract.Presenter {
 
                     @Override
                     public void onNext(Items items) {
-                        mDetailView.setSummary(summaryStr);
-                        mDetailView.setTag(tagStr);
-                        mDetailView.setScore(scoreStr);
+                        mDetailView.updateHeader(summaryStr, tagStr, scoreStr);
                         mDetailView.setFabVisible(View.VISIBLE);
                         mDetailView.refresh(items);
                         mDetailView.hideProgress();
@@ -157,8 +156,34 @@ public class BangumiDetailPresenter implements BangumiDetailContract.Presenter {
             Intent intent = new Intent(activity, LoginActivity.class);
             activity.startActivity(intent);
         } else {
-
+            mDetailView.showEvaluationDialog();
         }
+    }
+
+    @Override
+    public void updateComment(String mBangumiID, String status, int rating, String comment) {
+        Subscription subscription = ApiManager.getBangumiInstance()
+                .updateComment(mBangumiID, status, rating, comment, LoginManager.getAuthString(BangumiApp.sAppCtx))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<SubjectComment>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        mDetailView.showToast(e.getMessage());
+                    }
+
+                    @Override
+                    public void onNext(SubjectComment subjectComment) {
+                        mDetailView.showToast(BangumiApp.sAppCtx.getString(R.string.update_comment));
+                    }
+                });
+
+        mSubscriptions.add(subscription);
     }
 
     /** 解析网页动画概览 */
@@ -255,10 +280,8 @@ public class BangumiDetailPresenter implements BangumiDetailContract.Presenter {
 
         // 标签栏
         Elements tag = document.select("div.subject_tag_section>div.inner>a");
-//        List<TagEntity> tagList = new ArrayList<>();
         for (int tagIndex = 0; tagIndex < tag.size(); tagIndex++) {
             Element element = tag.get(tagIndex);
-//            TagEntity entity = new TagEntity();
 
             String tag_name = element.text();
             String tag_src = element.attr("href");
@@ -268,13 +291,19 @@ public class BangumiDetailPresenter implements BangumiDetailContract.Presenter {
             } else {
                 tagStr += tag_name;
             }
-
-//            entity.setTagName(tag_name);
-//            entity.setTagUrl(tag_src);
-
-//            tagList.add(entity);
         }
-//        animeDetailEntity.setTagList(tagList);
+
+        // 观看进度
+        Elements prg_list = document.select("ul.prg_list>li");
+        for (int i = 0; i < prg_list.size(); i++) {
+            Element element = prg_list.get(i);
+            // /ep/638065
+            String url = element.select("a").attr("href");
+            // load-epinfo epBtnWatched
+            String state = element.select("a").attr("class");
+            //  ep.5 OCHIMUSHA ～超能力と僕～
+            String name = element.select("a").attr("title");
+        }
 
 
 
@@ -318,18 +347,6 @@ public class BangumiDetailPresenter implements BangumiDetailContract.Presenter {
             commentList.add(entity);
         }
         animeDetailEntity.setCommentList(commentList);
-
-        // 观看进度
-        Elements prg_list = document.select("ul.prg_list>li");
-        for (int i = 0; i < prg_list.size(); i++) {
-            Element element = prg_list.get(i);
-            // /ep/638065
-            String url = element.select("a").attr("href");
-            // load-epinfo epBtnWatched
-            String state = element.select("a").attr("class");
-            //  ep.5 OCHIMUSHA ～超能力と僕～
-            String name = element.select("a").attr("title");
-        }
 
         // TODO: 2016/9/24   关联条目 ,有好多，暂时没想好怎么放，先不做
 

@@ -85,7 +85,6 @@ dependencies {
     compile rootProject.ext.dependencies["logging-interceptor"]
 
     compile rootProject.ext.dependencies["greendao"]
-    compile rootProject.ext.dependencies["eventbus"]
 
     compile rootProject.ext.dependencies["circleimageview"]
     compile rootProject.ext.dependencies["customtabs"]
@@ -101,6 +100,7 @@ dependencies {
     compile rootProject.ext.dependencies["jsoup"]
     compile rootProject.ext.dependencies["convert-scalars"]
     compile rootProject.ext.dependencies["multitype"]
+    compile rootProject.ext.dependencies["discrete-seekbar"]
 
     debugCompile rootProject.ext.dependencies["debug-leakcanary"]
     releaseCompile rootProject.ext.dependencies["release-leakcanary"]
