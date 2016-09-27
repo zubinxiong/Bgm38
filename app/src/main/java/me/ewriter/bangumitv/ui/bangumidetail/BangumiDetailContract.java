@@ -22,6 +22,7 @@ public interface BangumiDetailContract {
         void clickFab(Activity activity, String bangumiId);
 
         void updateComment(String mBangumiID, String status, int rating, String comment);
+
     }
 
 
@@ -37,5 +38,7 @@ public interface BangumiDetailContract {
         void setFabVisible(int visible);
 
         void showEvaluationDialog();
+
+        void insertComment(String comment, int status, int rating);
     }
 }

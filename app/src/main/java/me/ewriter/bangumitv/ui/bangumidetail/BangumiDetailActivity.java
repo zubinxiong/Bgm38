@@ -29,18 +29,11 @@ import org.adw.library.widgets.discreteseekbar.DiscreteSeekBar;
 import me.drakeet.multitype.Items;
 import me.drakeet.multitype.MultiTypeAdapter;
 import me.ewriter.bangumitv.R;
-import me.ewriter.bangumitv.api.ApiManager;
-import me.ewriter.bangumitv.api.LoginManager;
-import me.ewriter.bangumitv.api.response.SubjectComment;
-import me.ewriter.bangumitv.api.response.SubjectProgress;
 import me.ewriter.bangumitv.base.BaseActivity;
 import me.ewriter.bangumitv.utils.LogUtil;
 import me.ewriter.bangumitv.utils.ToastUtils;
 import me.ewriter.bangumitv.utils.Tools;
 import me.ewriter.bangumitv.widget.HorizonSpacingItemDecoration;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 /**
  * Created by zubin on 2016/9/24.
@@ -62,6 +55,10 @@ public class BangumiDetailActivity extends BaseActivity implements BangumiDetail
     private String mCommonImageUrl;
     private String mLargeImageUrl;
     private String mBangumiName;
+
+    // 插入的数据
+    int evRating, evStatus;
+    String evComment;
 
     @Override
     protected int getContentViewResId() {
@@ -199,18 +196,13 @@ public class BangumiDetailActivity extends BaseActivity implements BangumiDetail
         // 详情
         final TextInputLayout mRatingDetail = (TextInputLayout) itemView.findViewById(R.id.rate_detail);
 
-        // TODO: 2016/9/27 插入旧的数据
-//        if (mSubjectComment != null) {
-//            if (mSubjectComment.getRating() != 0) {
-//                mSeekBar.setProgress(mSubjectComment.getRating());
-//            }
-//            mRatingDetail.getEditText().setText(mSubjectComment.getComment());
-//
-//
-//            if (mSubjectComment.getStatus() != null) {
-//                spinner.setSelection(mSubjectComment.getStatus().getId() - 1);
-//            }
-//        }
+        if (evRating >= 0) {
+            mSeekBar.setProgress(evRating);
+        }
+        mRatingDetail.getEditText().setText(evComment);
+        if (evStatus > 0) {
+            spinner.setSelection(evStatus - 1);
+        }
 
         builder.setView(itemView);
         builder.setTitle(R.string.my_comment);
@@ -241,6 +233,13 @@ public class BangumiDetailActivity extends BaseActivity implements BangumiDetail
     }
 
     @Override
+    public void insertComment(String comment, int status, int rating) {
+        evComment = comment;
+        evRating = rating;
+        evStatus = status;
+    }
+
+    @Override
     public void hideProgress() {
         if (mProgressbar != null) {
             mProgressbar.setVisibility(View.GONE);
@@ -249,7 +248,7 @@ public class BangumiDetailActivity extends BaseActivity implements BangumiDetail
 
     @Override
     public void showToast(String msg) {
-        ToastUtils.showShortToast(this, msg);
+        ToastUtils.showShortToast(msg);
     }
 
     @Override

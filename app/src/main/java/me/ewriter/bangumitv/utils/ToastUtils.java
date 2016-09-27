@@ -78,6 +78,17 @@ public class ToastUtils {
 //                }
 //            });
         }
+    }
+
+    public static void showShortToast(String msg) {
+        if (toast != null) {
+            toast.cancel();
+        }
+
+        if (Thread.currentThread() == Looper.getMainLooper().getThread()) {
+            toast = Toast.makeText(BangumiApp.sAppCtx, msg, Toast.LENGTH_SHORT);
+            toast.show();
+        }
 
     }
 }

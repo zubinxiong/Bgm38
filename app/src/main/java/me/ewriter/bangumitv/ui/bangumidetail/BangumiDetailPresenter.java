@@ -41,6 +41,7 @@ import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func1;
+import rx.functions.Func2;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 
@@ -52,7 +53,12 @@ public class BangumiDetailPresenter implements BangumiDetailContract.Presenter {
 
     private CompositeSubscription mSubscriptions;
     private BangumiDetailContract.View mDetailView;
+    // cover信息
     String summaryStr = "", tagStr = "", scoreStr = "";
+    // 评价信息
+    int evRating = 0;
+    String evComment = "";
+    int evStatus = -1;
 
 
     public BangumiDetailPresenter(BangumiDetailContract.View mDetailView) {
@@ -72,16 +78,55 @@ public class BangumiDetailPresenter implements BangumiDetailContract.Presenter {
     }
 
     @Override
-    public void requestWebDetail(String subjectId) {
-        Subscription subscription = ApiManager.getWebInstance()
-                .getAnimeDetail(subjectId)
-                .subscribeOn(Schedulers.io())
-                .map(new Func1<String, Items>() {
+    public void requestWebDetail(final String subjectId) {
+//        Subscription subscription = ApiManager.getWebInstance()
+//                .getAnimeDetail(subjectId)
+//                .subscribeOn(Schedulers.io())
+//                .map(new Func1<String, Items>() {
+//                    @Override
+//                    public Items call(String s) {
+//                        return parseAnimeDetail(s);
+//                    }
+//                })
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(new Subscriber<Items>() {
+//                    @Override
+//                    public void onCompleted() {
+//                        LogUtil.d(LogUtil.ZUBIN, "requestWebDetail onCompleted");
+//                    }
+//
+//                    @Override
+//                    public void onError(Throwable e) {
+//                        LogUtil.d(LogUtil.ZUBIN, "requestWebDetail onError ;" + e.getMessage());
+//                        mDetailView.hideProgress();
+//                        mDetailView.showToast(e.getMessage());
+//                    }
+//
+//                    @Override
+//                    public void onNext(Items items) {
+//                        mDetailView.updateHeader(summaryStr, tagStr, scoreStr);
+//                        mDetailView.setFabVisible(View.VISIBLE);
+//                        mDetailView.refresh(items);
+//                        mDetailView.hideProgress();
+//                        LogUtil.d(LogUtil.ZUBIN, "requestWebDetail onNext");
+//                    }
+//                });
+
+        Subscription subscription = Observable.zip(ApiManager.getWebInstance().getAnimeDetail(subjectId)
+                , ApiManager.getBangumiInstance().
+                        getSubjectComment(subjectId, LoginManager.getAuthString(BangumiApp.sAppCtx))
+                , new Func2<String, SubjectComment, Items>() {
                     @Override
-                    public Items call(String s) {
+                    public Items call(String s, SubjectComment subjectComment) {
+                        if (subjectComment != null) {
+                            evComment = subjectComment.getComment();
+                            evRating = subjectComment.getRating();
+                            evStatus = subjectComment.getStatus().getId();
+                        }
                         return parseAnimeDetail(s);
                     }
                 })
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<Items>() {
                     @Override
@@ -99,6 +144,7 @@ public class BangumiDetailPresenter implements BangumiDetailContract.Presenter {
                     @Override
                     public void onNext(Items items) {
                         mDetailView.updateHeader(summaryStr, tagStr, scoreStr);
+                        mDetailView.insertComment(evComment, evStatus, evRating);
                         mDetailView.setFabVisible(View.VISIBLE);
                         mDetailView.refresh(items);
                         mDetailView.hideProgress();
@@ -188,7 +234,7 @@ public class BangumiDetailPresenter implements BangumiDetailContract.Presenter {
 
     /** 解析网页动画概览 */
     private Items parseAnimeDetail(String html) {
-
+        LogUtil.d(LogUtil.ZUBIN, "parseDetail thread = " + Thread.currentThread());
         Items items = new Items();
 
         AnimeDetailEntity animeDetailEntity = new AnimeDetailEntity();
