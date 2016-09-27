@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
+import android.view.View;
 import android.view.ViewGroup;
 
 import com.squareup.picasso.Picasso;
@@ -99,6 +100,7 @@ public class BangumiDetailPresenter implements BangumiDetailContract.Presenter {
                         mDetailView.setSummary(summaryStr);
                         mDetailView.setTag(tagStr);
                         mDetailView.setScore(scoreStr);
+                        mDetailView.setFabVisible(View.VISIBLE);
                         mDetailView.refresh(items);
                         mDetailView.hideProgress();
                         LogUtil.d(LogUtil.ZUBIN, "requestWebDetail onNext");
@@ -167,7 +169,13 @@ public class BangumiDetailPresenter implements BangumiDetailContract.Presenter {
         AnimeDetailEntity animeDetailEntity = new AnimeDetailEntity();
         Document document = Jsoup.parse(html);
 
-        // 左侧列表
+        // 剧情简介
+        items.add(new TitleItem(BangumiApp.sAppCtx.getString(R.string.bangumi_detail_summary), R.mipmap.ic_launcher));
+        String summary = document.select("div#subject_summary").text().trim();
+        summaryStr = summary;
+        items.add(new TextItem(summary));
+
+        // 左侧列表, 外面只有简介，点击进入后还有制作人员
         Elements li = document.select("div.infobox>ul#infobox>li");
         List<String> introList = new ArrayList<>();
         String showInfo = "";
@@ -197,18 +205,8 @@ public class BangumiDetailPresenter implements BangumiDetailContract.Presenter {
 //                String href_url = href.attr("href");
 //            }
         }
-        if (introList.size() > 6) {
-            items.add(new TitleMoreItem(BangumiApp.sAppCtx.getString(R.string.bangumi_detail_content), R.mipmap.ic_launcher));
-        } else {
-            items.add(new TitleItem(BangumiApp.sAppCtx.getString(R.string.bangumi_detail_content), R.mipmap.ic_launcher));
-        }
+        items.add(new TitleMoreItem(BangumiApp.sAppCtx.getString(R.string.bangumi_detail_content), R.mipmap.ic_launcher));
         items.add(new TextItem(showInfo));
-
-        // 剧情简介
-        items.add(new TitleItem(BangumiApp.sAppCtx.getString(R.string.bangumi_detail_summary), R.mipmap.ic_launcher));
-        String summary = document.select("div#subject_summary").text().trim();
-        summaryStr = summary;
-        items.add(new TextItem(summary));
 
 
         // 角色介绍, 可能不全
@@ -223,6 +221,9 @@ public class BangumiDetailPresenter implements BangumiDetailContract.Presenter {
             // 角色小头像图片
             String role_image_url = "https:" + element.select("div>strong>a>span>img").attr("src");
             entity.setRoleImageUrl(role_image_url);
+            // 下列链接为脑补，不一定有
+            String large_mage_url = role_image_url.replace("/s/", "/l/");
+            entity.setRoleLargeImageUrl(large_mage_url);
 
             // 日文名字
             String role_name_jp = element.select("div>strong>a").text();
@@ -317,6 +318,18 @@ public class BangumiDetailPresenter implements BangumiDetailContract.Presenter {
             commentList.add(entity);
         }
         animeDetailEntity.setCommentList(commentList);
+
+        // 观看进度
+        Elements prg_list = document.select("ul.prg_list>li");
+        for (int i = 0; i < prg_list.size(); i++) {
+            Element element = prg_list.get(i);
+            // /ep/638065
+            String url = element.select("a").attr("href");
+            // load-epinfo epBtnWatched
+            String state = element.select("a").attr("class");
+            //  ep.5 OCHIMUSHA ～超能力と僕～
+            String name = element.select("a").attr("title");
+        }
 
         // TODO: 2016/9/24   关联条目 ,有好多，暂时没想好怎么放，先不做
 

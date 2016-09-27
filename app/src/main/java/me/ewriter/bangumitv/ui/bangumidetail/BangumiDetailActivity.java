@@ -23,6 +23,8 @@ import me.drakeet.multitype.MultiTypeAdapter;
 import me.ewriter.bangumitv.R;
 import me.ewriter.bangumitv.base.BaseActivity;
 import me.ewriter.bangumitv.utils.ToastUtils;
+import me.ewriter.bangumitv.utils.Tools;
+import me.ewriter.bangumitv.widget.HorizonSpacingItemDecoration;
 
 /**
  * Created by zubin on 2016/9/24.
@@ -77,6 +79,7 @@ public class BangumiDetailActivity extends BaseActivity implements BangumiDetail
     }
 
     private void setUpRecyclerView() {
+        mRecyclerView.addItemDecoration(new HorizonSpacingItemDecoration(Tools.getPixFromDip(16)));
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
     }
 
@@ -152,6 +155,11 @@ public class BangumiDetailActivity extends BaseActivity implements BangumiDetail
     @Override
     public void setTag(String tag) {
         mCoverTag.setText(String.format(getString(R.string.tags), tag));
+    }
+
+    @Override
+    public void setFabVisible(int visible) {
+        mFab.setVisibility(visible);
     }
 
     @Override

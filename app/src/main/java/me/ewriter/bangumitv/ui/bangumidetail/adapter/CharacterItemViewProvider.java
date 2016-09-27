@@ -12,6 +12,7 @@ import java.util.List;
 import me.drakeet.multitype.ItemViewProvider;
 import me.ewriter.bangumitv.R;
 import me.ewriter.bangumitv.api.entity.AnimeCharacterEntity;
+import me.ewriter.bangumitv.widget.GridSpacingItemDecoration;
 
 /**
  * Created by Zubin on 2016/9/27.
@@ -44,6 +45,7 @@ public class CharacterItemViewProvider extends ItemViewProvider<CharacterList, C
             adapter = new CharacterAdapter();
             recyclerView.setNestedScrollingEnabled(false);
             recyclerView.setLayoutManager(layoutManager);
+            recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, 20, false));
             recyclerView.setAdapter(adapter);
         }
 

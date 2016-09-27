@@ -38,10 +38,11 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.View
         AnimeCharacterEntity characterItem = mList.get(position);
 
         Picasso.with(holder.mNameCn.getContext())
-                .load(characterItem.getRoleImageUrl())
+                .load(characterItem.getRoleLargeImageUrl())
                 .placeholder(R.drawable.img_on_load)
                 .error(R.drawable.img_on_error)
                 .into(holder.mAvatar);
+
         if (!TextUtils.isEmpty(characterItem.getRoleNameCn())) {
             holder.mNameCn.setText(characterItem.getRoleNameCn());
         } else {

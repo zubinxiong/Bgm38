@@ -35,5 +35,7 @@ public interface BangumiDetailContract {
         void setScore(String score);
 
         void setTag(String tag);
+
+        void setFabVisible(int visible);
     }
 }

@@ -8,12 +8,21 @@ package me.ewriter.bangumitv.api.entity;
 
 public class AnimeCharacterEntity {
     String roleImageUrl;
+    String roleLargeImageUrl;
     String roleNameJp;
     String roleUrl;
     String roleType;
     String roleNameCn;
     String cvName;
     String cvUrl;
+
+    public String getRoleLargeImageUrl() {
+        return roleLargeImageUrl;
+    }
+
+    public void setRoleLargeImageUrl(String roleLargeImageUrl) {
+        this.roleLargeImageUrl = roleLargeImageUrl;
+    }
 
     public String getRoleImageUrl() {
         return roleImageUrl;
