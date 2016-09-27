@@ -15,13 +15,20 @@ import me.ewriter.bangumitv.base.BaseView;
 public interface BangumiDetailContract {
 
     interface Presenter extends BasePresenter {
+        /** zip 请求网页概览及评论 */
         void requestWebDetail(String subjectId);
 
+        /** 处理封面的模糊效果*/
         void setUpCover(Activity activity, ViewGroup coverGroup, String imageUrl);
 
+        /**  处理fab 点击的弹出效果 */
         void clickFab(Activity activity, String bangumiId);
 
+        /** 提交用户的评价 */
         void updateComment(String mBangumiID, String status, int rating, String comment);
+
+        /** 分享*/
+        void shareDetail(String bangumid, String name, Activity activity);
 
     }
 

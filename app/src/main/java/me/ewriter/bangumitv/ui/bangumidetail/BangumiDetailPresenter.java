@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -19,23 +20,28 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import me.drakeet.multitype.Item;
 import me.drakeet.multitype.Items;
 import me.ewriter.bangumitv.BangumiApp;
 import me.ewriter.bangumitv.R;
 import me.ewriter.bangumitv.api.ApiManager;
 import me.ewriter.bangumitv.api.LoginManager;
+import me.ewriter.bangumitv.api.WebApi;
 import me.ewriter.bangumitv.api.entity.AnimeCharacterEntity;
 import me.ewriter.bangumitv.api.entity.AnimeDetailEntity;
+import me.ewriter.bangumitv.api.entity.AnimeEpEntity;
 import me.ewriter.bangumitv.api.entity.CommentEntity;
 import me.ewriter.bangumitv.api.entity.TagEntity;
 import me.ewriter.bangumitv.api.response.SubjectComment;
 import me.ewriter.bangumitv.ui.bangumidetail.adapter.CharacterList;
+import me.ewriter.bangumitv.ui.bangumidetail.adapter.EpList;
 import me.ewriter.bangumitv.ui.bangumidetail.adapter.TextItem;
 import me.ewriter.bangumitv.ui.bangumidetail.adapter.TitleItem;
 import me.ewriter.bangumitv.ui.bangumidetail.adapter.TitleMoreItem;
 import me.ewriter.bangumitv.ui.login.LoginActivity;
 import me.ewriter.bangumitv.utils.BlurUtil;
 import me.ewriter.bangumitv.utils.LogUtil;
+import me.ewriter.bangumitv.utils.ToastUtils;
 import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;
@@ -44,6 +50,8 @@ import rx.functions.Func1;
 import rx.functions.Func2;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
+
+import static me.ewriter.bangumitv.api.ApiManager.WEB_BASE_URL;
 
 /**
  * Created by zubin on 2016/9/24.
@@ -79,39 +87,6 @@ public class BangumiDetailPresenter implements BangumiDetailContract.Presenter {
 
     @Override
     public void requestWebDetail(final String subjectId) {
-//        Subscription subscription = ApiManager.getWebInstance()
-//                .getAnimeDetail(subjectId)
-//                .subscribeOn(Schedulers.io())
-//                .map(new Func1<String, Items>() {
-//                    @Override
-//                    public Items call(String s) {
-//                        return parseAnimeDetail(s);
-//                    }
-//                })
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(new Subscriber<Items>() {
-//                    @Override
-//                    public void onCompleted() {
-//                        LogUtil.d(LogUtil.ZUBIN, "requestWebDetail onCompleted");
-//                    }
-//
-//                    @Override
-//                    public void onError(Throwable e) {
-//                        LogUtil.d(LogUtil.ZUBIN, "requestWebDetail onError ;" + e.getMessage());
-//                        mDetailView.hideProgress();
-//                        mDetailView.showToast(e.getMessage());
-//                    }
-//
-//                    @Override
-//                    public void onNext(Items items) {
-//                        mDetailView.updateHeader(summaryStr, tagStr, scoreStr);
-//                        mDetailView.setFabVisible(View.VISIBLE);
-//                        mDetailView.refresh(items);
-//                        mDetailView.hideProgress();
-//                        LogUtil.d(LogUtil.ZUBIN, "requestWebDetail onNext");
-//                    }
-//                });
-
         Subscription subscription = Observable.zip(ApiManager.getWebInstance().getAnimeDetail(subjectId)
                 , ApiManager.getBangumiInstance().
                         getSubjectComment(subjectId, LoginManager.getAuthString(BangumiApp.sAppCtx))
@@ -121,7 +96,9 @@ public class BangumiDetailPresenter implements BangumiDetailContract.Presenter {
                         if (subjectComment != null) {
                             evComment = subjectComment.getComment();
                             evRating = subjectComment.getRating();
-                            evStatus = subjectComment.getStatus().getId();
+                            if (subjectComment.getStatus() != null) {
+                                evStatus = subjectComment.getStatus().getId();
+                            }
                         }
                         return parseAnimeDetail(s);
                     }
@@ -232,6 +209,20 @@ public class BangumiDetailPresenter implements BangumiDetailContract.Presenter {
         mSubscriptions.add(subscription);
     }
 
+    @Override
+    public void shareDetail(String bangumid, String name, Activity activity) {
+        if (!TextUtils.isEmpty(summaryStr) || !TextUtils.isEmpty(tagStr) || !TextUtils.isEmpty(scoreStr)) {
+            String shareText = name +  "\n" + summaryStr +  WEB_BASE_URL + "subject/" + bangumid;
+            Intent shareIntent = new Intent(Intent.ACTION_SEND);
+            shareIntent.setType("text/plain");
+            shareIntent.putExtra(Intent.EXTRA_TEXT, shareText);
+            activity.startActivity(Intent.createChooser(shareIntent, BangumiApp.sAppCtx.getString(R.string.send_intent_title)));
+        } else {
+            ToastUtils.showShortToast(R.string.wait_for_loading);
+        }
+
+    }
+
     /** 解析网页动画概览 */
     private Items parseAnimeDetail(String html) {
         LogUtil.d(LogUtil.ZUBIN, "parseDetail thread = " + Thread.currentThread());
@@ -339,18 +330,27 @@ public class BangumiDetailPresenter implements BangumiDetailContract.Presenter {
             }
         }
 
-        // 观看进度
+        // 观看进度, 点击会跳转到新的详细页面
         Elements prg_list = document.select("ul.prg_list>li");
+        List<AnimeEpEntity> epList = new ArrayList<>();
         for (int i = 0; i < prg_list.size(); i++) {
             Element element = prg_list.get(i);
             // /ep/638065
-            String url = element.select("a").attr("href");
-            // load-epinfo epBtnWatched
-            String state = element.select("a").attr("class");
-            //  ep.5 OCHIMUSHA ～超能力と僕～
-            String name = element.select("a").attr("title");
-        }
+//            String url = element.select("a").attr("href");
+//            // load-epinfo epBtnWatched
+//            String state = element.select("a").attr("class");
+//            //  ep.5 OCHIMUSHA ～超能力と僕～
+//            String name = element.select("a").attr("title");
 
+            // 显示的名字
+            String displayName = element.select("a").text().trim();
+            if(!TextUtils.isEmpty(displayName) && epList.size() <= 24) {
+                AnimeEpEntity entity = new AnimeEpEntity(displayName);
+                epList.add(entity);
+            }
+        }
+        items.add(new TitleMoreItem(BangumiApp.sAppCtx.getString(R.string.watch_progress), R.mipmap.ic_launcher));
+        items.add(new EpList(epList));
 
 
         // 最顶上的名称， 一般是日文名

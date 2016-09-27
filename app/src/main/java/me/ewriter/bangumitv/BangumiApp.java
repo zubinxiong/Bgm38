@@ -14,6 +14,8 @@ import me.ewriter.bangumitv.dao.DaoMaster;
 import me.ewriter.bangumitv.dao.DaoSession;
 import me.ewriter.bangumitv.ui.bangumidetail.adapter.CharacterItemViewProvider;
 import me.ewriter.bangumitv.ui.bangumidetail.adapter.CharacterList;
+import me.ewriter.bangumitv.ui.bangumidetail.adapter.EpItemViewProvider;
+import me.ewriter.bangumitv.ui.bangumidetail.adapter.EpList;
 import me.ewriter.bangumitv.ui.bangumidetail.adapter.TextItem;
 import me.ewriter.bangumitv.ui.bangumidetail.adapter.TextItemViewProvider;
 import me.ewriter.bangumitv.ui.bangumidetail.adapter.TitleItem;
@@ -55,6 +57,7 @@ public class BangumiApp extends Application {
         MultiTypePool.register(CharacterList.class, new CharacterItemViewProvider());
         MultiTypePool.register(TitleItem.class, new TitleItemViewProvider());
         MultiTypePool.register(TitleMoreItem.class, new TitleMoreViewProvider());
+        MultiTypePool.register(EpList.class, new EpItemViewProvider());
     }
 
     @SuppressWarnings("WrongConstant")

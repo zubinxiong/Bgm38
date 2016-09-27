@@ -14,6 +14,8 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.transition.Fade;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -135,6 +137,24 @@ public class BangumiDetailActivity extends BaseActivity implements BangumiDetail
             mLargeImageUrl = getIntent().getStringExtra("large_url");
         } else {
             mLargeImageUrl = mCommonImageUrl.replace("/c/", "/l/");
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.share_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.toolbar_share:
+                mPresenter.shareDetail(mBangumiId, mBangumiName, BangumiDetailActivity.this);
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 
