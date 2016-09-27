@@ -1,4 +1,4 @@
-package me.ewriter.bangumitv.ui.bangumidetail;
+package me.ewriter.bangumitv.ui.bangumidetail.adapter;
 
 import me.drakeet.multitype.Item;
 

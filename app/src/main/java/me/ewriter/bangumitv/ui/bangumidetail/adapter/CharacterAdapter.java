@@ -1,6 +1,5 @@
-package me.ewriter.bangumitv.ui.bangumidetail;
+package me.ewriter.bangumitv.ui.bangumidetail.adapter;
 
-import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,33 +9,46 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import me.drakeet.multitype.ItemViewProvider;
-import me.drakeet.multitype.MultiTypeAdapter;
+import java.util.List;
+
 import me.ewriter.bangumitv.R;
+import me.ewriter.bangumitv.api.entity.AnimeCharacterEntity;
 
 /**
- * Created by Zubin on 2016/9/26.
+ * Created by Zubin on 2016/9/27.
  */
 
-public class CharacterItemViewProvider extends ItemViewProvider<CharacterItem, CharacterItemViewProvider.ViewHolder> {
+public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.ViewHolder> {
 
-    @NonNull
+    List<AnimeCharacterEntity> mList;
+
+    public void setList(List<AnimeCharacterEntity> list) {
+        mList = list;
+    }
+
     @Override
-    protected ViewHolder onCreateViewHolder(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
-        View view = inflater.inflate(R.layout.detail_character_item, parent, false);
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_character_item, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull ViewHolder holder, @NonNull CharacterItem characterItem) {
+    public void onBindViewHolder(ViewHolder holder, int position) {
+        AnimeCharacterEntity characterItem = mList.get(position);
+
         Picasso.with(holder.mNameCn.getContext())
-                .load(characterItem.imageUrl)
+                .load(characterItem.getRoleImageUrl())
                 .placeholder(R.drawable.img_on_load)
                 .error(R.drawable.img_on_error)
                 .into(holder.mAvatar);
 
-        holder.mNameCn.setText(characterItem.nameCn);
-        holder.mRoleType.setText(characterItem.roleType);
+        holder.mNameCn.setText(characterItem.getRoleNameCn());
+        holder.mRoleType.setText(characterItem.getRoleType());
+    }
+
+    @Override
+    public int getItemCount() {
+        return mList.size();
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
@@ -46,7 +58,6 @@ public class CharacterItemViewProvider extends ItemViewProvider<CharacterItem, C
 
         public ViewHolder(View itemView) {
             super(itemView);
-
             mAvatar = (ImageView) itemView.findViewById(R.id.character_image);
             mNameCn = (TextView) itemView.findViewById(R.id.character_name_cn);
             mRoleType = (TextView) itemView.findViewById(R.id.character_type);

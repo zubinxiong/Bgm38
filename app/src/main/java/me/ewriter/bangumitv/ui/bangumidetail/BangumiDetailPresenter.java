@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import me.drakeet.multitype.Items;
 import me.ewriter.bangumitv.BangumiApp;
 import me.ewriter.bangumitv.R;
 import me.ewriter.bangumitv.api.ApiManager;
@@ -26,6 +27,10 @@ import me.ewriter.bangumitv.api.entity.AnimeCharacterEntity;
 import me.ewriter.bangumitv.api.entity.AnimeDetailEntity;
 import me.ewriter.bangumitv.api.entity.CommentEntity;
 import me.ewriter.bangumitv.api.entity.TagEntity;
+import me.ewriter.bangumitv.ui.bangumidetail.adapter.CharacterList;
+import me.ewriter.bangumitv.ui.bangumidetail.adapter.TextItem;
+import me.ewriter.bangumitv.ui.bangumidetail.adapter.TitleItem;
+import me.ewriter.bangumitv.ui.bangumidetail.adapter.TitleMoreItem;
 import me.ewriter.bangumitv.ui.login.LoginActivity;
 import me.ewriter.bangumitv.utils.BlurUtil;
 import me.ewriter.bangumitv.utils.LogUtil;
@@ -45,6 +50,7 @@ public class BangumiDetailPresenter implements BangumiDetailContract.Presenter {
 
     private CompositeSubscription mSubscriptions;
     private BangumiDetailContract.View mDetailView;
+    String summaryStr = "", tagStr = "", scoreStr = "";
 
 
     public BangumiDetailPresenter(BangumiDetailContract.View mDetailView) {
@@ -68,14 +74,14 @@ public class BangumiDetailPresenter implements BangumiDetailContract.Presenter {
         Subscription subscription = ApiManager.getWebInstance()
                 .getAnimeDetail(subjectId)
                 .subscribeOn(Schedulers.io())
-                .map(new Func1<String, AnimeDetailEntity>() {
+                .map(new Func1<String, Items>() {
                     @Override
-                    public AnimeDetailEntity call(String s) {
+                    public Items call(String s) {
                         return parseAnimeDetail(s);
                     }
                 })
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<AnimeDetailEntity>() {
+                .subscribe(new Subscriber<Items>() {
                     @Override
                     public void onCompleted() {
                         LogUtil.d(LogUtil.ZUBIN, "requestWebDetail onCompleted");
@@ -89,8 +95,11 @@ public class BangumiDetailPresenter implements BangumiDetailContract.Presenter {
                     }
 
                     @Override
-                    public void onNext(AnimeDetailEntity animeDetailEntity) {
-                        mDetailView.refresh(animeDetailEntity);
+                    public void onNext(Items items) {
+                        mDetailView.setSummary(summaryStr);
+                        mDetailView.setTag(tagStr);
+                        mDetailView.setScore(scoreStr);
+                        mDetailView.refresh(items);
                         mDetailView.hideProgress();
                         LogUtil.d(LogUtil.ZUBIN, "requestWebDetail onNext");
                     }
@@ -151,36 +160,25 @@ public class BangumiDetailPresenter implements BangumiDetailContract.Presenter {
     }
 
     /** 解析网页动画概览 */
-    // FIXME: 2016/9/26 这里应该直接返回items 类型的数据，供 adapter 直接调用
-    private AnimeDetailEntity parseAnimeDetail(String html) {
+    private Items parseAnimeDetail(String html) {
+
+        Items items = new Items();
 
         AnimeDetailEntity animeDetailEntity = new AnimeDetailEntity();
-
         Document document = Jsoup.parse(html);
-
-        // 最顶上的名称， 一般是日文名
-        String title = document.select("h1.nameSingle").text();
-        animeDetailEntity.setNameJp(title);
-
-        // 顶上名字旁边的灰色小字，一般是类别
-        String small_type = document.select("h1.nameSingle>small").text();
-        animeDetailEntity.setSmallType(small_type);
-
-        // 图片large 地址, 可能为空
-        String large_image_url = "https:" + document.select("div.infobox>div>a").attr("href");
-        animeDetailEntity.setLargeImageUrl(large_image_url);
-
-        // 图片cover 地址, 可能为空
-        String cover_image_url = "https:" + document.select("div.infobox>div>a>img").attr("src");
-        animeDetailEntity.setCoverImageUrl(cover_image_url);
 
         // 左侧列表
         Elements li = document.select("div.infobox>ul#infobox>li");
         List<String> introList = new ArrayList<>();
+        String showInfo = "";
         for (int i = 0; i < li.size(); i++) {
             Element element = li.get(i);
 
             String left_intro = element.text();
+
+            if (i < 6) {
+                showInfo += left_intro + "\n";
+            }
 
             introList.add(left_intro);
 
@@ -199,35 +197,22 @@ public class BangumiDetailPresenter implements BangumiDetailContract.Presenter {
 //                String href_url = href.attr("href");
 //            }
         }
-        animeDetailEntity.setInfoList(introList);
-
-
-        // 右侧收藏盒
-        String global_score = document.select("div.global_score").text();
-        animeDetailEntity.setGlobalScore(global_score);
+        if (introList.size() > 6) {
+            items.add(new TitleMoreItem(BangumiApp.sAppCtx.getString(R.string.bangumi_detail_content), R.mipmap.ic_launcher));
+        } else {
+            items.add(new TitleItem(BangumiApp.sAppCtx.getString(R.string.bangumi_detail_content), R.mipmap.ic_launcher));
+        }
+        items.add(new TextItem(showInfo));
 
         // 剧情简介
+        items.add(new TitleItem(BangumiApp.sAppCtx.getString(R.string.bangumi_detail_summary), R.mipmap.ic_launcher));
         String summary = document.select("div#subject_summary").text().trim();
-        animeDetailEntity.setSummary(summary);
+        summaryStr = summary;
+        items.add(new TextItem(summary));
 
-        // 标签栏
-        Elements tag = document.select("div.subject_tag_section>div.inner>a");
-        List<TagEntity> tagList = new ArrayList<>();
-        for (int tagIndex = 0; tagIndex < tag.size(); tagIndex++) {
-            Element element = tag.get(tagIndex);
-            TagEntity entity = new TagEntity();
-
-            String tag_name = element.text();
-            String tag_src = element.attr("href");
-
-            entity.setTagName(tag_name);
-            entity.setTagUrl(tag_src);
-
-            tagList.add(entity);
-        }
-        animeDetailEntity.setTagList(tagList);
 
         // 角色介绍, 可能不全
+        items.add(new TitleMoreItem(BangumiApp.sAppCtx.getString(R.string.bangumi_detail_character), R.mipmap.ic_launcher));
         Elements subject_clearit = document.select("ul#browserItemList>li");
         List<AnimeCharacterEntity> characterList = new ArrayList<>();
         for (int clearItIndex = 0; clearItIndex < subject_clearit.size(); clearItIndex++) {
@@ -261,10 +246,52 @@ public class BangumiDetailPresenter implements BangumiDetailContract.Presenter {
 
             characterList.add(entity);
         }
-        animeDetailEntity.setCharacterList(characterList);
+        items.add(new CharacterList(characterList));
+
+        // 右侧收藏盒
+        String global_score = document.select("div.global_score").text();
+        scoreStr = global_score;
+
+        // 标签栏
+        Elements tag = document.select("div.subject_tag_section>div.inner>a");
+//        List<TagEntity> tagList = new ArrayList<>();
+        for (int tagIndex = 0; tagIndex < tag.size(); tagIndex++) {
+            Element element = tag.get(tagIndex);
+//            TagEntity entity = new TagEntity();
+
+            String tag_name = element.text();
+            String tag_src = element.attr("href");
+
+            if (tagIndex < tag.size() - 1) {
+                tagStr += tag_name + "、";
+            } else {
+                tagStr += tag_name;
+            }
+
+//            entity.setTagName(tag_name);
+//            entity.setTagUrl(tag_src);
+
+//            tagList.add(entity);
+        }
+//        animeDetailEntity.setTagList(tagList);
 
 
 
+        // 最顶上的名称， 一般是日文名
+        String title = document.select("h1.nameSingle").text();
+        animeDetailEntity.setNameJp(title);
+
+        // 顶上名字旁边的灰色小字，一般是类别
+        String small_type = document.select("h1.nameSingle>small").text();
+        animeDetailEntity.setSmallType(small_type);
+
+        // 图片large 地址, 可能为空
+        String large_image_url = "https:" + document.select("div.infobox>div>a").attr("href");
+        animeDetailEntity.setLargeImageUrl(large_image_url);
+
+        // 图片cover 地址, 可能为空
+        String cover_image_url = "https:" + document.select("div.infobox>div>a>img").attr("src");
+        animeDetailEntity.setCoverImageUrl(cover_image_url);
 
         // 吐槽箱
         Elements comments = document.select("div#comment_box>div");
@@ -293,7 +320,7 @@ public class BangumiDetailPresenter implements BangumiDetailContract.Presenter {
 
         // TODO: 2016/9/24   关联条目 ,有好多，暂时没想好怎么放，先不做
 
-        return animeDetailEntity;
+        return items;
     }
 
 

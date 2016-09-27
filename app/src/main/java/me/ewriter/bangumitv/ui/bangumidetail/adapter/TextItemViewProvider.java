@@ -1,18 +1,14 @@
-package me.ewriter.bangumitv.ui.bangumidetail;
+package me.ewriter.bangumitv.ui.bangumidetail.adapter;
 
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import me.drakeet.multitype.ItemViewProvider;
-import me.ewriter.bangumitv.BangumiApp;
 import me.ewriter.bangumitv.R;
-import me.ewriter.bangumitv.ui.login.LoginActivity;
 
 /**
  * Created by Zubin on 2016/9/26.

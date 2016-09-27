@@ -5,7 +5,6 @@ import android.content.Context;
 import android.support.v7.app.AppCompatDelegate;
 
 import com.squareup.leakcanary.LeakCanary;
-import com.tencent.bugly.crashreport.CrashReport;
 
 import org.greenrobot.greendao.database.Database;
 
@@ -13,10 +12,14 @@ import me.drakeet.multitype.MultiTypePool;
 import me.ewriter.bangumitv.constants.MyConstants;
 import me.ewriter.bangumitv.dao.DaoMaster;
 import me.ewriter.bangumitv.dao.DaoSession;
-import me.ewriter.bangumitv.ui.bangumidetail.CharacterItem;
-import me.ewriter.bangumitv.ui.bangumidetail.CharacterItemViewProvider;
-import me.ewriter.bangumitv.ui.bangumidetail.TextItem;
-import me.ewriter.bangumitv.ui.bangumidetail.TextItemViewProvider;
+import me.ewriter.bangumitv.ui.bangumidetail.adapter.CharacterItemViewProvider;
+import me.ewriter.bangumitv.ui.bangumidetail.adapter.CharacterList;
+import me.ewriter.bangumitv.ui.bangumidetail.adapter.TextItem;
+import me.ewriter.bangumitv.ui.bangumidetail.adapter.TextItemViewProvider;
+import me.ewriter.bangumitv.ui.bangumidetail.adapter.TitleItem;
+import me.ewriter.bangumitv.ui.bangumidetail.adapter.TitleItemViewProvider;
+import me.ewriter.bangumitv.ui.bangumidetail.adapter.TitleMoreItem;
+import me.ewriter.bangumitv.ui.bangumidetail.adapter.TitleMoreViewProvider;
 import me.ewriter.bangumitv.utils.PreferencesUtils;
 
 /**
@@ -49,7 +52,9 @@ public class BangumiApp extends Application {
 
     private void registerMutiType() {
         MultiTypePool.register(TextItem.class, new TextItemViewProvider());
-        MultiTypePool.register(CharacterItem.class, new CharacterItemViewProvider());
+        MultiTypePool.register(CharacterList.class, new CharacterItemViewProvider());
+        MultiTypePool.register(TitleItem.class, new TitleItemViewProvider());
+        MultiTypePool.register(TitleMoreItem.class, new TitleMoreViewProvider());
     }
 
     @SuppressWarnings("WrongConstant")

@@ -3,6 +3,7 @@ package me.ewriter.bangumitv.ui.bangumidetail;
 import android.app.Activity;
 import android.view.ViewGroup;
 
+import me.drakeet.multitype.Items;
 import me.ewriter.bangumitv.api.entity.AnimeDetailEntity;
 import me.ewriter.bangumitv.base.BasePresenter;
 import me.ewriter.bangumitv.base.BaseView;
@@ -23,10 +24,16 @@ public interface BangumiDetailContract {
 
 
     interface View extends BaseView<Presenter> {
-        void refresh(AnimeDetailEntity animeDetailEntity);
+        void refresh(Items items);
 
         void hideProgress();
 
         void showToast(String msg);
+
+        void setSummary(String text);
+
+        void setScore(String score);
+
+        void setTag(String tag);
     }
 }
