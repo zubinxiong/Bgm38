@@ -1,14 +1,20 @@
 package me.ewriter.bangumitv.ui.characters;
 
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ProgressBar;
 
 import me.drakeet.multitype.Items;
+import me.drakeet.multitype.MultiTypeAdapter;
 import me.ewriter.bangumitv.R;
 import me.ewriter.bangumitv.base.BaseActivity;
+import me.ewriter.bangumitv.ui.commonAdapter.TextItem;
+import me.ewriter.bangumitv.ui.commonAdapter.TitleItem;
 import me.ewriter.bangumitv.utils.ToastUtils;
+import me.ewriter.bangumitv.utils.Tools;
+import me.ewriter.bangumitv.widget.HorizonSpacingItemDecoration;
 
 /**
  * Created by Zubin on 2016/9/28.
@@ -22,6 +28,7 @@ public class CharacterActivity extends BaseActivity implements CharacterContract
     private RecyclerView mRecyclerView;
 
     private String subjectId;
+    private Items list;
 
     CharacterContract.Presenter mPresenter;
 
@@ -58,7 +65,10 @@ public class CharacterActivity extends BaseActivity implements CharacterContract
     }
 
     private void setUpRecyclerView() {
-
+        list = new Items();
+        list.add(new TitleItem(getString(R.string.bangumi_detail_character), R.mipmap.ic_launcher));
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        mRecyclerView.addItemDecoration(new HorizonSpacingItemDecoration(Tools.getPixFromDip(16)));
     }
 
     @Override
@@ -68,7 +78,9 @@ public class CharacterActivity extends BaseActivity implements CharacterContract
 
     @Override
     public void refresh(Items items) {
-
+        list.addAll(items);
+        MultiTypeAdapter adapter = new MultiTypeAdapter(list);
+        mRecyclerView.setAdapter(adapter);
     }
 
     @Override

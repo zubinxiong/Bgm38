@@ -12,10 +12,12 @@ import me.drakeet.multitype.MultiTypePool;
 import me.ewriter.bangumitv.constants.MyConstants;
 import me.ewriter.bangumitv.dao.DaoMaster;
 import me.ewriter.bangumitv.dao.DaoSession;
-import me.ewriter.bangumitv.ui.bangumidetail.adapter.CharacterItemViewProvider;
-import me.ewriter.bangumitv.ui.bangumidetail.adapter.CharacterList;
-import me.ewriter.bangumitv.ui.bangumidetail.adapter.EpItemViewProvider;
-import me.ewriter.bangumitv.ui.bangumidetail.adapter.EpList;
+import me.ewriter.bangumitv.ui.bangumidetail.adapter.DetailCharacterItemViewProvider;
+import me.ewriter.bangumitv.ui.bangumidetail.adapter.DetailCharacterList;
+import me.ewriter.bangumitv.ui.bangumidetail.adapter.DetailEpItemViewProvider;
+import me.ewriter.bangumitv.ui.bangumidetail.adapter.DetailEpList;
+import me.ewriter.bangumitv.ui.characters.adapter.CharacterItem;
+import me.ewriter.bangumitv.ui.characters.adapter.CharacterItemViewProvider;
 import me.ewriter.bangumitv.ui.persons.adapter.PersonItemList;
 import me.ewriter.bangumitv.ui.persons.adapter.PersonItemViewProvider;
 import me.ewriter.bangumitv.ui.commonAdapter.TextItem;
@@ -56,11 +58,15 @@ public class BangumiApp extends Application {
 
     private void registerMutiType() {
         MultiTypePool.register(TextItem.class, new TextItemViewProvider());
-        MultiTypePool.register(CharacterList.class, new CharacterItemViewProvider());
         MultiTypePool.register(TitleItem.class, new TitleItemViewProvider());
         MultiTypePool.register(TitleMoreItem.class, new TitleMoreViewProvider());
-        MultiTypePool.register(EpList.class, new EpItemViewProvider());
+
+        MultiTypePool.register(DetailCharacterList.class, new DetailCharacterItemViewProvider());
+        MultiTypePool.register(DetailEpList.class, new DetailEpItemViewProvider());
+
         MultiTypePool.register(PersonItemList.class, new PersonItemViewProvider());
+
+        MultiTypePool.register(CharacterItem.class, new CharacterItemViewProvider());
     }
 
     @SuppressWarnings("WrongConstant")

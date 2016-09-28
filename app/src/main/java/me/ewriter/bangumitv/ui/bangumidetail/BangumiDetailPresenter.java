@@ -30,8 +30,8 @@ import me.ewriter.bangumitv.api.entity.AnimeEpEntity;
 import me.ewriter.bangumitv.api.entity.CommentEntity;
 import me.ewriter.bangumitv.api.response.SubjectComment;
 import me.ewriter.bangumitv.constants.MyConstants;
-import me.ewriter.bangumitv.ui.bangumidetail.adapter.CharacterList;
-import me.ewriter.bangumitv.ui.bangumidetail.adapter.EpList;
+import me.ewriter.bangumitv.ui.bangumidetail.adapter.DetailCharacterList;
+import me.ewriter.bangumitv.ui.bangumidetail.adapter.DetailEpList;
 import me.ewriter.bangumitv.ui.commonAdapter.TextItem;
 import me.ewriter.bangumitv.ui.commonAdapter.TitleItem;
 import me.ewriter.bangumitv.ui.commonAdapter.TitleMoreItem;
@@ -309,7 +309,7 @@ public class BangumiDetailPresenter implements BangumiDetailContract.Presenter {
 
             characterList.add(entity);
         }
-        items.add(new CharacterList(characterList));
+        items.add(new DetailCharacterList(characterList));
 
         // 右侧收藏盒
         String global_score = document.select("div.global_score").text();
@@ -350,7 +350,7 @@ public class BangumiDetailPresenter implements BangumiDetailContract.Presenter {
             }
         }
         items.add(new TitleMoreItem(BangumiApp.sAppCtx.getString(R.string.watch_progress), R.mipmap.ic_launcher, subjectId, MyConstants.DES_EP));
-        items.add(new EpList(epList));
+        items.add(new DetailEpList(epList));
 
 
         // 最顶上的名称， 一般是日文名

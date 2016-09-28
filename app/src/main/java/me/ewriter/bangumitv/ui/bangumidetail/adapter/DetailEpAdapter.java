@@ -15,13 +15,13 @@ import me.ewriter.bangumitv.api.entity.AnimeEpEntity;
  * Created by Zubin on 2016/9/27.
  */
 
-public class EpAdapter extends RecyclerView.Adapter<EpAdapter.ViewHolder> {
+public class DetailEpAdapter extends RecyclerView.Adapter<DetailEpAdapter.ViewHolder> {
 
     List<AnimeEpEntity> mList;
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_ep_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_detail_ep_item, parent, false);
         return new ViewHolder(view);
     }
 

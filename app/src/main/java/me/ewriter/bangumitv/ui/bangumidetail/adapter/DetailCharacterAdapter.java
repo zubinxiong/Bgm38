@@ -19,7 +19,7 @@ import me.ewriter.bangumitv.api.entity.AnimeCharacterEntity;
  * Created by Zubin on 2016/9/27.
  */
 
-public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.ViewHolder> {
+public class DetailCharacterAdapter extends RecyclerView.Adapter<DetailCharacterAdapter.ViewHolder> {
 
     List<AnimeCharacterEntity> mList;
 
@@ -29,7 +29,7 @@ public class CharacterAdapter extends RecyclerView.Adapter<CharacterAdapter.View
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_character_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_detail_character_item, parent, false);
         return new ViewHolder(view);
     }
 

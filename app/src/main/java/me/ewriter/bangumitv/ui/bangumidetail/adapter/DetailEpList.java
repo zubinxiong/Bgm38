@@ -9,11 +9,11 @@ import me.ewriter.bangumitv.api.entity.AnimeEpEntity;
  * Created by Zubin on 2016/9/27.
  */
 
-public class EpList implements Item {
+public class DetailEpList implements Item {
 
     List<AnimeEpEntity> mList;
 
-    public EpList(List<AnimeEpEntity> mList) {
+    public DetailEpList(List<AnimeEpEntity> mList) {
         this.mList = mList;
     }
 }

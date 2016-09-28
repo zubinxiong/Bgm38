@@ -10,6 +10,7 @@ import org.jsoup.select.Elements;
 import me.drakeet.multitype.Item;
 import me.drakeet.multitype.Items;
 import me.ewriter.bangumitv.api.ApiManager;
+import me.ewriter.bangumitv.ui.characters.adapter.CharacterItem;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
@@ -72,6 +73,8 @@ public class CharacterPresenter implements CharacterContract.Presenter{
                         mCharacterView.refresh(items);
                     }
                 });
+
+        mSubscriptions.add(subscription);
     }
 
     /** 解析网页人物介绍 一页到底，不翻页*/
@@ -86,17 +89,23 @@ public class CharacterPresenter implements CharacterContract.Presenter{
             Element element = elements.get(i);
 
             String avatar_url = element.select("a").attr("href");
-            String avatar_image_url = element.select("a>img").attr("src");
+            String avatar_image_url = "https:" + element.select("a>img").attr("src");
+            // 脑补大图，不一定存在
+            String large_image_url = avatar_image_url.replace("/g/", "/l/");
 
             String role_name_cn = element.select("div.clearit>h2>span").text();
             String role_name_jp = element.select("div.clearit>h2>a").text();
 
             String info = element.select("div.clearit>div.crt_info").text();
 
-            String cv_url = element.select("div.actorBadge clearit>a").attr("href");
-            String cv_image_url = element.select("div.actorBadge clearit>a>img").attr("src");
-            String cv_name_jp = element.select("div.actorBadge clearit>p>a").text();
-            String cv_name_cn = element.select("div.actorBadge clearit>p>small").text();
+            String cv_url = element.select("div.clearit>div.actorBadge>a").attr("href");
+            String cv_image_url = "https:" + element.select("div.clearit>div.actorBadge>a>img").attr("src");
+            String cv_name_jp = element.select("div.clearit>div.actorBadge>p>a").text();
+            String cv_name_cn = element.select("div.clearit>div.actorBadge>p>small").text();
+
+            CharacterItem characterItem = new CharacterItem(role_name_jp + role_name_cn, large_image_url,
+                    info, cv_name_jp);
+            items.add(characterItem);
         }
 
         return items;

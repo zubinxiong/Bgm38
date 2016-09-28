@@ -11,45 +11,42 @@ import java.util.List;
 
 import me.drakeet.multitype.ItemViewProvider;
 import me.ewriter.bangumitv.R;
-import me.ewriter.bangumitv.api.entity.AnimeCharacterEntity;
-import me.ewriter.bangumitv.widget.GridSpacingItemDecoration;
+import me.ewriter.bangumitv.api.entity.AnimeEpEntity;
 
 /**
  * Created by Zubin on 2016/9/27.
  */
 
-public class CharacterItemViewProvider extends ItemViewProvider<CharacterList, CharacterItemViewProvider.ViewHolder> {
-
+public class DetailEpItemViewProvider extends ItemViewProvider<DetailEpList, DetailEpItemViewProvider.ViewHolder> {
 
     @NonNull
     @Override
     protected ViewHolder onCreateViewHolder(@NonNull LayoutInflater inflater, @NonNull ViewGroup parent) {
         View view = inflater.inflate(R.layout.item_recyclerview, parent, false);
-        return new ViewHolder(view);
+        return new DetailEpItemViewProvider.ViewHolder(view);
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull ViewHolder holder, @NonNull CharacterList characterList) {
-        holder.setList(characterList.mList);
+    protected void onBindViewHolder(@NonNull ViewHolder holder, @NonNull DetailEpList epList) {
+        holder.setList(epList.mList);
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
 
         private RecyclerView recyclerView;
-        private CharacterAdapter adapter;
+        private DetailEpAdapter adapter;
 
         public ViewHolder(View itemView) {
             super(itemView);
             recyclerView = (RecyclerView) itemView.findViewById(R.id.recyclerview);
-            GridLayoutManager layoutManager = new GridLayoutManager(recyclerView.getContext(), 2);
-            adapter = new CharacterAdapter();
+            GridLayoutManager layoutManager = new GridLayoutManager(recyclerView.getContext(), 6);
+            adapter = new DetailEpAdapter();
             recyclerView.setNestedScrollingEnabled(false);
             recyclerView.setLayoutManager(layoutManager);
-            recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, 20, false));
             recyclerView.setAdapter(adapter);
         }
 
-        private void setList(List<AnimeCharacterEntity> list) {
+        private void setList(List<AnimeEpEntity> list) {
             adapter.setList(list);
             adapter.notifyDataSetChanged();
         }
