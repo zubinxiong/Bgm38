@@ -344,8 +344,8 @@ public class BangumiDetailPresenter implements BangumiDetailContract.Presenter {
 
             // 显示的名字
             String displayName = element.select("a").text().trim();
-            if(!TextUtils.isEmpty(displayName) && epList.size() <= 24) {
-                AnimeEpEntity entity = new AnimeEpEntity(displayName);
+            if(!TextUtils.isEmpty(displayName) && epList.size() < 12) {
+                AnimeEpEntity entity = new AnimeEpEntity(displayName, subjectId);
                 epList.add(entity);
             }
         }

@@ -43,6 +43,7 @@ public class TitleMoreViewProvider extends ItemViewProvider<TitleMoreItem, Title
                 Intent intent = null;
                 if (des.equals(MyConstants.DES_EP)) {
                     intent = new Intent(holder.item.getContext(), ProgressActivity.class);
+                    intent.putExtra("subjectId", titleMoreItem.subjectId);
                 } else if (des.equals(MyConstants.DES_CHARACTER)) {
                     intent = new Intent(holder.item.getContext(), CharacterActivity.class);
                     intent.putExtra("subjectId", titleMoreItem.subjectId);

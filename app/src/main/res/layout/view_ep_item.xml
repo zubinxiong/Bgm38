@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/bangumi_detail_grid"
+    android:background="@drawable/square_touch_bg"
+    android:textSize="@dimen/calender_item_title_size"
+    android:layout_marginBottom="10dp"
+    android:gravity="center"
+    android:textColor="@color/calendar_title_color"
+    android:layout_width="45dp"
+    android:layout_height="45dp" />

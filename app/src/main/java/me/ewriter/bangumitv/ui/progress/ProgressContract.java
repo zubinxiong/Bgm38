@@ -1,5 +1,6 @@
 package me.ewriter.bangumitv.ui.progress;
 
+import me.drakeet.multitype.Items;
 import me.ewriter.bangumitv.base.BasePresenter;
 import me.ewriter.bangumitv.base.BaseView;
 
@@ -10,13 +11,15 @@ import me.ewriter.bangumitv.base.BaseView;
 public interface ProgressContract {
 
     interface Presenter extends BasePresenter {
-        void requestProgress();
+        void requestProgress(String subjectId);
     }
 
     interface View extends BaseView<Presenter> {
         void setProgressBarVisible(int visible);
 
-        void refresh();
+        void refresh(Items items);
+
+        void showToast(String msg);
     }
 
 }

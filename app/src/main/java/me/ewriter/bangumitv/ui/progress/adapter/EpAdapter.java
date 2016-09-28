@@ -1,4 +1,4 @@
-package me.ewriter.bangumitv.ui.bangumidetail.adapter;
+package me.ewriter.bangumitv.ui.progress.adapter;
 
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
@@ -14,21 +14,21 @@ import me.ewriter.bangumitv.api.entity.AnimeEpEntity;
 import me.ewriter.bangumitv.ui.progress.ProgressActivity;
 
 /**
- * Created by Zubin on 2016/9/27.
+ * Created by Zubin on 2016/9/28.
  */
 
-public class DetailEpAdapter extends RecyclerView.Adapter<DetailEpAdapter.ViewHolder> {
+public class EpAdapter extends RecyclerView.Adapter<EpAdapter.ViewHolder> {
 
     List<AnimeEpEntity> mList;
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_detail_ep_item, parent, false);
-        return new ViewHolder(view);
+    public EpAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_ep_item, parent, false);
+        return new EpAdapter.ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
+    public void onBindViewHolder(final EpAdapter.ViewHolder holder, int position) {
         final AnimeEpEntity entity = mList.get(position);
 
         holder.textView.setText(entity.getDisplayName());
@@ -36,9 +36,6 @@ public class DetailEpAdapter extends RecyclerView.Adapter<DetailEpAdapter.ViewHo
         holder.textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(holder.textView.getContext(), ProgressActivity.class);
-                intent.putExtra("subjectId", entity.getSubjectId());
-                holder.textView.getContext().startActivity(intent);
             }
         });
     }

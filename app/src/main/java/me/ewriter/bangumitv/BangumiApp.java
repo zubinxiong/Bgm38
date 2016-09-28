@@ -26,6 +26,8 @@ import me.ewriter.bangumitv.ui.commonAdapter.TitleItem;
 import me.ewriter.bangumitv.ui.commonAdapter.TitleItemViewProvider;
 import me.ewriter.bangumitv.ui.commonAdapter.TitleMoreItem;
 import me.ewriter.bangumitv.ui.commonAdapter.TitleMoreViewProvider;
+import me.ewriter.bangumitv.ui.progress.adapter.EpItemViewProvider;
+import me.ewriter.bangumitv.ui.progress.adapter.EpList;
 import me.ewriter.bangumitv.utils.PreferencesUtils;
 
 /**
@@ -65,8 +67,8 @@ public class BangumiApp extends Application {
         MultiTypePool.register(DetailEpList.class, new DetailEpItemViewProvider());
 
         MultiTypePool.register(PersonItemList.class, new PersonItemViewProvider());
-
         MultiTypePool.register(CharacterItem.class, new CharacterItemViewProvider());
+        MultiTypePool.register(EpList.class, new EpItemViewProvider());
     }
 
     @SuppressWarnings("WrongConstant")
