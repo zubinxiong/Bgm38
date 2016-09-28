@@ -1,4 +1,4 @@
-package me.ewriter.bangumitv.ui.commonAdapter;
+package me.ewriter.bangumitv.ui.progress.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;

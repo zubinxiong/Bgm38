@@ -11,8 +11,11 @@ public class AnimeEpEntity {
     String epName;
     // 单集链接地址
     String epUrl;
+    /** 单集的id */
     String epId;
+    /** 状态，对应Air WISH, WATCHED,DROP 和默认*/
     String epStatusName;
+    /** 状态 code 值 */
     int epStatusCode;
     String subjectId;
     String info;

@@ -20,6 +20,7 @@ import me.ewriter.bangumitv.R;
 import me.ewriter.bangumitv.api.ApiManager;
 import me.ewriter.bangumitv.api.LoginManager;
 import me.ewriter.bangumitv.api.entity.AnimeEpEntity;
+import me.ewriter.bangumitv.api.response.BaseResponse;
 import me.ewriter.bangumitv.api.response.SubjectProgress;
 import me.ewriter.bangumitv.base.BasePresenter;
 import me.ewriter.bangumitv.ui.bangumidetail.adapter.DetailEpList;
@@ -94,6 +95,35 @@ public class ProgressPresenter implements ProgressContract.Presenter {
         mSubscriptions.add(subscription);
     }
 
+    @Override
+    public void updateEpStatus(int epsId, String status) {
+        Subscription subscription = ApiManager.getBangumiInstance()
+                .updateEp(epsId, status, LoginManager.getAuthString(BangumiApp.sAppCtx))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<BaseResponse>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        mProgressView.dismissProgressDialog();
+                        mProgressView.showToast(e.getMessage());
+                    }
+
+                    @Override
+                    public void onNext(BaseResponse baseResponse) {
+                        mProgressView.dismissProgressDialog();
+                        mProgressView.showToast(BangumiApp.sAppCtx.getString(R.string.progress_updated));
+                        mProgressView.updateEp();
+                    }
+                });
+
+        mSubscriptions.add(subscription);
+    }
+
     /** 处理列表和进度的数据，混合起来后返回*/
     private Items funsionData(String html, SubjectProgress subjectProgress) {
 
@@ -105,9 +135,29 @@ public class ProgressPresenter implements ProgressContract.Presenter {
             String key = entry.getKey();
             items.add(new TitleItem(key, R.mipmap.ic_launcher));
             List<AnimeEpEntity> value = entry.getValue();
+
+            if (subjectProgress != null && subjectProgress.getEps() != null) {
+                List<SubjectProgress.EpsBean> eps = subjectProgress.getEps();
+
+                for (int i = 0; i < eps.size(); i++) {
+                    // 循环返回的状态
+                    SubjectProgress.EpsBean bean = eps.get(i);
+                    String epsId = bean.getId() + "";
+                    String epsStatusName = bean.getStatus().getCssName();
+                    int epsStatusCode = bean.getStatus().getId();
+
+                    for (int j = 0; j < value.size(); j++) {
+                        AnimeEpEntity entity = value.get(j);
+                        if (entity.getEpId().equals(epsId)) {
+                            entity.setEpStatusName(epsStatusName);
+                            entity.setEpStatusCode(epsStatusCode);
+                            break;
+                        }
+                    }
+                }
+            }
             items.add(new EpList(value));
         }
-
         return items;
     }
 
@@ -139,17 +189,20 @@ public class ProgressPresenter implements ProgressContract.Presenter {
                 String epAirStatus = element.select("h6>span.epAirStatus>span").attr("class");
 
                 String epUrl = element.select("h6>a").attr("href");
+                String epId = epUrl.replace("/ep/", "").trim();
                 String name_jp = element.select("h6>a").text();
                 String name_cn = element.select("h6>span.tip").text();
                 String info = element.select("small").text();
 
                 entity.setEpName(name_jp + name_cn);
+                entity.setEpId(epId);
                 entity.setEpUrl(epUrl);
                 entity.setInfo(info);
                 entity.setEpStatusName(epAirStatus);
 
                 entity.setDisplayName(displayNumber + "");
                 displayNumber++;
+
                 itemList.add(entity);
             } else {
                 key = element.text();

@@ -1,5 +1,6 @@
 package me.ewriter.bangumitv.ui.progress;
 
+import android.app.ProgressDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -12,6 +13,8 @@ import me.ewriter.bangumitv.R;
 import me.ewriter.bangumitv.base.BaseActivity;
 import me.ewriter.bangumitv.ui.commonAdapter.TextItem;
 import me.ewriter.bangumitv.ui.commonAdapter.TitleItem;
+import me.ewriter.bangumitv.ui.progress.adapter.EpItemViewProvider;
+import me.ewriter.bangumitv.utils.LogUtil;
 import me.ewriter.bangumitv.utils.ToastUtils;
 import me.ewriter.bangumitv.utils.Tools;
 import me.ewriter.bangumitv.widget.HorizonSpacingItemDecoration;
@@ -27,8 +30,10 @@ public class ProgressActivity extends BaseActivity implements ProgressContract.V
     private Toolbar mToolbar;
     private ProgressBar mProgressbar;
     private Items list;
+    MultiTypeAdapter adapter;
 
     private String subjectId;
+    private ProgressDialog mProgressDialog;
 
     @Override
     protected int getContentViewResId() {
@@ -94,12 +99,38 @@ public class ProgressActivity extends BaseActivity implements ProgressContract.V
     @Override
     public void refresh(Items items) {
         list.addAll(items);
-        MultiTypeAdapter adapter = new MultiTypeAdapter(list);
+        adapter = new MultiTypeAdapter(list);
         mRecyclerView.setAdapter(adapter);
     }
 
     @Override
     public void showToast(String msg) {
         ToastUtils.showShortToast(msg);
+    }
+
+    @Override
+    public void showProgressDialog() {
+        if (mProgressDialog == null) {
+            mProgressDialog = new ProgressDialog(this);
+        }
+        mProgressDialog.setCancelable(false);
+        mProgressDialog.setMessage(getString(R.string.progress_updating));
+        mProgressDialog.show();
+    }
+
+    @Override
+    public void updateEp() {
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void dismissProgressDialog() {
+        if (mProgressDialog != null) {
+            mProgressDialog.dismiss();
+        }
+    }
+
+    public ProgressContract.Presenter getPresenter() {
+        return mPresenter;
     }
 }

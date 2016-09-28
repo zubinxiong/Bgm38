@@ -12,6 +12,8 @@ public interface ProgressContract {
 
     interface Presenter extends BasePresenter {
         void requestProgress(String subjectId);
+
+        void updateEpStatus(int epsId, String status);
     }
 
     interface View extends BaseView<Presenter> {
@@ -20,6 +22,13 @@ public interface ProgressContract {
         void refresh(Items items);
 
         void showToast(String msg);
+
+        void dismissProgressDialog();
+
+        void showProgressDialog();
+
+        void updateEp();
+
     }
 
 }
