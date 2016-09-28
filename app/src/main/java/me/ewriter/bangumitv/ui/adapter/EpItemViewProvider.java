@@ -1,4 +1,4 @@
-package me.ewriter.bangumitv.ui.bangumidetail.adapter;
+package me.ewriter.bangumitv.ui.adapter;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayoutManager;
@@ -12,7 +12,6 @@ import java.util.List;
 import me.drakeet.multitype.ItemViewProvider;
 import me.ewriter.bangumitv.R;
 import me.ewriter.bangumitv.api.entity.AnimeEpEntity;
-import me.ewriter.bangumitv.widget.GridSpacingItemDecoration;
 
 /**
  * Created by Zubin on 2016/9/27.

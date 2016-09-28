@@ -54,6 +54,24 @@
 
         </activity>
 
+        <activity android:name=".ui.progress.ProgressActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait">
+
+        </activity>
+
+        <activity android:name=".ui.persons.PersonsActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait">
+
+        </activity>
+
+        <activity android:name=".ui.characters.CharacterActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait">
+
+        </activity>
+
         <meta-data
             android:name="BUGLY_APP_CHANNEL"
             android:value="${BUGLY_CHANNEL_VALUE}" />

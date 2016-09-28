@@ -40,4 +40,10 @@ public class MyConstants {
 
     public static final String BUGLY_APPID = "900046055";
     public static final String DB_NAME = "bangumi.db";
+
+
+    //title more 跳转目的地
+    public static final String DES_CHARACTER = "DES_CHARACTER";
+    public static final String DES_PERSON = "DES_PERSON";
+    public static final String DES_EP = "DES_EP";
 }

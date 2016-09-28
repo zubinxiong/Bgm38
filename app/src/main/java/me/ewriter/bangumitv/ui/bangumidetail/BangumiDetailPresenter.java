@@ -20,24 +20,22 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import me.drakeet.multitype.Item;
 import me.drakeet.multitype.Items;
 import me.ewriter.bangumitv.BangumiApp;
 import me.ewriter.bangumitv.R;
 import me.ewriter.bangumitv.api.ApiManager;
 import me.ewriter.bangumitv.api.LoginManager;
-import me.ewriter.bangumitv.api.WebApi;
 import me.ewriter.bangumitv.api.entity.AnimeCharacterEntity;
 import me.ewriter.bangumitv.api.entity.AnimeDetailEntity;
 import me.ewriter.bangumitv.api.entity.AnimeEpEntity;
 import me.ewriter.bangumitv.api.entity.CommentEntity;
-import me.ewriter.bangumitv.api.entity.TagEntity;
 import me.ewriter.bangumitv.api.response.SubjectComment;
-import me.ewriter.bangumitv.ui.bangumidetail.adapter.CharacterList;
-import me.ewriter.bangumitv.ui.bangumidetail.adapter.EpList;
-import me.ewriter.bangumitv.ui.bangumidetail.adapter.TextItem;
-import me.ewriter.bangumitv.ui.bangumidetail.adapter.TitleItem;
-import me.ewriter.bangumitv.ui.bangumidetail.adapter.TitleMoreItem;
+import me.ewriter.bangumitv.constants.MyConstants;
+import me.ewriter.bangumitv.ui.adapter.CharacterList;
+import me.ewriter.bangumitv.ui.adapter.EpList;
+import me.ewriter.bangumitv.ui.adapter.TextItem;
+import me.ewriter.bangumitv.ui.adapter.TitleItem;
+import me.ewriter.bangumitv.ui.adapter.TitleMoreItem;
 import me.ewriter.bangumitv.ui.login.LoginActivity;
 import me.ewriter.bangumitv.utils.BlurUtil;
 import me.ewriter.bangumitv.utils.LogUtil;
@@ -46,7 +44,6 @@ import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Func1;
 import rx.functions.Func2;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
@@ -231,6 +228,9 @@ public class BangumiDetailPresenter implements BangumiDetailContract.Presenter {
         AnimeDetailEntity animeDetailEntity = new AnimeDetailEntity();
         Document document = Jsoup.parse(html);
 
+        // subjectID
+        String subjectId = document.select("h1.nameSingle>a").attr("href").replace("/subject/", "").trim();
+
         // 剧情简介
         items.add(new TitleItem(BangumiApp.sAppCtx.getString(R.string.bangumi_detail_summary), R.mipmap.ic_launcher));
         String summary = document.select("div#subject_summary").text().trim();
@@ -239,18 +239,16 @@ public class BangumiDetailPresenter implements BangumiDetailContract.Presenter {
 
         // 左侧列表, 外面只有简介，点击进入后还有制作人员
         Elements li = document.select("div.infobox>ul#infobox>li");
-        List<String> introList = new ArrayList<>();
         String showInfo = "";
+        String extra = "";
         for (int i = 0; i < li.size(); i++) {
             Element element = li.get(i);
-
             String left_intro = element.text();
 
             if (i < 6) {
                 showInfo += left_intro + "\n";
             }
-
-            introList.add(left_intro);
+            extra += left_intro + "\n";
 
             // 暂时不做简介里面的跳转，放到 ep/characters 中去做跳转,放在这里跳转太重了
             // 左侧的标题，比如 话数：，中文名:
@@ -267,12 +265,15 @@ public class BangumiDetailPresenter implements BangumiDetailContract.Presenter {
 //                String href_url = href.attr("href");
 //            }
         }
-        items.add(new TitleMoreItem(BangumiApp.sAppCtx.getString(R.string.bangumi_detail_content), R.mipmap.ic_launcher));
+        TitleMoreItem titleMoreItem = new TitleMoreItem(BangumiApp.sAppCtx.getString(R.string.bangumi_detail_content)
+                , R.mipmap.ic_launcher, subjectId, MyConstants.DES_PERSON);
+        titleMoreItem.setExtra(extra);
+        items.add(titleMoreItem);
         items.add(new TextItem(showInfo));
 
 
         // 角色介绍, 可能不全
-        items.add(new TitleMoreItem(BangumiApp.sAppCtx.getString(R.string.bangumi_detail_character), R.mipmap.ic_launcher));
+        items.add(new TitleMoreItem(BangumiApp.sAppCtx.getString(R.string.bangumi_detail_character), R.mipmap.ic_launcher, subjectId, MyConstants.DES_CHARACTER));
         Elements subject_clearit = document.select("ul#browserItemList>li");
         List<AnimeCharacterEntity> characterList = new ArrayList<>();
         for (int clearItIndex = 0; clearItIndex < subject_clearit.size(); clearItIndex++) {
@@ -349,7 +350,7 @@ public class BangumiDetailPresenter implements BangumiDetailContract.Presenter {
                 epList.add(entity);
             }
         }
-        items.add(new TitleMoreItem(BangumiApp.sAppCtx.getString(R.string.watch_progress), R.mipmap.ic_launcher));
+        items.add(new TitleMoreItem(BangumiApp.sAppCtx.getString(R.string.watch_progress), R.mipmap.ic_launcher, subjectId, MyConstants.DES_EP));
         items.add(new EpList(epList));
 
 
@@ -398,114 +399,6 @@ public class BangumiDetailPresenter implements BangumiDetailContract.Presenter {
 
         return items;
     }
-
-
-    /** 解析网页章节 */
-    private String parseAnimeEP(String html) {
-        Document document = Jsoup.parse(html);
-
-        Elements line_list = document.select("ul.line_list>li");
-
-        int catNumber = document.select("li.cat").size();
-
-        // key 是 cat， value 是 list，list 里面是 item，这里先以 string 代替
-        HashMap<String, List<String>> hashMap = new HashMap<>();
-        List<String> itemList = new ArrayList<>();
-
-        String key = "";
-
-        for (int i = 0; i < line_list.size(); i++) {
-            Element element = line_list.get(i);
-
-            String cat = element.attr("class");
-
-            if (cat.startsWith("line")) {
-                // 已放送
-                String epAirStatusStr = element.select("h6>span.epAirStatus").attr("title");
-                //Air
-                String epAirStatus = element.select("h6>span.epAirStatus>span").attr("class");
-
-                String epUrl = element.select("h6>a").attr("href");
-                String name_jp = element.select("h6>a").text();
-                String name_cn = element.select("h6>span.tip").text();
-                String info = element.select("small").text();
-
-                itemList.add(name_cn);
-            } else {
-                key = element.text();
-            }
-
-            // 最后一个
-            if (i == line_list.size() -1) {
-                hashMap.put(key, itemList);
-            } else {
-                // 中间
-                String nextCat = line_list.get(i + 1).attr("class");
-                if (!nextCat.startsWith("line")) {
-                    List<String> copyList = new ArrayList<>();
-                    copyList.addAll(itemList);
-                    hashMap.put(key, copyList);
-                    itemList.clear();
-                }
-            }
-
-        }
-
-        return "parseEP";
-    }
-
-
-    /** 解析网页人物介绍 一页到底，不翻页*/
-    private String parseAnimeCharacters(String html) {
-        Document document = Jsoup.parse(html);
-
-        Elements elements = document.select("div#columnInSubjectA>div");
-
-        for (int i = 0; i < elements.size(); i++) {
-
-            Element element = elements.get(i);
-
-            String avatar_url = element.select("a").attr("href");
-            String avatar_image_url = element.select("a>img").attr("src");
-
-            String role_name_cn = element.select("div.clearit>h2>span").text();
-            String role_name_jp = element.select("div.clearit>h2>a").text();
-
-            String info = element.select("div.clearit>div.crt_info").text();
-
-            String cv_url = element.select("div.actorBadge clearit>a").attr("href");
-            String cv_image_url = element.select("div.actorBadge clearit>a>img").attr("src");
-            String cv_name_jp = element.select("div.actorBadge clearit>p>a").text();
-            String cv_name_cn = element.select("div.actorBadge clearit>p>small").text();
-        }
-
-        return "parseAnimeCharacters";
-    }
-
-
-    /** 解析网页制作人员 不翻页*/
-    private String parseAnimePersons(String html) {
-
-        Document document = Jsoup.parse(html);
-
-        Elements elements = document.select("div#columnInSubjectA>div");
-
-        for (int i = 0; i < elements.size(); i++) {
-
-            Element element = elements.get(i);
-
-            String avatar_url = element.select("a").attr("href");
-            String avatar_image_url = element.select("a>img").attr("src");
-
-            String name = element.select("div>h2>a").text();
-            String info = element.select("div>div.prsn_info").text();
-
-        }
-
-
-        return "parseAnimePersons";
-    }
-
 
     /** 解析网页评论 会翻页*/
     private String parseAnimeComments(String html) {

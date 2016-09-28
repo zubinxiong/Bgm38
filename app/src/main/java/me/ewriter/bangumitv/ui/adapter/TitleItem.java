@@ -1,7 +1,6 @@
-package me.ewriter.bangumitv.ui.bangumidetail.adapter;
+package me.ewriter.bangumitv.ui.adapter;
 
 import me.drakeet.multitype.Item;
-import me.ewriter.bangumitv.R;
 
 /**
  * Created by Zubin on 2016/9/27.

@@ -12,16 +12,19 @@ import me.drakeet.multitype.MultiTypePool;
 import me.ewriter.bangumitv.constants.MyConstants;
 import me.ewriter.bangumitv.dao.DaoMaster;
 import me.ewriter.bangumitv.dao.DaoSession;
-import me.ewriter.bangumitv.ui.bangumidetail.adapter.CharacterItemViewProvider;
-import me.ewriter.bangumitv.ui.bangumidetail.adapter.CharacterList;
-import me.ewriter.bangumitv.ui.bangumidetail.adapter.EpItemViewProvider;
-import me.ewriter.bangumitv.ui.bangumidetail.adapter.EpList;
-import me.ewriter.bangumitv.ui.bangumidetail.adapter.TextItem;
-import me.ewriter.bangumitv.ui.bangumidetail.adapter.TextItemViewProvider;
-import me.ewriter.bangumitv.ui.bangumidetail.adapter.TitleItem;
-import me.ewriter.bangumitv.ui.bangumidetail.adapter.TitleItemViewProvider;
-import me.ewriter.bangumitv.ui.bangumidetail.adapter.TitleMoreItem;
-import me.ewriter.bangumitv.ui.bangumidetail.adapter.TitleMoreViewProvider;
+import me.ewriter.bangumitv.ui.adapter.CharacterItemViewProvider;
+import me.ewriter.bangumitv.ui.adapter.CharacterList;
+import me.ewriter.bangumitv.ui.adapter.EpItemViewProvider;
+import me.ewriter.bangumitv.ui.adapter.EpList;
+import me.ewriter.bangumitv.ui.adapter.PersonItem;
+import me.ewriter.bangumitv.ui.adapter.PersonItemList;
+import me.ewriter.bangumitv.ui.adapter.PersonItemViewProvider;
+import me.ewriter.bangumitv.ui.adapter.TextItem;
+import me.ewriter.bangumitv.ui.adapter.TextItemViewProvider;
+import me.ewriter.bangumitv.ui.adapter.TitleItem;
+import me.ewriter.bangumitv.ui.adapter.TitleItemViewProvider;
+import me.ewriter.bangumitv.ui.adapter.TitleMoreItem;
+import me.ewriter.bangumitv.ui.adapter.TitleMoreViewProvider;
 import me.ewriter.bangumitv.utils.PreferencesUtils;
 
 /**
@@ -58,6 +61,7 @@ public class BangumiApp extends Application {
         MultiTypePool.register(TitleItem.class, new TitleItemViewProvider());
         MultiTypePool.register(TitleMoreItem.class, new TitleMoreViewProvider());
         MultiTypePool.register(EpList.class, new EpItemViewProvider());
+        MultiTypePool.register(PersonItemList.class, new PersonItemViewProvider());
     }
 
     @SuppressWarnings("WrongConstant")
