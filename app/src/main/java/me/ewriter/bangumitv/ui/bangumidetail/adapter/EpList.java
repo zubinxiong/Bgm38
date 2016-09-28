@@ -1,4 +1,4 @@
-package me.ewriter.bangumitv.ui.adapter;
+package me.ewriter.bangumitv.ui.bangumidetail.adapter;
 
 import java.util.List;
 

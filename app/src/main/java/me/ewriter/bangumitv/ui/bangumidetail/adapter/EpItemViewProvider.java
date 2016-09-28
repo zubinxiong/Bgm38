@@ -1,4 +1,4 @@
-package me.ewriter.bangumitv.ui.adapter;
+package me.ewriter.bangumitv.ui.bangumidetail.adapter;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayoutManager;

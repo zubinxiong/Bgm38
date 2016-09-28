@@ -1,4 +1,4 @@
-package me.ewriter.bangumitv.ui.adapter;
+package me.ewriter.bangumitv.ui.commonAdapter;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -14,10 +14,8 @@ import me.drakeet.multitype.ItemViewProvider;
 import me.ewriter.bangumitv.R;
 import me.ewriter.bangumitv.constants.MyConstants;
 import me.ewriter.bangumitv.ui.characters.CharacterActivity;
-import me.ewriter.bangumitv.ui.login.LoginActivity;
 import me.ewriter.bangumitv.ui.persons.PersonsActivity;
 import me.ewriter.bangumitv.ui.progress.ProgressActivity;
-import me.ewriter.bangumitv.ui.search.SearchActivity;
 
 /**
  * Created by Zubin on 2016/9/27.
@@ -47,6 +45,7 @@ public class TitleMoreViewProvider extends ItemViewProvider<TitleMoreItem, Title
                     intent = new Intent(holder.item.getContext(), ProgressActivity.class);
                 } else if (des.equals(MyConstants.DES_CHARACTER)) {
                     intent = new Intent(holder.item.getContext(), CharacterActivity.class);
+                    intent.putExtra("subjectId", titleMoreItem.subjectId);
                 } else if (des.equals(MyConstants.DES_PERSON)) {
                     intent = new Intent(holder.item.getContext(), PersonsActivity.class);
                     if (!TextUtils.isEmpty(titleMoreItem.extra)) {

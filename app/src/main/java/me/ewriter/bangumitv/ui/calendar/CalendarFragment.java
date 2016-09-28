@@ -10,6 +10,7 @@ import android.view.View;
 import me.ewriter.bangumitv.R;
 import me.ewriter.bangumitv.base.BaseFragment;
 import me.ewriter.bangumitv.event.OpenNavigationEvent;
+import me.ewriter.bangumitv.ui.calendar.adapter.CalendarAdapter;
 import me.ewriter.bangumitv.ui.search.SearchActivity;
 import me.ewriter.bangumitv.utils.RxBus;
 

@@ -17,7 +17,6 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import me.drakeet.multitype.Items;
@@ -31,11 +30,11 @@ import me.ewriter.bangumitv.api.entity.AnimeEpEntity;
 import me.ewriter.bangumitv.api.entity.CommentEntity;
 import me.ewriter.bangumitv.api.response.SubjectComment;
 import me.ewriter.bangumitv.constants.MyConstants;
-import me.ewriter.bangumitv.ui.adapter.CharacterList;
-import me.ewriter.bangumitv.ui.adapter.EpList;
-import me.ewriter.bangumitv.ui.adapter.TextItem;
-import me.ewriter.bangumitv.ui.adapter.TitleItem;
-import me.ewriter.bangumitv.ui.adapter.TitleMoreItem;
+import me.ewriter.bangumitv.ui.bangumidetail.adapter.CharacterList;
+import me.ewriter.bangumitv.ui.bangumidetail.adapter.EpList;
+import me.ewriter.bangumitv.ui.commonAdapter.TextItem;
+import me.ewriter.bangumitv.ui.commonAdapter.TitleItem;
+import me.ewriter.bangumitv.ui.commonAdapter.TitleMoreItem;
 import me.ewriter.bangumitv.ui.login.LoginActivity;
 import me.ewriter.bangumitv.utils.BlurUtil;
 import me.ewriter.bangumitv.utils.LogUtil;

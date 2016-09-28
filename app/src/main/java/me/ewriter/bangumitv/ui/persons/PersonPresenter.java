@@ -10,14 +10,13 @@ import org.jsoup.select.Elements;
 import java.util.ArrayList;
 import java.util.List;
 
-import me.drakeet.multitype.Item;
 import me.drakeet.multitype.Items;
 import me.ewriter.bangumitv.BangumiApp;
 import me.ewriter.bangumitv.R;
 import me.ewriter.bangumitv.api.ApiManager;
-import me.ewriter.bangumitv.ui.adapter.PersonItem;
-import me.ewriter.bangumitv.ui.adapter.PersonItemList;
-import me.ewriter.bangumitv.ui.adapter.TitleItem;
+import me.ewriter.bangumitv.ui.persons.adapter.PersonItem;
+import me.ewriter.bangumitv.ui.persons.adapter.PersonItemList;
+import me.ewriter.bangumitv.ui.commonAdapter.TitleItem;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;

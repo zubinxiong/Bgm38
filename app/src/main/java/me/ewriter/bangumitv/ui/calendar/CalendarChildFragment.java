@@ -12,10 +12,10 @@ import android.widget.ProgressBar;
 import java.util.ArrayList;
 import java.util.List;
 
-import me.ewriter.bangumitv.BangumiApp;
 import me.ewriter.bangumitv.R;
 import me.ewriter.bangumitv.base.BaseFragment;
 import me.ewriter.bangumitv.dao.BangumiCalendar;
+import me.ewriter.bangumitv.ui.calendar.adapter.CalendarItemAdapter;
 import me.ewriter.bangumitv.utils.LogUtil;
 
 /**

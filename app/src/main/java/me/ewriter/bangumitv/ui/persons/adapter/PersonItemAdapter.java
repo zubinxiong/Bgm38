@@ -1,4 +1,4 @@
-package me.ewriter.bangumitv.ui.adapter;
+package me.ewriter.bangumitv.ui.persons.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;

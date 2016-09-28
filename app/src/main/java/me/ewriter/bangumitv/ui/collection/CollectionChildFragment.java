@@ -16,6 +16,7 @@ import java.util.List;
 import me.ewriter.bangumitv.R;
 import me.ewriter.bangumitv.base.BaseFragment;
 import me.ewriter.bangumitv.dao.MyCollection;
+import me.ewriter.bangumitv.ui.collection.adapter.CollectionItemAdapter;
 import me.ewriter.bangumitv.utils.LogUtil;
 import me.ewriter.bangumitv.utils.Tools;
 import me.ewriter.bangumitv.widget.VertialSpacingItemDecoration;
