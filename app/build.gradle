@@ -91,8 +91,6 @@ dependencies {
 
     compile rootProject.ext.dependencies["bugly"]
 
-    compile rootProject.ext.dependencies["easypermissions"]
-
     compile rootProject.ext.dependencies["rxjava"]
     compile rootProject.ext.dependencies["rxandroid"]
     compile rootProject.ext.dependencies["rxjavaAdapter"]
@@ -101,6 +99,7 @@ dependencies {
     compile rootProject.ext.dependencies["convert-scalars"]
     compile rootProject.ext.dependencies["multitype"]
     compile rootProject.ext.dependencies["discrete-seekbar"]
+    compile rootProject.ext.dependencies["rxpermissions"]
 
     debugCompile rootProject.ext.dependencies["debug-leakcanary"]
     releaseCompile rootProject.ext.dependencies["release-leakcanary"]

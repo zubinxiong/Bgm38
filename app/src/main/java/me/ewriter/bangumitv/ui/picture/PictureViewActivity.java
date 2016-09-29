@@ -1,8 +1,6 @@
 package me.ewriter.bangumitv.ui.picture;
 
-import android.Manifest;
 import android.os.Build;
-import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.transition.Fade;
@@ -18,22 +16,15 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import java.util.List;
-
 import me.ewriter.bangumitv.R;
 import me.ewriter.bangumitv.base.BaseActivity;
-import me.ewriter.bangumitv.utils.LogUtil;
 import me.ewriter.bangumitv.utils.ToastUtils;
-import pub.devrel.easypermissions.AfterPermissionGranted;
-import pub.devrel.easypermissions.EasyPermissions;
-import rx.Subscription;
-import rx.subscriptions.CompositeSubscription;
 
 /**
  * Created by Zubin on 2016/9/29.
  */
 
-public class PictureViewActivity extends BaseActivity implements View.OnClickListener {
+public class PictureViewActivity extends BaseActivity implements View.OnClickListener, PictureContract.View {
 
     public static final String EXTRA_IMAGE_URL = "image_url";
     public static final String EXTRA_IMAGE_TEXT = "image_text";
@@ -45,6 +36,8 @@ public class PictureViewActivity extends BaseActivity implements View.OnClickLis
     private ImageView mPicture;
     private TextView mDetailText;
     private ViewGroup mPicGroup;
+
+    PictureContract.Presenter mPresenter;
 
     @Override
     protected int getContentViewResId() {
@@ -72,6 +65,9 @@ public class PictureViewActivity extends BaseActivity implements View.OnClickLis
         if (!TextUtils.isEmpty(mImageText)) {
             mDetailText.setText(mImageText);
         }
+
+        mPresenter = new PicturePresenter(this);
+        mPresenter.subscribe();
     }
 
     @Override
@@ -85,8 +81,8 @@ public class PictureViewActivity extends BaseActivity implements View.OnClickLis
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_save:
-//                requestWES();
-                return true;
+                mPresenter.checkPermission(mImageUrl, mImageText+".jpg");
+                return false;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -139,5 +135,21 @@ public class PictureViewActivity extends BaseActivity implements View.OnClickLis
                 .start();
 
         isHidden = !isHidden;
+    }
+
+    @Override
+    public void showToast(String msg) {
+        ToastUtils.showShortToast(msg);
+    }
+
+    @Override
+    public void setPresenter(PictureContract.Presenter presenter) {
+        mPresenter = presenter;
+    }
+
+    @Override
+    protected void onDestroy() {
+        mPresenter.unsubscribe();
+        super.onDestroy();
     }
 }

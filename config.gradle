@@ -12,7 +12,6 @@ ext {
             "greendao" : "org.greenrobot:greendao:3.0.1",
             "circleimageview" : "de.hdodenhof:circleimageview:2.1.0",
             "bugly" : "com.tencent.bugly:crashreport:latest.release",
-            "easypermissions" : "pub.devrel:easypermissions:0.1.9",
             "rxjava" : "io.reactivex:rxjava:1.1.6",
             "rxandroid" : "io.reactivex:rxandroid:1.2.1",
             "rxjavaAdapter" : "com.squareup.retrofit2:adapter-rxjava:2.1.0",
@@ -22,7 +21,8 @@ ext {
             "multitype" : "me.drakeet.multitype:multitype:2.0.0",
             "debug-leakcanary" : "com.squareup.leakcanary:leakcanary-android:1.4-beta2",
             "release-leakcanary" : "com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2",
-            "discrete-seekbar" : "org.adw.library:discrete-seekbar:1.0.1"
+            "discrete-seekbar" : "org.adw.library:discrete-seekbar:1.0.1",
+            "rxpermissions" : "com.tbruyelle.rxpermissions:rxpermissions:0.7.1@aar"
     ]
 
     android = [
