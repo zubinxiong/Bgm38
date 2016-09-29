@@ -224,17 +224,26 @@ public class BangumiDetailPresenter implements BangumiDetailContract.Presenter {
         LogUtil.d(LogUtil.ZUBIN, "parseDetail thread = " + Thread.currentThread());
         Items items = new Items();
 
-        AnimeDetailEntity animeDetailEntity = new AnimeDetailEntity();
+//        AnimeDetailEntity animeDetailEntity = new AnimeDetailEntity();
         Document document = Jsoup.parse(html);
 
         // subjectID
         String subjectId = document.select("h1.nameSingle>a").attr("href").replace("/subject/", "").trim();
 
+        // 顶上名字旁边的灰色小字，一般是类别
+        String small_type = document.select("h1.nameSingle>small").text();
+        if (!TextUtils.isEmpty(small_type)) {
+            items.add(new TitleItem(BangumiApp.sAppCtx.getString(R.string.bangumi_type), R.mipmap.ic_launcher));
+            items.add(new TextItem(small_type));
+        }
+
         // 剧情简介
-        items.add(new TitleItem(BangumiApp.sAppCtx.getString(R.string.bangumi_detail_summary), R.mipmap.ic_launcher));
         String summary = document.select("div#subject_summary").text().trim();
         summaryStr = summary;
-        items.add(new TextItem(summary));
+        if (!TextUtils.isEmpty(summary)) {
+            items.add(new TitleItem(BangumiApp.sAppCtx.getString(R.string.bangumi_detail_summary), R.mipmap.ic_launcher));
+            items.add(new TextItem(summary));
+        }
 
         // 左侧列表, 外面只有简介，点击进入后还有制作人员
         Elements li = document.select("div.infobox>ul#infobox>li");
@@ -264,15 +273,16 @@ public class BangumiDetailPresenter implements BangumiDetailContract.Presenter {
 //                String href_url = href.attr("href");
 //            }
         }
-        TitleMoreItem titleMoreItem = new TitleMoreItem(BangumiApp.sAppCtx.getString(R.string.bangumi_detail_content)
-                , R.mipmap.ic_launcher, subjectId, MyConstants.DES_PERSON);
-        titleMoreItem.setExtra(extra);
-        items.add(titleMoreItem);
-        items.add(new TextItem(showInfo));
 
+        if (li.size() > 0) {
+            TitleMoreItem titleMoreItem = new TitleMoreItem(BangumiApp.sAppCtx.getString(R.string.bangumi_detail_content)
+                    , R.mipmap.ic_launcher, subjectId, MyConstants.DES_PERSON);
+            titleMoreItem.setExtra(extra);
+            items.add(titleMoreItem);
+            items.add(new TextItem(showInfo));
+        }
 
         // 角色介绍, 可能不全
-        items.add(new TitleMoreItem(BangumiApp.sAppCtx.getString(R.string.bangumi_detail_character), R.mipmap.ic_launcher, subjectId, MyConstants.DES_CHARACTER));
         Elements subject_clearit = document.select("ul#browserItemList>li");
         List<AnimeCharacterEntity> characterList = new ArrayList<>();
         for (int clearItIndex = 0; clearItIndex < subject_clearit.size(); clearItIndex++) {
@@ -309,7 +319,11 @@ public class BangumiDetailPresenter implements BangumiDetailContract.Presenter {
 
             characterList.add(entity);
         }
-        items.add(new DetailCharacterList(characterList));
+        if (subject_clearit.size() > 0) {
+            items.add(new TitleMoreItem(BangumiApp.sAppCtx.getString(R.string.bangumi_detail_character), R.mipmap.ic_launcher, subjectId, MyConstants.DES_CHARACTER));
+            items.add(new DetailCharacterList(characterList));
+        }
+
 
         // 右侧收藏盒
         String global_score = document.select("div.global_score").text();
@@ -349,25 +363,19 @@ public class BangumiDetailPresenter implements BangumiDetailContract.Presenter {
                 epList.add(entity);
             }
         }
-        items.add(new TitleMoreItem(BangumiApp.sAppCtx.getString(R.string.watch_progress), R.mipmap.ic_launcher, subjectId, MyConstants.DES_EP));
-        items.add(new DetailEpList(epList));
-
+        if (prg_list.size() > 0) {
+            items.add(new TitleMoreItem(BangumiApp.sAppCtx.getString(R.string.watch_progress), R.mipmap.ic_launcher, subjectId, MyConstants.DES_EP));
+            items.add(new DetailEpList(epList));
+        }
 
         // 最顶上的名称， 一般是日文名
         String title = document.select("h1.nameSingle").text();
-        animeDetailEntity.setNameJp(title);
-
-        // 顶上名字旁边的灰色小字，一般是类别
-        String small_type = document.select("h1.nameSingle>small").text();
-        animeDetailEntity.setSmallType(small_type);
 
         // 图片large 地址, 可能为空
         String large_image_url = "https:" + document.select("div.infobox>div>a").attr("href");
-        animeDetailEntity.setLargeImageUrl(large_image_url);
 
         // 图片cover 地址, 可能为空
         String cover_image_url = "https:" + document.select("div.infobox>div>a>img").attr("src");
-        animeDetailEntity.setCoverImageUrl(cover_image_url);
 
         // 吐槽箱
         Elements comments = document.select("div#comment_box>div");
@@ -392,7 +400,6 @@ public class BangumiDetailPresenter implements BangumiDetailContract.Presenter {
 
             commentList.add(entity);
         }
-        animeDetailEntity.setCommentList(commentList);
 
         // TODO: 2016/9/24   关联条目 ,有好多，暂时没想好怎么放，先不做
 

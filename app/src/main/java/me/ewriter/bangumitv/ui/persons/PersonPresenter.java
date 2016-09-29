@@ -14,6 +14,7 @@ import me.drakeet.multitype.Items;
 import me.ewriter.bangumitv.BangumiApp;
 import me.ewriter.bangumitv.R;
 import me.ewriter.bangumitv.api.ApiManager;
+import me.ewriter.bangumitv.ui.commonAdapter.TextItem;
 import me.ewriter.bangumitv.ui.persons.adapter.PersonItem;
 import me.ewriter.bangumitv.ui.persons.adapter.PersonItemList;
 import me.ewriter.bangumitv.ui.commonAdapter.TitleItem;
@@ -102,8 +103,12 @@ public class PersonPresenter implements PersonContract.Presenter {
 
             list.add(new PersonItem(name, info, avatar_image_url));
         }
+        if (list.size() == 0) {
+            items.add(new TextItem("没有数据_(:з”∠)_"));
+        } else {
+            items.add(new PersonItemList(list));
+        }
 
-        items.add(new PersonItemList(list));
         return items;
     }
 }

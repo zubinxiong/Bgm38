@@ -48,6 +48,7 @@
     <string name="tags">大家的标注 : %1$s</string>
     <string name="score">评分 : %1$s</string>
     <string name="bangumi_persons">制作人员</string>
+    <string name="bangumi_type">类别</string>
 
     <!-- 登录 -->
     <string name="login_email_hint">邮箱</string>

@@ -91,6 +91,14 @@ public class ProgressPresenter implements ProgressContract.Presenter {
 
     @Override
     public void updateEpStatus(final AnimeEpEntity entity, final int position, final int gridPosition) {
+
+        // 先检查是否已经登录
+        if (!LoginManager.isLogin(BangumiApp.sAppCtx)) {
+            mProgressView.dismissProgressDialog();
+            mProgressView.showToast(BangumiApp.sAppCtx.getString(R.string.not_login_hint));
+            return;
+        }
+
         final String[] valueArray = BangumiApp.sAppCtx.getResources().getStringArray(R.array.bottom_sheet_value);
         final String[] type = {"Queue", "Watched", "Drop", ""};
 
@@ -129,7 +137,6 @@ public class ProgressPresenter implements ProgressContract.Presenter {
     /** 处理列表和进度的数据，混合起来后返回*/
     private List<AnimeEpEntity> funsionData(String html, SubjectProgress subjectProgress) {
 
-//        Items items = new Items();
 
         List<AnimeEpEntity> returnList = new ArrayList<>();
 
@@ -138,7 +145,6 @@ public class ProgressPresenter implements ProgressContract.Presenter {
         for (Map.Entry<String, List<AnimeEpEntity>> entry : map.entrySet()) {
             String key = entry.getKey();
             returnList.add(new AnimeEpEntity(R.mipmap.ic_launcher, key, MyEpAdapter.TYPE_TITLE));
-//            items.add(new TitleItem(key, R.mipmap.ic_launcher));
             List<AnimeEpEntity> value = entry.getValue();
 
             if (subjectProgress != null && subjectProgress.getEps() != null) {
