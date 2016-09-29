@@ -5,9 +5,11 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;
 
@@ -36,6 +38,7 @@ import me.ewriter.bangumitv.ui.commonAdapter.TextItem;
 import me.ewriter.bangumitv.ui.commonAdapter.TitleItem;
 import me.ewriter.bangumitv.ui.commonAdapter.TitleMoreItem;
 import me.ewriter.bangumitv.ui.login.LoginActivity;
+import me.ewriter.bangumitv.ui.picture.PictureViewActivity;
 import me.ewriter.bangumitv.utils.BlurUtil;
 import me.ewriter.bangumitv.utils.LogUtil;
 import me.ewriter.bangumitv.utils.ToastUtils;
@@ -177,6 +180,14 @@ public class BangumiDetailPresenter implements BangumiDetailContract.Presenter {
         } else {
             mDetailView.showEvaluationDialog();
         }
+    }
+
+    @Override
+    public void clickCoverImage(Activity activity, String imageUrl, String name, ImageView view) {
+        Intent intent = new Intent(activity, PictureViewActivity.class);
+        intent.putExtra(PictureViewActivity.EXTRA_IMAGE_URL, imageUrl);
+        intent.putExtra(PictureViewActivity.EXTRA_IMAGE_TEXT, name);
+        activity.startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(activity, view, "img").toBundle());
     }
 
     @Override

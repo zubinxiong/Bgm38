@@ -2,6 +2,7 @@ package me.ewriter.bangumitv.ui.bangumidetail;
 
 import android.app.Activity;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import me.drakeet.multitype.Items;
 import me.ewriter.bangumitv.api.entity.AnimeDetailEntity;
@@ -23,6 +24,8 @@ public interface BangumiDetailContract {
 
         /**  处理fab 点击的弹出效果 */
         void clickFab(Activity activity, String bangumiId);
+
+        void clickCoverImage(Activity activity, String imageUrl, String name, ImageView view);
 
         /** 提交用户的评价 */
         void updateComment(String mBangumiID, String status, int rating, String comment);

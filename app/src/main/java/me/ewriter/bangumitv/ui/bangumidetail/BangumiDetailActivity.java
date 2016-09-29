@@ -89,6 +89,7 @@ public class BangumiDetailActivity extends BaseActivity implements BangumiDetail
         setUpToolbar();
         setUpRecyclerView();
         mFab.setOnClickListener(this);
+        mCoverImg.setOnClickListener(this);
 
         mPresenter.requestWebDetail(mBangumiId);
     }
@@ -283,6 +284,10 @@ public class BangumiDetailActivity extends BaseActivity implements BangumiDetail
         switch (v.getId()) {
             case R.id.edit_fab:
                 mPresenter.clickFab(BangumiDetailActivity.this, mBangumiId);
+                break;
+
+            case R.id.cover_img:
+                mPresenter.clickCoverImage(BangumiDetailActivity.this, mLargeImageUrl, mBangumiName, mCoverImg);
                 break;
         }
     }

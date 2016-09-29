@@ -10,7 +10,7 @@
 
     <ImageView
         android:id="@+id/picture"
-        android:transitionName="card_img"
+        android:transitionName="img"
         android:layout_below="@+id/toolbar"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="?attr/actionBarSize"
