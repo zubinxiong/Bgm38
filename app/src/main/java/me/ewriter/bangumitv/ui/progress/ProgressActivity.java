@@ -1,23 +1,28 @@
 package me.ewriter.bangumitv.ui.progress;
 
 import android.app.ProgressDialog;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomSheetBehavior;
+import android.support.design.widget.BottomSheetDialog;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
-import me.drakeet.multitype.Items;
-import me.drakeet.multitype.MultiTypeAdapter;
+import java.util.ArrayList;
+import java.util.List;
+
+import me.ewriter.bangumitv.BangumiApp;
 import me.ewriter.bangumitv.R;
+import me.ewriter.bangumitv.api.entity.AnimeEpEntity;
 import me.ewriter.bangumitv.base.BaseActivity;
-import me.ewriter.bangumitv.ui.commonAdapter.TextItem;
-import me.ewriter.bangumitv.ui.commonAdapter.TitleItem;
-import me.ewriter.bangumitv.ui.progress.adapter.EpItemViewProvider;
-import me.ewriter.bangumitv.utils.LogUtil;
+import me.ewriter.bangumitv.ui.progress.adapter.BottomSheetAdapter;
+import me.ewriter.bangumitv.ui.progress.adapter.MyEpAdapter;
 import me.ewriter.bangumitv.utils.ToastUtils;
-import me.ewriter.bangumitv.utils.Tools;
-import me.ewriter.bangumitv.widget.HorizonSpacingItemDecoration;
 
 /**
  * Created by Zubin on 2016/9/28.
@@ -29,11 +34,14 @@ public class ProgressActivity extends BaseActivity implements ProgressContract.V
     private RecyclerView mRecyclerView;
     private Toolbar mToolbar;
     private ProgressBar mProgressbar;
-    private Items list;
-    MultiTypeAdapter adapter;
+    private List<AnimeEpEntity> list;
+    MyEpAdapter adapter;
 
     private String subjectId;
     private ProgressDialog mProgressDialog;
+    private TextView mEpsTitle, mEpsSummary;
+    private BottomSheetAdapter mBottomSheetAdapter;
+    private BottomSheetDialog mBottomSheetDialog;
 
     @Override
     protected int getContentViewResId() {
@@ -51,14 +59,89 @@ public class ProgressActivity extends BaseActivity implements ProgressContract.V
 
         setUpToolbar();
         setUpRecyclerView();
+        setUpBottomSheetDialog();
 
         mPresenter.requestProgress(subjectId);
     }
 
-    private void setUpRecyclerView() {
-        list = new Items();
+    private void setUpBottomSheetDialog() {
+        mBottomSheetDialog = new BottomSheetDialog(this);
+        View mContentView = LayoutInflater.from(this).inflate(R.layout.view_bottom_sheet, null, false);
+        RecyclerView mRecyclerView = (RecyclerView) mContentView.findViewById(R.id.bottom_recyclerView);
+        String[] nameArray = getResources().getStringArray(R.array.bottom_sheet_name);
+        List<String> mNameList = new ArrayList<>();
+        for (int i = 0; i < nameArray.length; i++) {
+            mNameList.add(nameArray[i]);
+        }
+        mBottomSheetAdapter = new BottomSheetAdapter(this, mNameList);
+        mRecyclerView.setAdapter(mBottomSheetAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        mRecyclerView.addItemDecoration(new HorizonSpacingItemDecoration(Tools.getPixFromDip(16)));
+
+        mBottomSheetDialog.setContentView(mContentView);
+
+        mEpsTitle = (TextView) mContentView.findViewById(R.id.eps_title);
+        mEpsSummary = (TextView) mContentView.findViewById(R.id.eps_summary);
+
+        // 解决BottomSheetDialog 滑动后无法再次显示
+        View view = mBottomSheetDialog.getDelegate().findViewById(android.support.design.R.id.design_bottom_sheet);
+        final BottomSheetBehavior behavior = BottomSheetBehavior.from(view);
+        behavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+            @Override
+            public void onStateChanged(@NonNull View bottomSheet, int newState) {
+                if (newState == BottomSheetBehavior.STATE_HIDDEN) {
+                    mBottomSheetDialog.dismiss();
+                    behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                }
+            }
+
+            @Override
+            public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+
+            }
+        });
+    }
+
+    private void setUpRecyclerView() {
+        list = new ArrayList<>();
+        adapter = new MyEpAdapter(list, this);
+        mRecyclerView.setAdapter(adapter);
+        final GridLayoutManager layoutManager = new GridLayoutManager(this, 6);
+        mRecyclerView.setLayoutManager(layoutManager);
+//        mRecyclerView.addItemDecoration(new GridSpacingItemDecoration(6, Tools.getPixFromDip(16), true));
+        layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(int position) {
+                int type = adapter.getItemViewType(position);
+                if (type == MyEpAdapter.TYPE_TITLE) {
+                    return layoutManager.getSpanCount();
+                } else {
+                    return 1;
+                }
+            }
+        });
+
+        adapter.setOnItemClickListener(new MyEpAdapter.onItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position, AnimeEpEntity entity) {
+                updateBottomSheet(entity, position);
+                mBottomSheetDialog.show();
+            }
+        });
+
+    }
+
+    private void updateBottomSheet(final AnimeEpEntity entity, final int gridPosition) {
+        mEpsTitle.setText(entity.getEpName());
+        mEpsSummary.setText(entity.getInfo());
+
+        mBottomSheetAdapter.setOnItemClickListener(new BottomSheetAdapter.onItemClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                mBottomSheetDialog.dismiss();
+                showProgressDialog();
+                mPresenter.updateEpStatus(entity, position, gridPosition);
+            }
+        });
     }
 
     private void setUpToolbar() {
@@ -97,10 +180,9 @@ public class ProgressActivity extends BaseActivity implements ProgressContract.V
     }
 
     @Override
-    public void refresh(Items items) {
+    public void refresh(List<AnimeEpEntity> items) {
         list.addAll(items);
-        adapter = new MultiTypeAdapter(list);
-        mRecyclerView.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
     }
 
     @Override
@@ -119,8 +201,8 @@ public class ProgressActivity extends BaseActivity implements ProgressContract.V
     }
 
     @Override
-    public void updateEp() {
-        adapter.notifyDataSetChanged();
+    public void updateEp(int position) {
+        adapter.notifyItemChanged(position);
     }
 
     @Override
@@ -128,9 +210,5 @@ public class ProgressActivity extends BaseActivity implements ProgressContract.V
         if (mProgressDialog != null) {
             mProgressDialog.dismiss();
         }
-    }
-
-    public ProgressContract.Presenter getPresenter() {
-        return mPresenter;
     }
 }

@@ -1,6 +1,9 @@
 package me.ewriter.bangumitv.ui.progress;
 
+import java.util.List;
+
 import me.drakeet.multitype.Items;
+import me.ewriter.bangumitv.api.entity.AnimeEpEntity;
 import me.ewriter.bangumitv.base.BasePresenter;
 import me.ewriter.bangumitv.base.BaseView;
 
@@ -13,13 +16,13 @@ public interface ProgressContract {
     interface Presenter extends BasePresenter {
         void requestProgress(String subjectId);
 
-        void updateEpStatus(int epsId, String status);
+        void updateEpStatus(AnimeEpEntity entity, int position, int gridPosition);
     }
 
     interface View extends BaseView<Presenter> {
         void setProgressBarVisible(int visible);
 
-        void refresh(Items items);
+        void refresh(List<AnimeEpEntity> items);
 
         void showToast(String msg);
 
@@ -27,7 +30,7 @@ public interface ProgressContract {
 
         void showProgressDialog();
 
-        void updateEp();
+        void updateEp(int position);
 
     }
 

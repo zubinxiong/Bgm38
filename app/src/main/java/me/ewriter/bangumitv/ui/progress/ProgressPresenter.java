@@ -9,12 +9,9 @@ import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import me.drakeet.multitype.Item;
-import me.drakeet.multitype.Items;
 import me.ewriter.bangumitv.BangumiApp;
 import me.ewriter.bangumitv.R;
 import me.ewriter.bangumitv.api.ApiManager;
@@ -22,10 +19,7 @@ import me.ewriter.bangumitv.api.LoginManager;
 import me.ewriter.bangumitv.api.entity.AnimeEpEntity;
 import me.ewriter.bangumitv.api.response.BaseResponse;
 import me.ewriter.bangumitv.api.response.SubjectProgress;
-import me.ewriter.bangumitv.base.BasePresenter;
-import me.ewriter.bangumitv.ui.bangumidetail.adapter.DetailEpList;
-import me.ewriter.bangumitv.ui.commonAdapter.TitleItem;
-import me.ewriter.bangumitv.ui.progress.adapter.EpList;
+import me.ewriter.bangumitv.ui.progress.adapter.MyEpAdapter;
 import me.ewriter.bangumitv.utils.LogUtil;
 import rx.Observable;
 import rx.Subscriber;
@@ -64,16 +58,16 @@ public class ProgressPresenter implements ProgressContract.Presenter {
     public void requestProgress(String subjectId) {
         Subscription subscription = Observable.zip(ApiManager.getWebInstance().getAnimeEp(subjectId)
                 , ApiManager.getBangumiInstance().getSubjectProgress(LoginManager.getUserId(BangumiApp.sAppCtx),
-                        LoginManager.getAuthString(BangumiApp.sAppCtx), subjectId), new Func2<String, SubjectProgress, Items>() {
+                        LoginManager.getAuthString(BangumiApp.sAppCtx), subjectId), new Func2<String, SubjectProgress, List<AnimeEpEntity>>() {
                     @Override
-                    public Items call(String s, SubjectProgress subjectProgress) {
+                    public List<AnimeEpEntity> call(String s, SubjectProgress subjectProgress) {
                         LogUtil.d(LogUtil.ZUBIN, "requestProgress " + Thread.currentThread());
                         return funsionData(s, subjectProgress);
                     }
                 })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<Items>() {
+                .subscribe(new Subscriber<List<AnimeEpEntity>>() {
                     @Override
                     public void onCompleted() {
 
@@ -86,7 +80,7 @@ public class ProgressPresenter implements ProgressContract.Presenter {
                     }
 
                     @Override
-                    public void onNext(Items items) {
+                    public void onNext(List<AnimeEpEntity> items) {
                         mProgressView.refresh(items);
                         mProgressView.setProgressBarVisible(View.GONE);
                     }
@@ -96,7 +90,13 @@ public class ProgressPresenter implements ProgressContract.Presenter {
     }
 
     @Override
-    public void updateEpStatus(int epsId, String status) {
+    public void updateEpStatus(final AnimeEpEntity entity, final int position, final int gridPosition) {
+        final String[] valueArray = BangumiApp.sAppCtx.getResources().getStringArray(R.array.bottom_sheet_value);
+        final String[] type = {"Queue", "Watched", "Drop", ""};
+
+        int epsId = Integer.parseInt(entity.getEpId());
+        String status = valueArray[position];
+
         Subscription subscription = ApiManager.getBangumiInstance()
                 .updateEp(epsId, status, LoginManager.getAuthString(BangumiApp.sAppCtx))
                 .subscribeOn(Schedulers.io())
@@ -117,7 +117,9 @@ public class ProgressPresenter implements ProgressContract.Presenter {
                     public void onNext(BaseResponse baseResponse) {
                         mProgressView.dismissProgressDialog();
                         mProgressView.showToast(BangumiApp.sAppCtx.getString(R.string.progress_updated));
-                        mProgressView.updateEp();
+                        entity.setEpStatusName(type[position]);
+                        // 这里的position 是 bottomsheet 的position
+                        mProgressView.updateEp(gridPosition);
                     }
                 });
 
@@ -125,15 +127,18 @@ public class ProgressPresenter implements ProgressContract.Presenter {
     }
 
     /** 处理列表和进度的数据，混合起来后返回*/
-    private Items funsionData(String html, SubjectProgress subjectProgress) {
+    private List<AnimeEpEntity> funsionData(String html, SubjectProgress subjectProgress) {
 
-        Items items = new Items();
+//        Items items = new Items();
+
+        List<AnimeEpEntity> returnList = new ArrayList<>();
 
         HashMap<String, List<AnimeEpEntity>> map = parseAnimeEP(html);
 
         for (Map.Entry<String, List<AnimeEpEntity>> entry : map.entrySet()) {
             String key = entry.getKey();
-            items.add(new TitleItem(key, R.mipmap.ic_launcher));
+            returnList.add(new AnimeEpEntity(R.mipmap.ic_launcher, key, MyEpAdapter.TYPE_TITLE));
+//            items.add(new TitleItem(key, R.mipmap.ic_launcher));
             List<AnimeEpEntity> value = entry.getValue();
 
             if (subjectProgress != null && subjectProgress.getEps() != null) {
@@ -156,9 +161,9 @@ public class ProgressPresenter implements ProgressContract.Presenter {
                     }
                 }
             }
-            items.add(new EpList(value));
+            returnList.addAll(value);
         }
-        return items;
+        return returnList;
     }
 
     /** 解析网页章节 */
@@ -182,7 +187,6 @@ public class ProgressPresenter implements ProgressContract.Presenter {
             String cat = element.attr("class");
 
             if (cat.startsWith("line")) {
-                AnimeEpEntity entity = new AnimeEpEntity();
                 // 已放送
                 String epAirStatusStr = element.select("h6>span.epAirStatus").attr("title");
                 //Air
@@ -194,13 +198,14 @@ public class ProgressPresenter implements ProgressContract.Presenter {
                 String name_cn = element.select("h6>span.tip").text();
                 String info = element.select("small").text();
 
-                entity.setEpName(name_jp + name_cn);
-                entity.setEpId(epId);
-                entity.setEpUrl(epUrl);
-                entity.setInfo(info);
-                entity.setEpStatusName(epAirStatus);
-
-                entity.setDisplayName(displayNumber + "");
+//                entity.setEpName(name_jp + name_cn);
+//                entity.setEpId(epId);
+//                entity.setEpUrl(epUrl);
+//                entity.setInfo(info);
+//                entity.setEpStatusName(epAirStatus);
+//
+//                entity.setDisplayName(displayNumber + "");
+                AnimeEpEntity entity = new AnimeEpEntity(displayNumber+"", name_jp + name_cn, epId, epAirStatus, info, MyEpAdapter.TYPE_GRID);
                 displayNumber++;
 
                 itemList.add(entity);

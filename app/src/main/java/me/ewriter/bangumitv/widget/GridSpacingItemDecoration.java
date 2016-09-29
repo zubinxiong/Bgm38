@@ -4,6 +4,8 @@ import android.graphics.Rect;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import me.ewriter.bangumitv.ui.progress.adapter.MyEpAdapter;
+
 /**
  * Created by Zubin on 2016/8/4.
  */
@@ -40,5 +42,27 @@ public class GridSpacingItemDecoration extends RecyclerView.ItemDecoration {
                 outRect.top = spacing; // item top
             }
         }
+
+//        int position = parent.getChildAdapterPosition(view); // item position
+//        int column = position % spanCount; // 第几列
+//        int type = parent.getAdapter().getItemViewType(position);
+//
+//        if (type == MyEpAdapter.TYPE_TITLE) {
+//            outRect.left = spacing;
+//            outRect.top = spacing;
+//            outRect.right = spacing;
+//        } else if (type == MyEpAdapter.TYPE_GRID) {
+//            // 因为标题占了一行， 0或者1就是末尾和开头
+//            if (column == 1) {
+//                outRect.left = spacing;
+//                outRect.right = spacing / 2;
+//            } else if (column == 0) {
+//                outRect.left = spacing / 2;
+//                outRect.right = spacing;
+//            } else {
+//                outRect.left = spacing / 2;
+//                outRect.right = spacing / 2;
+//            }
+//        }
     }
 }

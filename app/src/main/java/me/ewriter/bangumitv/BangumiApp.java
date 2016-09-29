@@ -26,8 +26,6 @@ import me.ewriter.bangumitv.ui.commonAdapter.TitleItem;
 import me.ewriter.bangumitv.ui.commonAdapter.TitleItemViewProvider;
 import me.ewriter.bangumitv.ui.commonAdapter.TitleMoreItem;
 import me.ewriter.bangumitv.ui.commonAdapter.TitleMoreViewProvider;
-import me.ewriter.bangumitv.ui.progress.adapter.EpItemViewProvider;
-import me.ewriter.bangumitv.ui.progress.adapter.EpList;
 import me.ewriter.bangumitv.utils.PreferencesUtils;
 
 /**
@@ -59,6 +57,9 @@ public class BangumiApp extends Application {
     }
 
     private void registerMutiType() {
+        // 性能上有问题，在 progress 界面初始如果 grid 超过 800 条更新的时候会在 ui 线程执行时间过长，可能 ANR
+        // eg: 海贼王界面，考虑下一个版本去掉
+        // FIXME: 2016/9/29 性能上有问题
         MultiTypePool.register(TextItem.class, new TextItemViewProvider());
         MultiTypePool.register(TitleItem.class, new TitleItemViewProvider());
         MultiTypePool.register(TitleMoreItem.class, new TitleMoreViewProvider());
@@ -68,7 +69,6 @@ public class BangumiApp extends Application {
 
         MultiTypePool.register(PersonItemList.class, new PersonItemViewProvider());
         MultiTypePool.register(CharacterItem.class, new CharacterItemViewProvider());
-        MultiTypePool.register(EpList.class, new EpItemViewProvider());
     }
 
     @SuppressWarnings("WrongConstant")
