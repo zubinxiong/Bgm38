@@ -42,6 +42,8 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyHolder> 
         holder.mSearchTitle.setText(item.getNormalName());
         holder.mSearchOutline.setText(item.getInfo());
 
+        holder.mSearchType.setText(String.format(mContext.getString(R.string.search_type), item.getTypeName()));
+
         Picasso.with(mContext)
                 .load(item.getCoverImageUrl())
                 .placeholder(R.drawable.img_on_load)
@@ -77,6 +79,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyHolder> 
         ImageView mSearchImg;
         TextView mSearchTitle;
         TextView mSearchOutline;
+        TextView mSearchType;
 
         public MyHolder(View itemView) {
             super(itemView);
@@ -85,6 +88,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.MyHolder> 
             mSearchImg = (ImageView) itemView.findViewById(R.id.search_img);
             mSearchTitle = (TextView) itemView.findViewById(R.id.search_title);
             mSearchOutline = (TextView) itemView.findViewById(R.id.search_outline);
+            mSearchType = (TextView) itemView.findViewById(R.id.search_type);
         }
     }
 }

@@ -20,7 +20,7 @@
         android:textSize="@dimen/calender_item_title_size"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
-        android:paddingLeft="4dp"
+        android:paddingLeft="6dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
@@ -29,10 +29,22 @@
         android:layout_toRightOf="@+id/search_img"
         android:layout_below="@+id/search_title"
         android:textSize="@dimen/calender_item_outline_size"
-        android:paddingLeft="4dp"
+        android:paddingLeft="6dp"
         android:paddingBottom="10dp"
         android:textColor="@color/calendar_detail_color"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/search_type"
+        android:layout_toRightOf="@+id/search_img"
+        android:layout_below="@+id/search_outline"
+        android:textSize="@dimen/calender_item_outline_size"
+        android:paddingLeft="6dp"
+        android:paddingBottom="10dp"
+        android:textColor="@color/calendar_detail_color"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
 
 </RelativeLayout>

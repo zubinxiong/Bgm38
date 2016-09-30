@@ -29,8 +29,10 @@ public class SearchItemEntity {
     /** 排名， 不一定有*/
     private String rank;
 
-    /** 返回的数据类型，是漫画还是游戏*/
+    /** 返回的数据类型，是漫画还是游戏, 这里的是id 如1,2,3 这种*/
     private String type;
+    /** 返回的类型中文名 */
+    private String typeName;
 
     /**  番剧 id */
     private String bangumiId;
@@ -129,5 +131,13 @@ public class SearchItemEntity {
 
     public void setLargeImageUrl(String largeImageUrl) {
         this.largeImageUrl = largeImageUrl;
+    }
+
+    public String getTypeName() {
+        return typeName;
+    }
+
+    public void setTypeName(String typeName) {
+        this.typeName = typeName;
     }
 }
