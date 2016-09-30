@@ -10,7 +10,7 @@
     <ImageView
         android:id="@+id/character_image"
         android:padding="5dp"
-        android:transitionName="card_img"
+        android:transitionName="img"
         android:layout_width="110dp"
         android:layout_height="110dp" />
 
