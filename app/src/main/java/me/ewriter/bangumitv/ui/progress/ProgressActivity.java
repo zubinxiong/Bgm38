@@ -23,6 +23,9 @@ import me.ewriter.bangumitv.base.BaseActivity;
 import me.ewriter.bangumitv.ui.progress.adapter.BottomSheetAdapter;
 import me.ewriter.bangumitv.ui.progress.adapter.MyEpAdapter;
 import me.ewriter.bangumitv.utils.ToastUtils;
+import me.ewriter.bangumitv.utils.Tools;
+import me.ewriter.bangumitv.widget.GridSpacingItemDecoration;
+import me.ewriter.bangumitv.widget.HorizonSpacingItemDecoration;
 
 /**
  * Created by Zubin on 2016/9/28.
@@ -107,7 +110,6 @@ public class ProgressActivity extends BaseActivity implements ProgressContract.V
         mRecyclerView.setAdapter(adapter);
         final GridLayoutManager layoutManager = new GridLayoutManager(this, 6);
         mRecyclerView.setLayoutManager(layoutManager);
-//        mRecyclerView.addItemDecoration(new GridSpacingItemDecoration(6, Tools.getPixFromDip(16), true));
         layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
             public int getSpanSize(int position) {
