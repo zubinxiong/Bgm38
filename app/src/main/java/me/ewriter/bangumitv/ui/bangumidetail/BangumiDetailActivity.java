@@ -134,6 +134,7 @@ public class BangumiDetailActivity extends BaseActivity implements BangumiDetail
         mBangumiId = getIntent().getStringExtra("bangumiId");
         mCommonImageUrl = getIntent().getStringExtra("common_url");
         mBangumiName = getIntent().getStringExtra("name");
+        // FIXME: 2016/10/2 ImageURL 为空时 null exception
         if (!TextUtils.isEmpty(getIntent().getStringExtra("large_url"))) {
             mLargeImageUrl = getIntent().getStringExtra("large_url");
         } else {
