@@ -5,6 +5,7 @@ import android.content.Context;
 import android.support.v7.app.AppCompatDelegate;
 
 import com.squareup.leakcanary.LeakCanary;
+import com.tencent.bugly.crashreport.CrashReport;
 
 import org.greenrobot.greendao.database.Database;
 
@@ -47,7 +48,7 @@ public class BangumiApp extends Application {
 
         registerMutiType();
 
-//        CrashReport.initCrashReport(getApplicationContext(), MyConstants.BUGLY_APPID, true);
+        CrashReport.initCrashReport(getApplicationContext(), MyConstants.BUGLY_APPID, true);
         LeakCanary.install(this);
 
         DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, MyConstants.DB_NAME, null);

@@ -47,6 +47,13 @@ android {
         GooglePlay {
             manifestPlaceholders = [BUGLY_CHANNEL_VALUE : "GooglePlay"]
         }
+        CoolApk {
+            manifestPlaceholders = [BUGLY_CHANNEL_VALUE : "CoolApk"]
+        }
+        Github {
+            manifestPlaceholders = [BUGLY_CHANNEL_VALUE : "Github"]
+        }
+
 
     }
 
