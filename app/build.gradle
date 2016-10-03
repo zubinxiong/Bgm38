@@ -100,6 +100,7 @@ dependencies {
     compile rootProject.ext.dependencies["multitype"]
     compile rootProject.ext.dependencies["discrete-seekbar"]
     compile rootProject.ext.dependencies["rxpermissions"]
+    compile rootProject.ext.dependencies["persistenCookieJar"]
 
     debugCompile rootProject.ext.dependencies["debug-leakcanary"]
     releaseCompile rootProject.ext.dependencies["release-leakcanary"]

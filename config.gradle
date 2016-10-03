@@ -22,7 +22,8 @@ ext {
             "debug-leakcanary" : "com.squareup.leakcanary:leakcanary-android:1.4-beta2",
             "release-leakcanary" : "com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2",
             "discrete-seekbar" : "org.adw.library:discrete-seekbar:1.0.1",
-            "rxpermissions" : "com.tbruyelle.rxpermissions:rxpermissions:0.7.1@aar"
+            "rxpermissions" : "com.tbruyelle.rxpermissions:rxpermissions:0.7.1@aar",
+            "persistenCookieJar" : "com.github.franmontiel:PersistentCookieJar:v1.0.0"
     ]
 
     android = [

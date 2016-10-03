@@ -48,7 +48,32 @@ public class CalendarPresenter implements CalendarContract.Presenter {
     public void subscribe() {
         // do some rx task
         mSubscriptions = new CompositeSubscription();
+        requestForCookies();
 //        requestData();
+    }
+
+    private void requestForCookies() {
+        Subscription subscription = ApiManager.getWebInstance()
+                .searchItem("bangumi", "all", 1)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<String>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onNext(String s) {
+                        // request for cookies, not deal with response
+                    }
+                });
+        mSubscriptions.add(subscription);
     }
 
     @Override
