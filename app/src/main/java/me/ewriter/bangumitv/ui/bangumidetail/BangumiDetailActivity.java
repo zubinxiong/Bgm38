@@ -137,7 +137,7 @@ public class BangumiDetailActivity extends BaseActivity implements BangumiDetail
         // FIXME: 2016/10/2 ImageURL 为空时 null exception
         if (!TextUtils.isEmpty(getIntent().getStringExtra("large_url"))) {
             mLargeImageUrl = getIntent().getStringExtra("large_url");
-        } else {
+        } else if (!TextUtils.isEmpty(mCommonImageUrl)){
             mLargeImageUrl = mCommonImageUrl.replace("/c/", "/l/");
         }
     }
