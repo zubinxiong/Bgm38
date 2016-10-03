@@ -90,7 +90,7 @@
     <string name="open_source_title">本项目用到了下列开源项目</string>
     <string name="weibo_url">http://weibo.com/xiongzba</string>
     <string name="github_url">https://github.com/zubinxiong/BangumiTV</string>
-    <string name="open_source_list">square/okhttp \nsquare/retrofit \nsquare/picasso \ngreenrobot/EventBus \ngreenrobot/greenDAO \nhdodenhof/CircleImageView \nscarletsky/Bangumi-Android\ndrakeet/Meizhi</string>
+    <string name="open_source_list">square/okhttp \nsquare/retrofit \nsquare/picasso  \ngreenrobot/greenDAO \nhdodenhof/CircleImageView \nscarletsky/Bangumi-Android \nJakeWharton/RxBinding \nReactiveX/RxJava \nfranmontiel/PersistentCookieJar \ntbruyelle/RxPermissions \ndrakeet/MultiType \nAnderWeb/discreteSeekBar</string>
 
     <string name="share">分享</string>
 
