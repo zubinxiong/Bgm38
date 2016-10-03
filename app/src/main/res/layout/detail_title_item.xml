@@ -22,7 +22,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:textColor="@android:color/black"
+        android:textColor="@color/title_item_color"
         tool:text="title"/>
 
 </LinearLayout>

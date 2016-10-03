@@ -4,7 +4,7 @@
     android:id="@+id/design_bottom_sheet"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white"
+    android:background="@color/bottomsheet_backgroup"
     android:orientation="vertical"
     app:layout_behavior="@string/bottom_sheet_behavior">
 
@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/common_padding"
-        android:textColor="@color/md_black_1000"
+        android:textColor="@color/bottomsheet_title"
         android:textSize="@dimen/bottom_sheet_title" />
 
     <TextView
@@ -24,7 +24,7 @@
         android:paddingRight="@dimen/common_padding"
         android:maxLines="8"
         android:ellipsize="end"
-        android:textColor="@color/md_grey_600"
+        android:textColor="@color/bottomsheet_summary"
         android:textSize="@dimen/bottom_sheet_title" />
 
     <View style="@style/divider_line" />

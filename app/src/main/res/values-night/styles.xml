@@ -11,7 +11,7 @@
     <style name="divider_line">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">1px</item>
-        <item name="android:background">@color/md_grey_200</item>
+        <item name="android:background">@color/md_grey_400</item>
     </style>
 
     <style name="Loading_ProgressBar" parent="Widget.AppCompat.ProgressBar">

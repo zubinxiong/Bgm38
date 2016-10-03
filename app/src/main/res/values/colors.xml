@@ -19,6 +19,15 @@
     <color name="white">#ffffff</color>
     <color name="shadow_color">#6c000000</color>
 
+    <color name="title_item_color">#000000</color>
+
+    <color name="color_watched">#E57373</color>
+    <color name="color_wanted">#ff8a80</color>
+
+    <color name="bottomsheet_backgroup">#ffffff</color>
+    <color name="bottomsheet_title">@color/md_black_1000</color>
+    <color name="bottomsheet_summary">@color/md_grey_600</color>
+
     <!-- footer -->
     <color name="color_ff">#F0F0F0</color>
     <color name="color_00">#8A000000</color>
