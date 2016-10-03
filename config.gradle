@@ -1,28 +1,37 @@
 ext {
+    dependencies = [
+            "appcompat-v7" : "com.android.support:appcompat-v7:24.2.1",
+            "design" : "com.android.support:design:24.2.1",
+            "recyclerview" : "com.android.support:recyclerview-v7:24.2.1",
+            "customtabs" : "com.android.support:customtabs:24.2.1",
+            "picasso" : "com.squareup.picasso:picasso:2.5.2",
+            "retrofit" : "com.squareup.retrofit2:retrofit:2.1.0",
+            "convert-gson" : "com.squareup.retrofit2:converter-gson:2.1.0",
+            "logging-interceptor" : "com.squareup.okhttp3:logging-interceptor:3.4.1",
+            "greendao" : "org.greenrobot:greendao:3.0.1",
+            "circleimageview" : "de.hdodenhof:circleimageview:2.1.0",
+            "bugly" : "com.tencent.bugly:crashreport:latest.release",
+            "rxjava" : "io.reactivex:rxjava:1.1.6",
+            "rxandroid" : "io.reactivex:rxandroid:1.2.1",
+            "rxjavaAdapter" : "com.squareup.retrofit2:adapter-rxjava:2.1.0",
+            "rxbinding" : "com.jakewharton.rxbinding:rxbinding:0.4.0",
+            "jsoup" : "org.jsoup:jsoup:1.9.2",
+            "convert-scalars" : "com.squareup.retrofit2:converter-scalars:2.1.0",
+            "multitype" : "me.drakeet.multitype:multitype:2.0.0",
+            "debug-leakcanary" : "com.squareup.leakcanary:leakcanary-android:1.4-beta2",
+            "release-leakcanary" : "com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2",
+            "discrete-seekbar" : "org.adw.library:discrete-seekbar:1.0.1",
+            "rxpermissions" : "com.tbruyelle.rxpermissions:rxpermissions:0.7.1@aar",
+            "persistenCookieJar" : "com.github.franmontiel:PersistentCookieJar:v1.0.0"
+    ]
 
     android = [
             compileSdkVersion : 23,
             buildToolsVersion : "23.0.2",
             minSdkVersion : 17,
             targetSdkVersion : 23,
-            versionCode : 4,
-            versionName : "1.2"
+            versionCode : 6,
+            versionName : "1.3"
     ]
 
-    dependencies = [
-            "appcompat-v7" : "com.android.support:appcompat-v7:23.4.0",
-            "design" : "com.android.support:design:23.4.0",
-            "recyclerview" : "com.android.support:recyclerview-v7:23.4.0",
-            "picasso" : "com.squareup.picasso:picasso:2.5.2",
-            "retrofit" : "com.squareup.retrofit2:retrofit:2.1.0",
-            "convert-gson" : "com.squareup.retrofit2:converter-gson:2.1.0",
-            "logging-interceptor" : "com.squareup.okhttp3:logging-interceptor:3.4.1",
-            "greendao" : "org.greenrobot:greendao:3.0.1",
-            "eventbus" : "org.greenrobot:eventbus:3.0.0",
-            "circleimageview" : "de.hdodenhof:circleimageview:2.1.0",
-            "customtabs" : "com.android.support:customtabs:23.3.0",
-            "bugly" : "com.tencent.bugly:crashreport:latest.release",
-            "easypermissions" : "pub.devrel:easypermissions:0.1.9",
-            "discrete-seekbar" : "org.adw.library:discrete-seekbar:1.0.1"
-    ]
 }

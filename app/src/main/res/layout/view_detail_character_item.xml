@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_marginBottom="8dp"
+    android:clickable="true"
+    android:background="@drawable/square_touch_bg"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/character_image"
+        android:padding="5dp"
+        android:transitionName="card_img"
+        android:layout_width="65dp"
+        android:layout_height="65dp" />
+
+    <TextView
+        android:id="@+id/character_name_cn"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:layout_toRightOf="@+id/character_image"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="5dp"
+        android:textSize="@dimen/calender_item_title_size"
+        android:textColor="@color/calendar_title_color"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/character_type"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:layout_toRightOf="@+id/character_image"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_below="@+id/character_name_cn"
+        android:textSize="@dimen/calender_item_title_size"
+        android:textColor="@color/calendar_detail_color"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</RelativeLayout>

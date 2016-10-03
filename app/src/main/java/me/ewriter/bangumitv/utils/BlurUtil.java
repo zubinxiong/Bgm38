@@ -38,7 +38,10 @@ public class BlurUtil {
             theIntrinsic.forEach(tmpOut);
             tmpOut.copyTo(outputBitmap);
 
-            image.recycle();
+            //http://bugly.qq.com/bbs/forum.php?mod=viewthread&tid=1014
+            // bitmap recycle 后导致了background 为空，出现   java.lang.RuntimeException: Canvas: trying to use a recycled bitmap android.graphics.Bitmap
+            // 这个问题是我在升级support library 后出现的，总结下就是当前bitmap对象可能还被 View 在屏幕画出的时候，不要回收 Bitmap 对象
+//            image.recycle();
 
             rs.destroy();
             return outputBitmap;

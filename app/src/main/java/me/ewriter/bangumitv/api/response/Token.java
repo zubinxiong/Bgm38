@@ -1,18 +1,9 @@
 package me.ewriter.bangumitv.api.response;
 
-import com.google.gson.annotations.SerializedName;
-
-import java.io.File;
-import java.io.Serializable;
-
-import me.ewriter.bangumitv.constants.MyConstants;
-import me.ewriter.bangumitv.utils.Md5Util;
-import me.ewriter.bangumitv.utils.SerializeUtils;
-
 /**
  * Created by Zubin on 2016/7/26.
  */
-public class Token{
+public class Token {
     private int id;
 
     private String url;
