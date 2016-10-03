@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3B3B3B</color>
+    <color name="colorPrimaryDark">#3B3B3B</color>
+    <color name="colorAccent">#ff8a80</color>
+
+    <color name="textcolor">#ff336f</color>
+
+    <color name="calendar_title_color">#ffffff</color>
+    <color name="calendar_detail_color">#757575</color>
+
+    <color name="title_item_color">#ffffff</color>
+
+    <color name="shape_square_normal">#3B3B3B</color>
+    <color name="color_wanted">#ff8a80</color>
+
+    <color name="bottomsheet_backgroup">#3b3b3b</color>
+    <color name="bottomsheet_title">#ffffff</color>
+    <color name="bottomsheet_summary">@color/md_grey_600</color>
+</resources>

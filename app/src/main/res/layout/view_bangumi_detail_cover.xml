@@ -12,8 +12,9 @@
     <ImageView
         android:id="@+id/cover_img"
         android:transitionName="img"
+        android:src="@drawable/img_on_load"
         android:layout_width="150dp"
-        android:layout_height="150dp" />
+        android:layout_height="170dp" />
 
     <TextView
         android:id="@+id/cover_name"
@@ -41,23 +42,23 @@
         android:textSize="@dimen/calender_item_outline_size" />
 
     <TextView
-        android:id="@+id/cover_air_day"
+        android:id="@+id/cover_tag"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/cover_summary"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
+        android:maxLines="2"
+        android:ellipsize="end"
         android:layout_toRightOf="@+id/cover_img"
         android:textColor="@color/white"
         android:textSize="@dimen/calender_item_outline_size" />
 
 
     <TextView
-        android:id="@+id/cover_url"
-        android:visibility="gone"
-        android:text="@string/bangumi_detail_more"
+        android:id="@+id/cover_score"
         android:layout_toRightOf="@+id/cover_img"
-        android:layout_below="@+id/cover_air_day"
+        android:layout_below="@+id/cover_tag"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="10dp"
         android:textColor="@color/white"

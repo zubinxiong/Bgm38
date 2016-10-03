@@ -10,6 +10,7 @@
     <string name="nav_about">关于</string>
     <string name="nav_logout">退出登录</string>
     <string name="nav_setting">设置</string>
+    <string name="nav_night_mode">夜间模式</string>
     <string name="calender_bangumi_img">calender_bangumi_img</string>
 
     <!-- 每日放送 -->
@@ -27,9 +28,11 @@
 
     <!-- 番剧详情 -->
     <string name="bangumi_detail_title">详情</string>
-    <string name="bangumi_detail_more">更多信息 &gt;&gt;&gt; </string>
+    <string name="bangumi_detail_more">更多 &gt; </string>
     <string name="bangumi_detail_init_error">初始化失败</string>
-    <string name="bangumi_detail_summary">简介: %1$s</string>
+    <string name="bangumi_detail_summary">剧情概览</string>
+    <string name="bangumi_detail_content">简介及制作人员</string>
+    <string name="bangumi_detail_character">角色介绍</string>
     <string name="bangumi_detail_air_day">放送日期: %1$s</string>
     <string name="cancel">取消</string>
     <string name="submit">提交</string>
@@ -42,6 +45,10 @@
     <string name="my_comment">我的评价</string>
     <string name="rating_number_max">评分不能大于10</string>
     <string name="progress_updating">进度更新中</string>
+    <string name="tags">大家的标注 : %1$s</string>
+    <string name="score">评分 : %1$s</string>
+    <string name="bangumi_persons">制作人员</string>
+    <string name="bangumi_type">类别</string>
 
     <!-- 登录 -->
     <string name="login_email_hint">邮箱</string>
@@ -65,6 +72,7 @@
     <string name="search_nothing">搜索的内容不存在</string>
     <string name="search_null_hint">请输入搜索内容</string>
     <string name="search_api_limit">共 %1$d 条数据,api限制只显示%2$d 条</string>
+    <string name="search_type">类型 : %1$s</string>
 
     <!-- 退出登录 -->
     <string name="logout_title">退出登录</string>
@@ -82,7 +90,7 @@
     <string name="open_source_title">本项目用到了下列开源项目</string>
     <string name="weibo_url">http://weibo.com/xiongzba</string>
     <string name="github_url">https://github.com/zubinxiong/BangumiTV</string>
-    <string name="open_source_list">square/okhttp \nsquare/retrofit \nsquare/picasso \ngreenrobot/EventBus \ngreenrobot/greenDAO \nhdodenhof/CircleImageView \nscarletsky/Bangumi-Android\ndrakeet/Meizhi</string>
+    <string name="open_source_list">square/okhttp \nsquare/retrofit \nsquare/picasso  \ngreenrobot/greenDAO \nhdodenhof/CircleImageView \nscarletsky/Bangumi-Android \nJakeWharton/RxBinding \nReactiveX/RxJava \nfranmontiel/PersistentCookieJar \ntbruyelle/RxPermissions \ndrakeet/MultiType \nAnderWeb/discreteSeekBar</string>
 
     <string name="share">分享</string>
 
@@ -129,5 +137,11 @@
         <item>drop</item>
         <item>remove</item>
     </string-array>
+
+
+    <!--footer-->
+    <string name="list_footer_loading">正在加载下一页_(:з”∠)_</string>
+    <string name="list_footer_network_error">点击重新加载</string>
+    <string name="list_footer_end">已经没有更多数据了_(:з”∠)_</string>
 
 </resources>

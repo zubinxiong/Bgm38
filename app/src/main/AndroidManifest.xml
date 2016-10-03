@@ -18,7 +18,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ui.activity.MainActivity"
+            android:name=".ui.home.MainActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
             android:theme="@style/TransparentStatusTheme">
@@ -29,50 +29,58 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name=".ui.activity.BangumiDetailActivity"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait"
-            android:theme="@style/TransparentStatusTheme">
-
-        </activity>
-
-        <activity
-            android:name=".ui.activity.LoginActivity"
+        <activity android:name=".ui.search.SearchActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait">
 
         </activity>
 
-        <activity
-            android:name=".ui.activity.SearchActivity"
+        <activity android:name=".ui.login.LoginActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait">
 
         </activity>
 
-        <activity
-            android:name=".ui.activity.AboutActivity"
+        <activity android:name=".ui.about.AboutActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait">
 
         </activity>
 
-        <activity
-            android:name=".ui.activity.MyProgressActivity"
+        <activity android:name=".ui.bangumidetail.BangumiDetailActivity"
+            android:theme="@style/TransparentStatusTheme"
             android:configChanges="orientation"
             android:screenOrientation="portrait">
 
         </activity>
 
-        <activity
-            android:name=".ui.activity.PictureViewActivity"
+        <activity android:name=".ui.progress.ProgressActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait">
 
         </activity>
 
-        <meta-data android:name="BUGLY_APP_CHANNEL" android:value="${BUGLY_CHANNEL_VALUE}" />
+        <activity android:name=".ui.persons.PersonsActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait">
+
+        </activity>
+
+        <activity android:name=".ui.characters.CharacterActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait">
+
+        </activity>
+
+        <activity android:name=".ui.picture.PictureViewActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait">
+
+        </activity>
+
+        <meta-data
+            android:name="BUGLY_APP_CHANNEL"
+            android:value="${BUGLY_CHANNEL_VALUE}" />
 
     </application>
 
