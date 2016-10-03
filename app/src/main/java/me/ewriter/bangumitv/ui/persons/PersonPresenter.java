@@ -90,7 +90,7 @@ public class PersonPresenter implements PersonContract.Presenter {
 
         Elements elements = document.select("div#columnInSubjectA>div");
 
-        items.add(new TitleItem(BangumiApp.sAppCtx.getString(R.string.bangumi_persons), R.mipmap.ic_launcher));
+        items.add(new TitleItem(BangumiApp.sAppCtx.getString(R.string.bangumi_persons), R.drawable.ic_weekend_24dp));
         List<PersonItem> list = new ArrayList<>();
         for (int i = 0; i < elements.size(); i++) {
 

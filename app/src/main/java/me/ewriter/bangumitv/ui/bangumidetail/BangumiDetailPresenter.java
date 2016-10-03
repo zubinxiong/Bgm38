@@ -244,7 +244,7 @@ public class BangumiDetailPresenter implements BangumiDetailContract.Presenter {
         // 顶上名字旁边的灰色小字，一般是类别
         String small_type = document.select("h1.nameSingle>small").text();
         if (!TextUtils.isEmpty(small_type)) {
-            items.add(new TitleItem(BangumiApp.sAppCtx.getString(R.string.bangumi_type), R.mipmap.ic_launcher));
+            items.add(new TitleItem(BangumiApp.sAppCtx.getString(R.string.bangumi_type), R.drawable.ic_widgets_24dp));
             items.add(new TextItem(small_type));
         }
 
@@ -252,7 +252,7 @@ public class BangumiDetailPresenter implements BangumiDetailContract.Presenter {
         String summary = document.select("div#subject_summary").text().trim();
         summaryStr = summary;
         if (!TextUtils.isEmpty(summary)) {
-            items.add(new TitleItem(BangumiApp.sAppCtx.getString(R.string.bangumi_detail_summary), R.mipmap.ic_launcher));
+            items.add(new TitleItem(BangumiApp.sAppCtx.getString(R.string.bangumi_detail_summary), R.drawable.ic_graphic_eq_24dp));
             items.add(new TextItem(summary));
         }
 
@@ -287,7 +287,7 @@ public class BangumiDetailPresenter implements BangumiDetailContract.Presenter {
 
         if (li.size() > 0) {
             TitleMoreItem titleMoreItem = new TitleMoreItem(BangumiApp.sAppCtx.getString(R.string.bangumi_detail_content)
-                    , R.mipmap.ic_launcher, subjectId, MyConstants.DES_PERSON);
+                    , R.drawable.ic_weekend_24dp, subjectId, MyConstants.DES_PERSON);
             titleMoreItem.setExtra(extra);
             items.add(titleMoreItem);
             items.add(new TextItem(showInfo));
@@ -331,7 +331,7 @@ public class BangumiDetailPresenter implements BangumiDetailContract.Presenter {
             characterList.add(entity);
         }
         if (subject_clearit.size() > 0) {
-            items.add(new TitleMoreItem(BangumiApp.sAppCtx.getString(R.string.bangumi_detail_character), R.mipmap.ic_launcher, subjectId, MyConstants.DES_CHARACTER));
+            items.add(new TitleMoreItem(BangumiApp.sAppCtx.getString(R.string.bangumi_detail_character), R.drawable.ic_whatshot_24dp, subjectId, MyConstants.DES_CHARACTER));
             items.add(new DetailCharacterList(characterList));
         }
 
@@ -375,7 +375,7 @@ public class BangumiDetailPresenter implements BangumiDetailContract.Presenter {
             }
         }
         if (prg_list.size() > 0) {
-            items.add(new TitleMoreItem(BangumiApp.sAppCtx.getString(R.string.watch_progress), R.mipmap.ic_launcher, subjectId, MyConstants.DES_EP));
+            items.add(new TitleMoreItem(BangumiApp.sAppCtx.getString(R.string.watch_progress), R.drawable.ic_timeline_24dp, subjectId, MyConstants.DES_EP));
             items.add(new DetailEpList(epList));
         }
 

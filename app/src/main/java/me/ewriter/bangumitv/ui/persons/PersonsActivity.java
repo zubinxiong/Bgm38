@@ -54,7 +54,7 @@ public class PersonsActivity extends BaseActivity implements PersonContract.View
 
     private void setUpRecyclerView() {
         list = new Items();
-        list.add(new TitleItem(getString(R.string.bangumi_detail_content), R.mipmap.ic_launcher));
+        list.add(new TitleItem(getString(R.string.bangumi_detail_content), R.drawable.ic_weekend_24dp));
         list.add(new TextItem(extra));
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         mRecyclerView.addItemDecoration(new HorizonSpacingItemDecoration(Tools.getPixFromDip(16)));

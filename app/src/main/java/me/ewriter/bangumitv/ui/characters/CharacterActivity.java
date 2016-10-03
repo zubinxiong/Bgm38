@@ -66,7 +66,7 @@ public class CharacterActivity extends BaseActivity implements CharacterContract
 
     private void setUpRecyclerView() {
         list = new Items();
-        list.add(new TitleItem(getString(R.string.bangumi_detail_character), R.mipmap.ic_launcher));
+        list.add(new TitleItem(getString(R.string.bangumi_detail_character), R.drawable.ic_whatshot_24dp));
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         mRecyclerView.addItemDecoration(new HorizonSpacingItemDecoration(Tools.getPixFromDip(16)));
     }

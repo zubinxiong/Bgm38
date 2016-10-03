@@ -43,7 +43,7 @@
             android:id="@+id/night_mode"
             app:actionLayout="@layout/night_switch"
             android:title="@string/nav_night_mode"
-            android:icon="@drawable/ic_info_white_24dp"/>
+            android:icon="@drawable/ic_brightness_auto_white_24dp"/>
 
         <item
             android:id="@+id/nav_about"

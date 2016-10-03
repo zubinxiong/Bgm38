@@ -144,7 +144,7 @@ public class ProgressPresenter implements ProgressContract.Presenter {
 
         for (Map.Entry<String, List<AnimeEpEntity>> entry : map.entrySet()) {
             String key = entry.getKey();
-            returnList.add(new AnimeEpEntity(R.mipmap.ic_launcher, key, MyEpAdapter.TYPE_TITLE));
+            returnList.add(new AnimeEpEntity(R.drawable.ic_live_tv_24dp, key, MyEpAdapter.TYPE_TITLE));
             List<AnimeEpEntity> value = entry.getValue();
 
             if (subjectProgress != null && subjectProgress.getEps() != null) {
