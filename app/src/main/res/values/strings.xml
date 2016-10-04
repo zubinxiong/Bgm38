@@ -121,7 +121,7 @@
         <item>collect</item>
         <item>do</item>
         <item>on_hold</item>
-        <item>drop</item>
+        <item>dropped</item>
     </string-array>
 
     <string-array name="bottom_sheet_name">
