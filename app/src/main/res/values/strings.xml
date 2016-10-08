@@ -74,6 +74,7 @@
     <string name="search_null_hint">请输入搜索内容</string>
     <string name="search_api_limit">共 %1$d 条数据,api限制只显示%2$d 条</string>
     <string name="search_type">类型 : %1$s</string>
+    <string name="search_filter">高级筛选</string>
 
     <!-- 退出登录 -->
     <string name="logout_title">退出登录</string>

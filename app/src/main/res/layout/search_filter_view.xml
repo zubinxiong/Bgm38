@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:background="@color/white"
+    android:background="@color/search_filter_background"
+    android:padding="@dimen/common_padding"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <TextView
-        android:text="搜索筛选栏"
+        android:text="@string/search_filter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:text="这里的筛选用于选择各个分类下的排行榜，但是筛选条件不同，不知道怎么处理ui？"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 

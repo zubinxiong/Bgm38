@@ -17,4 +17,6 @@
     <color name="bottomsheet_backgroup">#3b3b3b</color>
     <color name="bottomsheet_title">#ffffff</color>
     <color name="bottomsheet_summary">@color/md_grey_600</color>
+
+    <color name="search_filter_background">@color/colorPrimary</color>
 </resources>

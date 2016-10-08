@@ -26,6 +26,8 @@
     <color name="bottomsheet_title">@color/md_black_1000</color>
     <color name="bottomsheet_summary">@color/md_grey_600</color>
 
+    <color name="search_filter_background">@color/white</color>
+
     <!-- footer -->
     <color name="color_ff">#F0F0F0</color>
     <color name="color_00">#8A000000</color>
