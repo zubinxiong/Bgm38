@@ -1,5 +1,7 @@
 package me.ewriter.bangumitv.ui.search;
 
+import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -186,6 +188,7 @@ public class SearchActivity extends BaseActivity implements SearchContract.View,
         switch (v.getId()) {
             case R.id.search_filter:
 //                ToastUtils.showShortToast("点击了筛选条件");
+                mDrawerLayout.openDrawer(GravityCompat.END);
                 break;
         }
     }

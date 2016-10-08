@@ -45,8 +45,7 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="right|center_vertical"
                 android:paddingRight="@dimen/common_padding"
-                android:src="@drawable/ic_format_align_left_black_24dp"
-                android:visibility="gone" />
+                android:src="@drawable/ic_format_align_left_black_24dp" />
 
         </FrameLayout>
 
