@@ -1,19 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
+    android:clickable="true"
+    android:fitsSystemWindows="true"
     android:background="@color/search_filter_background"
-    android:padding="@dimen/common_padding"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <TextView
+        android:padding="@dimen/common_padding"
         android:text="@string/search_filter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
+    <View
+        style="@style/divider_line" />
+
     <TextView
-        android:text="这里的筛选用于选择各个分类下的排行榜，但是筛选条件不同，不知道怎么处理ui？"
+        android:padding="@dimen/common_padding"
+        android:text="@string/subject"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+
+    <TextView
+        android:padding="@dimen/common_padding"
+        android:text="@string/mono"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+
+    <View
+        style="@style/divider_line" />
+
+    <!--条目筛选有 类型，系列，时间，三个详细选项。时间还是可以随意选择的-->
+    <!--人物有类型，血型，年月日等等详细的信息，暂时不放搜索页面-->
 
 </LinearLayout>

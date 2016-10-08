@@ -75,6 +75,8 @@
     <string name="search_api_limit">共 %1$d 条数据,api限制只显示%2$d 条</string>
     <string name="search_type">类型 : %1$s</string>
     <string name="search_filter">高级筛选</string>
+    <string name="subject">条目</string>
+    <string name="mono">人物</string>
 
     <!-- 退出登录 -->
     <string name="logout_title">退出登录</string>
@@ -146,12 +148,17 @@
     <string name="music">音乐</string>
     <string name="real">电视剧</string>
 
-    <string-array name="filter_name">
+    <string-array name="subject_name">
         <item>动画</item>
         <item>图书</item>
         <item>游戏</item>
         <item>音乐</item>
         <item>电视剧</item>
+    </string-array>
+
+    <string-array name="mono_name">
+        <item>虚拟角色</item>
+        <item>现实人物</item>
     </string-array>
 
     <string-array name="filter_value">
