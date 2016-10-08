@@ -1,6 +1,6 @@
 
 
-## BangumiTV
+## Bgm38
 
 A third part Android Client for  [Bangumi](http://bangumi.tv/)
 
