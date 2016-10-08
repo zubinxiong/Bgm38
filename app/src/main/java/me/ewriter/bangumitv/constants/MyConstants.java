@@ -21,6 +21,7 @@ public class MyConstants {
     public static final String LOGIN_MANAGER_NAME = Md5Util.md5("LOGIN_MANAGER_NAME");
     public static final String LOGIN_MANAGER_AUTH_KEY = Md5Util.md5("LOGIN_MANAGER_AUTH_KEY");
     public static final String LOGIN_MANAGER_USER_ID_KEY = Md5Util.md5("LOGIN_MANAGER_USER_ID_KEY");
+    public static final String LOGIN_MANAGER_USER_NAME_KEY = Md5Util.md5("LOGIN_MANAGER_USER_NAME_KEY");
     public static final String LOGIN_MANAGER_HOME_URL_KEY = Md5Util.md5("LOGIN_MANAGER_HOME_URL_KEY");
     public static final String LOGIN_MANAGER_NICKNAME_KEY = Md5Util.md5("LOGIN_MANAGER_NICKNAME_KEY");
     public static final String LOGIN_MANAGER_AVATAR_KEY = Md5Util.md5("LOGIN_MANAGER_AVATAR_KEY");

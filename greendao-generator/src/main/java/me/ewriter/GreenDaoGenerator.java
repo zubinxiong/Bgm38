@@ -11,7 +11,7 @@ public class GreenDaoGenerator {
 
     public static void main(String[] args) throws Exception{
 
-        Schema schema = new Schema(8, "me.ewriter.bangumitv.dao");
+        Schema schema = new Schema(9, "me.ewriter.bangumitv.dao");
 
         // 新建每日放送表
         addCalendar(schema);

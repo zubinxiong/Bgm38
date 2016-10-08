@@ -2,6 +2,7 @@ package me.ewriter.bangumitv;
 
 import android.app.Application;
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatDelegate;
 
 import com.squareup.leakcanary.LeakCanary;
@@ -11,6 +12,7 @@ import org.greenrobot.greendao.database.Database;
 
 import me.drakeet.multitype.MultiTypePool;
 import me.ewriter.bangumitv.constants.MyConstants;
+import me.ewriter.bangumitv.dao.CustomOpenHelper;
 import me.ewriter.bangumitv.dao.DaoMaster;
 import me.ewriter.bangumitv.dao.DaoSession;
 import me.ewriter.bangumitv.ui.bangumidetail.adapter.DetailCharacterItemViewProvider;
@@ -51,10 +53,12 @@ public class BangumiApp extends Application {
         CrashReport.initCrashReport(getApplicationContext(), MyConstants.BUGLY_APPID, true);
         LeakCanary.install(this);
 
-        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, MyConstants.DB_NAME, null);
-        // 不加密，加密的参考官方的demo
-        Database db = helper.getWritableDb();
-        daoSession = new DaoMaster(db).newSession();
+//        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, MyConstants.DB_NAME, null);
+//        Database db = helper.getWritableDb();
+//        daoSession = new DaoMaster(db).newSession();
+        CustomOpenHelper helper = new CustomOpenHelper(this, MyConstants.DB_NAME, null);
+        SQLiteDatabase sqLiteDatabase = helper.getWritableDatabase();
+        daoSession = new DaoMaster(sqLiteDatabase).newSession();
     }
 
     private void registerMutiType() {

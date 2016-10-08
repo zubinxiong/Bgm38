@@ -160,7 +160,7 @@ public class CollectionPresenter implements CollectionContract.Presenter {
 
         // 网络数据
         Observable<List<MyCollection>> network = ApiManager.getWebInstance()
-                .listCollection(category, LoginManager.getUserId(BangumiApp.sAppCtx), type, mPage)
+                .listCollection(category, LoginManager.getUserName(BangumiApp.sAppCtx), type, mPage)
                 .map(new Func1<String, List<MyCollection>>() {
                     @Override
                     public List<MyCollection> call(String s) {
