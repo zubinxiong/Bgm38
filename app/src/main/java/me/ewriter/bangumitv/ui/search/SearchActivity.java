@@ -1,5 +1,6 @@
 package me.ewriter.bangumitv.ui.search;
 
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -16,6 +17,7 @@ import me.ewriter.bangumitv.api.entity.SearchItemEntity;
 import me.ewriter.bangumitv.base.BaseActivity;
 import me.ewriter.bangumitv.ui.search.adapter.SearchAdapter;
 import me.ewriter.bangumitv.utils.LogUtil;
+import me.ewriter.bangumitv.utils.ToastUtils;
 import me.ewriter.bangumitv.utils.Tools;
 import me.ewriter.bangumitv.widget.headerfooter.EndlessRecyclerOnScrollListener;
 import me.ewriter.bangumitv.widget.headerfooter.HeaderAndFooterAdapter;
@@ -26,13 +28,14 @@ import me.ewriter.bangumitv.widget.VertialSpacingItemDecoration;
 /**
  * Created by Zubin on 2016/9/18.
  */
-public class SearchActivity extends BaseActivity implements SearchContract.View{
+public class SearchActivity extends BaseActivity implements SearchContract.View, View.OnClickListener {
 
     private Toolbar mToolbar;
     private EditText mSearchEdit;
-    private ImageView mBackImg, mStatusImg;
+    private ImageView mBackImg, mStatusImg, mSearchFilter;
     private RecyclerView mRecyclerView;
     private ProgressBar mProgressbar;
+    private DrawerLayout mDrawerLayout;
     private SearchContract.Presenter mPresenter;
     private SearchAdapter mDataAdapter;
     private HeaderAndFooterAdapter mWrapperAdapter;
@@ -56,12 +59,14 @@ public class SearchActivity extends BaseActivity implements SearchContract.View{
         mStatusImg = (ImageView) findViewById(R.id.status_image);
         mRecyclerView = (RecyclerView) findViewById(R.id.search_recycler_view);
         mProgressbar = (ProgressBar) findViewById(R.id.progressbar);
+        mSearchFilter = (ImageView) findViewById(R.id.search_filter);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerlayout);
         mList = new ArrayList<>();
 
         setupToolbar();
         setupRecyclerView();
-
         setupSearchEdit();
+        mSearchFilter.setOnClickListener(this);
     }
 
     private void setupRecyclerView() {
@@ -174,5 +179,14 @@ public class SearchActivity extends BaseActivity implements SearchContract.View{
                         mPresenter.searchItem(mSearchEdit, "all");
                     }
                 });
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.search_filter:
+//                ToastUtils.showShortToast("点击了筛选条件");
+                break;
+        }
     }
 }

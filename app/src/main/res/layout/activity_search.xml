@@ -1,64 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/drawerlayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <FrameLayout
-        android:id="@+id/title_frame"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <include
-            layout="@layout/toolbar" />
-
-        <EditText
-            android:id="@+id/search_editText"
-            android:layout_marginLeft="6dp"
-            android:layout_marginRight="6dp"
-            android:layout_marginTop="6dp"
-            android:paddingLeft="50dp"
-            android:imeOptions="actionSearch"
-            android:inputType="text"
-            android:maxLines="1"
-            android:hint="@string/search"
-            android:background="@drawable/bg_card"
+        <FrameLayout
+            android:id="@+id/title_frame"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize" />
+            android:layout_height="wrap_content">
 
-        <ImageView
-            android:id="@+id/search_arrow_back"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="@dimen/common_padding"
-            android:padding="6dp"
-            android:src="@drawable/ic_arrow_back_black_24dp"
+            <include layout="@layout/toolbar" />
+
+            <EditText
+                android:id="@+id/search_editText"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:layout_marginLeft="6dp"
+                android:layout_marginRight="6dp"
+                android:layout_marginTop="3dp"
+                android:background="@drawable/bg_card"
+                android:hint="@string/search"
+                android:imeOptions="actionSearch"
+                android:inputType="text"
+                android:maxLines="1"
+                android:paddingLeft="50dp" />
+
+            <ImageView
+                android:id="@+id/search_arrow_back"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/common_padding"
+                android:padding="6dp"
+                android:src="@drawable/ic_arrow_back_black_24dp" />
+
+            <ImageView
+                android:id="@+id/search_filter"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="right|center_vertical"
+                android:paddingRight="@dimen/common_padding"
+                android:src="@drawable/ic_format_align_left_black_24dp"
+                android:visibility="gone" />
+
+        </FrameLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/search_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/title_frame" />
+
+        <ProgressBar
+            android:id="@+id/progressbar"
+            style="@style/Loading_ProgressBar"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent" />
-
-    </FrameLayout>
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/search_recycler_view"
-        android:layout_below="@+id/title_frame"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
-    <ProgressBar
-        android:id="@+id/progressbar"
-        android:layout_centerInParent="true"
-        android:visibility="invisible"
-        style="@style/Loading_ProgressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="invisible" />
 
 
-    <!-- 用来显示状态的图片，还没有图先占位-->
-    <ImageView
-        android:id="@+id/status_image"
-        android:visibility="gone"
-        android:layout_centerInParent="true"
-        android:layout_width="150dp"
-        android:layout_height="150dp" />
+        <!-- 用来显示状态的图片，还没有图先占位-->
+        <ImageView
+            android:id="@+id/status_image"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_centerInParent="true"
+            android:visibility="gone" />
 
 
-</RelativeLayout>
+    </RelativeLayout>
+
+    <include
+        android:id="@+id/drawer_content"
+        android:layout_gravity="end"
+        android:layout_width="260dp"
+        android:layout_height="match_parent"
+        layout="@layout/search_filter_view" />
+
+</android.support.v4.widget.DrawerLayout>
