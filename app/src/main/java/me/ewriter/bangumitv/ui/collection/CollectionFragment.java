@@ -3,12 +3,14 @@ package me.ewriter.bangumitv.ui.collection;
 import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 
 import me.ewriter.bangumitv.R;
 import me.ewriter.bangumitv.base.BaseFragment;
+import me.ewriter.bangumitv.event.CategoryChangeEvent;
 import me.ewriter.bangumitv.event.OpenNavigationEvent;
 import me.ewriter.bangumitv.ui.collection.adapter.CollectionAdapter;
 import me.ewriter.bangumitv.ui.search.SearchActivity;
@@ -22,6 +24,8 @@ public class CollectionFragment extends BaseFragment {
     private ViewPager mViewPager;
     private TabLayout mTabLayout;
     private Toolbar mToolbar;
+    private PopupMenu mPopupMenu;
+    View showView;
 
     public static CollectionFragment newInstance() {
         return new CollectionFragment();
@@ -51,8 +55,10 @@ public class CollectionFragment extends BaseFragment {
 
     private void setupToolbar() {
         mToolbar.setTitle(getString(R.string.nav_my_collection));
-        mToolbar.inflateMenu(R.menu.search_menu);
+        mToolbar.inflateMenu(R.menu.filter_menu);
         mToolbar.setNavigationIcon(R.drawable.ic_action_drawer);
+
+        showView = mToolbar.findViewById(R.id.toolbar_filter);
 
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,12 +70,49 @@ public class CollectionFragment extends BaseFragment {
         mToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                if (item.getItemId() == R.id.toolbar_search) {
-                    startActivity(new Intent(getActivity(), SearchActivity.class));
+                if (item.getItemId() == R.id.toolbar_filter) {
+//                    startActivity(new Intent(getActivity(), SearchActivity.class));
+                    showMenu();
                 }
                 return false;
             }
         });
+    }
+
+    private void showMenu() {
+        mPopupMenu = new PopupMenu(getActivity(), showView);
+        mPopupMenu.inflate(R.menu.menu_popupmenu);
+        mPopupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+
+                switch (item.getItemId()) {
+                    case R.id.item_anime:
+                        RxBus.getDefault().postSticky(new CategoryChangeEvent("anime"));
+                        return true;
+
+                    case R.id.item_book:
+                        RxBus.getDefault().postSticky(new CategoryChangeEvent("book"));
+                        return true;
+
+                    case R.id.item_game:
+                        RxBus.getDefault().postSticky(new CategoryChangeEvent("game"));
+                        return true;
+
+                    case R.id.item_music:
+                        RxBus.getDefault().postSticky(new CategoryChangeEvent("music"));
+                        return true;
+
+                    case R.id.item_real:
+                        RxBus.getDefault().postSticky(new CategoryChangeEvent("real"));
+                        return true;
+                }
+
+                return false;
+            }
+        });
+
+        mPopupMenu.show();
     }
 
     private void setupViewPager() {

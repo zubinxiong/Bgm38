@@ -49,5 +49,9 @@ public interface CollectionContract {
         void onLogoutEvent();
 
         void onLoginEvent();
+
+        void onChangeCateEvent();
+
+        void showToast(String msg);
     }
 }
