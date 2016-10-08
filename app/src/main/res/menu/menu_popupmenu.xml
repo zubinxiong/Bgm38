@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/item_anime"
+        android:title="@string/anime"/>
+
+    <item
+        android:id="@+id/item_book"
+        android:title="@string/book" />
+
+    <item
+        android:id="@+id/item_game"
+        android:title="@string/game" />
+
+    <item
+        android:id="@+id/item_music"
+        android:title="@string/music" />
+
+    <item
+        android:id="@+id/item_real"
+        android:title="@string/real" />
+
+</menu>

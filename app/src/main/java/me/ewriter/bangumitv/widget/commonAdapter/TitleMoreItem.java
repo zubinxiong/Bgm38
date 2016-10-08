@@ -1,4 +1,4 @@
-package me.ewriter.bangumitv.ui.commonAdapter;
+package me.ewriter.bangumitv.widget.commonAdapter;
 
 import me.drakeet.multitype.Item;
 
