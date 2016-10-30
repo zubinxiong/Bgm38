@@ -21,6 +21,7 @@ import me.ewriter.bangumitv.constants.MyConstants;
 import me.ewriter.bangumitv.dao.DaoSession;
 import me.ewriter.bangumitv.dao.MyCollection;
 import me.ewriter.bangumitv.dao.MyCollectionDao;
+import me.ewriter.bangumitv.event.CategoryChangeEvent;
 import me.ewriter.bangumitv.event.UserLoginEvent;
 import me.ewriter.bangumitv.event.UserLogoutEvent;
 import me.ewriter.bangumitv.ui.bangumidetail.BangumiDetailActivity;
@@ -44,8 +45,9 @@ public class CollectionPresenter implements CollectionContract.Presenter {
 
     private CollectionContract.View mCollectionView;
     private CompositeSubscription mSubscriptions;
-    private Subscription mRxLoginSub, mRxLogoutStb;
+    private Subscription mRxLoginSub, mRxLogoutStb, mRxChangeCateStub;
     private int mPage = 1;
+    private String category = "anime";
 
     public CollectionPresenter(CollectionContract.View mCollectionView) {
         this.mCollectionView = mCollectionView;
@@ -59,6 +61,27 @@ public class CollectionPresenter implements CollectionContract.Presenter {
 
         subscribeLoginEvent();
         subscribeLogoutEvent();
+        subscribeChangeCateEvent();
+    }
+
+    private void subscribeChangeCateEvent() {
+        mRxChangeCateStub = RxBus.getDefault().toObservableSticky(CategoryChangeEvent.class)
+                .subscribe(new RxBusSubscriber<CategoryChangeEvent>() {
+                    @Override
+                    protected void onEvent(CategoryChangeEvent categoryChangeEvent) {
+                        mPage = 1;
+                        category = categoryChangeEvent.getCategory();
+                        mCollectionView.onChangeCateEvent();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        super.onError(e);
+                        mCollectionView.showToast(e.getMessage());
+                    }
+                });
+
+        mSubscriptions.add(mRxChangeCateStub);
     }
 
     private void subscribeLogoutEvent() {
@@ -160,7 +183,7 @@ public class CollectionPresenter implements CollectionContract.Presenter {
 
         // 网络数据
         Observable<List<MyCollection>> network = ApiManager.getWebInstance()
-                .listCollection(category, LoginManager.getUserId(BangumiApp.sAppCtx), type, mPage)
+                .listCollection(category, LoginManager.getUserName(BangumiApp.sAppCtx), type, mPage)
                 .map(new Func1<String, List<MyCollection>>() {
                     @Override
                     public List<MyCollection> call(String s) {
@@ -309,7 +332,9 @@ public class CollectionPresenter implements CollectionContract.Presenter {
     public String getCategory() {
         // TODO: 2016/9/19 第一个版本 category 写死了，实际上需要用户手动选择的
         // 测试后切换标签是正常的，只需要做切换的功能即可
-        return "anime";
+//        return "anime";
+
+        return category;
     }
 
     @Override

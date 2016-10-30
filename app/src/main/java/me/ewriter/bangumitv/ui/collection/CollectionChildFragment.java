@@ -18,6 +18,7 @@ import me.ewriter.bangumitv.base.BaseFragment;
 import me.ewriter.bangumitv.dao.MyCollection;
 import me.ewriter.bangumitv.ui.collection.adapter.CollectionItemAdapter;
 import me.ewriter.bangumitv.utils.LogUtil;
+import me.ewriter.bangumitv.utils.ToastUtils;
 import me.ewriter.bangumitv.utils.Tools;
 import me.ewriter.bangumitv.widget.VertialSpacingItemDecoration;
 import me.ewriter.bangumitv.widget.headerfooter.EndlessRecyclerOnScrollListener;
@@ -242,5 +243,21 @@ public class CollectionChildFragment extends BaseFragment implements CollectionC
         mEmptyButton.setVisibility(View.GONE);
         mEmptyText.setVisibility(View.GONE);
         loadData();
+    }
+
+    @Override
+    public void onChangeCateEvent() {
+        LogUtil.d(LogUtil.ZUBIN, "onChangeCateEvent + " + mPosition);
+        if (mList != null) {
+            mList.clear();
+            mDataAdapter.notifyDataSetChanged();
+        }
+        isNoMoreData = false;
+        loadData();
+    }
+
+    @Override
+    public void showToast(String msg) {
+        ToastUtils.showShortToast(msg);
     }
 }

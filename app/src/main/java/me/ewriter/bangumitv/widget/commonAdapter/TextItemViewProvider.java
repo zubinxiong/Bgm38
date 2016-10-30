@@ -1,4 +1,4 @@
-package me.ewriter.bangumitv.ui.commonAdapter;
+package me.ewriter.bangumitv.widget.commonAdapter;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;

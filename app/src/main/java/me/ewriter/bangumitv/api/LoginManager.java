@@ -33,6 +33,16 @@ public class LoginManager {
                 MyConstants.LOGIN_MANAGER_HOME_URL_KEY, url);
     }
 
+    public static boolean setUserName(Context context, String userName) {
+        return PreferencesUtils.putString(context, MyConstants.LOGIN_MANAGER_NAME,
+                MyConstants.LOGIN_MANAGER_USER_NAME_KEY, userName);
+    }
+
+    public static String getUserName(Context context) {
+        return PreferencesUtils.getString(context, MyConstants.LOGIN_MANAGER_NAME,
+                MyConstants.LOGIN_MANAGER_USER_NAME_KEY, "");
+    }
+
     public static String getUserNickName(Context context) {
         return PreferencesUtils.getString(context, MyConstants.LOGIN_MANAGER_NAME,
                 MyConstants.LOGIN_MANAGER_NICKNAME_KEY, "");
@@ -87,6 +97,7 @@ public class LoginManager {
     public static void saveToken(Context context, Token token) {
         setUserId(context, token.getId());
         setUserHomeUrl(context, token.getUrl());
+        setUserName(context, token.getUsername());
         setUserNickName(context, token.getNickname());
         if (token.getAvatar()!= null && token.getAvatar().getLarge() != null) {
             setLargeAvatar(context, token.getAvatar().getLarge());

@@ -2,15 +2,15 @@ package me.ewriter.bangumitv;
 
 import android.app.Application;
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatDelegate;
 
 import com.squareup.leakcanary.LeakCanary;
 import com.tencent.bugly.crashreport.CrashReport;
 
-import org.greenrobot.greendao.database.Database;
-
 import me.drakeet.multitype.MultiTypePool;
 import me.ewriter.bangumitv.constants.MyConstants;
+import me.ewriter.bangumitv.dao.CustomOpenHelper;
 import me.ewriter.bangumitv.dao.DaoMaster;
 import me.ewriter.bangumitv.dao.DaoSession;
 import me.ewriter.bangumitv.ui.bangumidetail.adapter.DetailCharacterItemViewProvider;
@@ -21,12 +21,12 @@ import me.ewriter.bangumitv.ui.characters.adapter.CharacterItem;
 import me.ewriter.bangumitv.ui.characters.adapter.CharacterItemViewProvider;
 import me.ewriter.bangumitv.ui.persons.adapter.PersonItemList;
 import me.ewriter.bangumitv.ui.persons.adapter.PersonItemViewProvider;
-import me.ewriter.bangumitv.ui.commonAdapter.TextItem;
-import me.ewriter.bangumitv.ui.commonAdapter.TextItemViewProvider;
-import me.ewriter.bangumitv.ui.commonAdapter.TitleItem;
-import me.ewriter.bangumitv.ui.commonAdapter.TitleItemViewProvider;
-import me.ewriter.bangumitv.ui.commonAdapter.TitleMoreItem;
-import me.ewriter.bangumitv.ui.commonAdapter.TitleMoreViewProvider;
+import me.ewriter.bangumitv.widget.commonAdapter.TextItem;
+import me.ewriter.bangumitv.widget.commonAdapter.TextItemViewProvider;
+import me.ewriter.bangumitv.widget.commonAdapter.TitleItem;
+import me.ewriter.bangumitv.widget.commonAdapter.TitleItemViewProvider;
+import me.ewriter.bangumitv.widget.commonAdapter.TitleMoreItem;
+import me.ewriter.bangumitv.widget.commonAdapter.TitleMoreViewProvider;
 import me.ewriter.bangumitv.utils.PreferencesUtils;
 
 /**
@@ -48,13 +48,21 @@ public class BangumiApp extends Application {
 
         registerMutiType();
 
-        CrashReport.initCrashReport(getApplicationContext(), MyConstants.BUGLY_APPID, true);
+        // debug 的时候为true，正式版本记得改成 false
+        if (BuildConfig.DEBUG) {
+            CrashReport.initCrashReport(getApplicationContext(), MyConstants.BUGLY_APPID, true);
+        } else {
+            CrashReport.initCrashReport(getApplicationContext(), MyConstants.BUGLY_APPID, false);
+        }
+
         LeakCanary.install(this);
 
-        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, MyConstants.DB_NAME, null);
-        // 不加密，加密的参考官方的demo
-        Database db = helper.getWritableDb();
-        daoSession = new DaoMaster(db).newSession();
+//        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, MyConstants.DB_NAME, null);
+//        Database db = helper.getWritableDb();
+//        daoSession = new DaoMaster(db).newSession();
+        CustomOpenHelper helper = new CustomOpenHelper(this, MyConstants.DB_NAME, null);
+        SQLiteDatabase sqLiteDatabase = helper.getWritableDatabase();
+        daoSession = new DaoMaster(sqLiteDatabase).newSession();
     }
 
     private void registerMutiType() {
