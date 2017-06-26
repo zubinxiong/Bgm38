@@ -2,7 +2,7 @@
 
 ## Bgm38
 
-A third part Android Client for  [Bangumi](http://bangumi.tv/) | [中文说明](http://ewriter.me/2016/08/18/bgm38/) 及 [中文QA](http://ewriter.me/2016/09/12/Bgm38%20%E8%B8%A9%E5%9D%91%E5%A4%87%E5%BF%98/)
+A third part Android Client for  [Bangumi](http://bangumi.tv/) | [中文说明](http://zubinxiong.github.io/2016/08/18/bgm38/) 及 [中文QA](http://zubinxiong.github.io/2016/09/12/Bgm38%20%E8%B8%A9%E5%9D%91%E5%A4%87%E5%BF%98/)
 
 If you find problem about this application, feel free to contact me via [weibo](http://weibo.com/xiongzba), [email](mailto:zubinxiong@gmail.com) or issuses. 
 
