@@ -20,9 +20,9 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
  */
 public class ApiManager {
 
-    public static final String BANGUMI_BASE_URL = "http://api.bgm.tv/";
+    public static final String BANGUMI_BASE_URL = "https://api.bgm.tv/";
     /** 网页地址 */
-    public static final String WEB_BASE_URL = "http://bgm.tv/";
+    public static final String WEB_BASE_URL = "https://bgm.tv/";
 
     public static final int DEFAULT_TIMEOUT = 10;
 
