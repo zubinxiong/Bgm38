@@ -5,6 +5,9 @@ def releaseTime() {
 }
 
 android {
+
+    def BUGLY_CHANNEL_VALUE = project.hasProperty('DEFINED_UMENG_CHANNEL') ? "$DEFINED_UMENG_CHANNEL" : 'UNKNOWN'
+
     compileSdkVersion rootProject.ext.android.compileSdkVersion
     buildToolsVersion rootProject.ext.android.buildToolsVersion
 
@@ -40,18 +43,31 @@ android {
         }
     }
 
+    flavorDimensions "default"
     productFlavors {
         QQ {
-            manifestPlaceholders = [BUGLY_CHANNEL_VALUE : "QQ"]
+            manifestPlaceholders = [
+                    BUGLY_CHANNEL_VALUE : "QQ"
+            ]
+            dimension "default"
         }
         GooglePlay {
-            manifestPlaceholders = [BUGLY_CHANNEL_VALUE : "GooglePlay"]
+            manifestPlaceholders = [
+                    BUGLY_CHANNEL_VALUE : "GooglePlay"
+            ]
+            dimension "default"
         }
         CoolApk {
-            manifestPlaceholders = [BUGLY_CHANNEL_VALUE : "CoolApk"]
+            manifestPlaceholders = [
+                    BUGLY_CHANNEL_VALUE : "CoolApk"
+            ]
+            dimension "default"
         }
         Github {
-            manifestPlaceholders = [BUGLY_CHANNEL_VALUE : "Github"]
+            manifestPlaceholders = [
+                    BUGLY_CHANNEL_VALUE : "Github"
+            ]
+            dimension "default"
         }
 
 
@@ -63,16 +79,13 @@ android {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
-        }
-    }
 
-    android.applicationVariants.all { variant ->
-        variant.outputs.each {output ->
-            def outputFile = output.outputFile
-            if (outputFile != null && outputFile.name.endsWith('release.apk')) {
-                // 输出apk名称为BangumiTV_v1.0_2015-01-15_wandoujia.apk
-                def fileName = "BangumiTV_v${defaultConfig.versionName}_${releaseTime()}_${variant.productFlavors[0].name}.apk"
-                output.outputFile = new File(outputFile.parent, fileName)
+            applicationVariants.all { variant ->
+                variant.outputs.all {output ->
+                    // 输出apk名称为BangumiTV_v1.0_2015-01-15_qq.apk
+                    def flavor = variant.productFlavors[0]
+                    outputFileName = "BangumiTV_${flavor.name}_${flavor.versionName}_${releaseTime()}.apk"
+                }
             }
         }
     }

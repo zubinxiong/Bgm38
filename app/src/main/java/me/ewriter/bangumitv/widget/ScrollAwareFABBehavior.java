@@ -74,7 +74,7 @@ public class ScrollAwareFABBehavior extends FloatingActionButton.Behavior {
                     .start();
         } else {
             Animation anim = AnimationUtils.loadAnimation(button.getContext(),
-                    android.support.design.R.anim.design_fab_out);
+                    android.support.design.R.anim.abc_fade_out);
             anim.setInterpolator(INTERPOLATOR);
             anim.setDuration(200L);
             anim.setAnimationListener(new Animation.AnimationListener() {
@@ -111,7 +111,7 @@ public class ScrollAwareFABBehavior extends FloatingActionButton.Behavior {
                     .start();
         } else {
             Animation anim = AnimationUtils.loadAnimation(button.getContext(),
-                    android.support.design.R.anim.design_fab_in);
+                    android.support.design.R.anim.abc_fade_in);
             anim.setDuration(200L);
             anim.setInterpolator(INTERPOLATOR);
             button.startAnimation(anim);
