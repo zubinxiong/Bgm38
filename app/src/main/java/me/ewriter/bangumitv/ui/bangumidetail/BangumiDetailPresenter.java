@@ -20,6 +20,8 @@ import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import me.drakeet.multitype.Items;
 import me.ewriter.bangumitv.BangumiApp;
@@ -301,7 +303,11 @@ public class BangumiDetailPresenter implements BangumiDetailContract.Presenter {
             AnimeCharacterEntity entity = new AnimeCharacterEntity();
 
             // 角色小头像图片
-            String role_image_url = "https:" + element.select("div>strong>a>span>img").attr("src");
+            String span_style = element.select("div>strong>a>span>span").attr("style");
+
+            span_style = span_style.replace("background-image:url('", "").replace("')", "");
+
+            String role_image_url = "https:" + span_style;
             entity.setRoleImageUrl(role_image_url);
             // 下列链接为脑补，不一定有
             String large_mage_url = role_image_url.replace("/s/", "/l/");

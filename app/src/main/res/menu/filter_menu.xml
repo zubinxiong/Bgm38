@@ -4,7 +4,7 @@
 
     <item
         android:id="@+id/toolbar_filter"
-        android:icon="@drawable/ic_format_align_left_white_24dp"
+        android:icon="@drawable/ic_filter_list_white_24dp"
         android:title="@string/nav_filter"
         app:showAsAction="always" />
 </menu>

@@ -187,8 +187,10 @@ public class CalendarPresenter implements CalendarContract.Presenter {
                 entity.setAir_weekday(calendar.getItems().get(j).getAir_weekday());
                 entity.setName_cn(calendar.getItems().get(j).getName_cn());
                 entity.setBangumi_id(calendar.getItems().get(j).getId());
-                entity.setBangumi_total(calendar.getItems().get(j).getRating().getTotal());
-                entity.setBangumi_average(calendar.getItems().get(j).getRating().getScore());
+                if (calendar.getItems().get(j).getRating() != null) {
+                    entity.setBangumi_total(calendar.getItems().get(j).getRating().getTotal());
+                    entity.setBangumi_average(calendar.getItems().get(j).getRating().getScore());
+                }
                 if (calendar.getItems().get(j).getImages() != null) {
                     entity.setCommon_image(calendar.getItems().get(j).getImages().getCommon());
                     entity.setLarge_image(calendar.getItems().get(j).getImages().getLarge());
