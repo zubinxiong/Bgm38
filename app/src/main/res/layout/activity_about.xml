@@ -73,6 +73,24 @@
 
             </LinearLayout>
 
+            <TextView
+                android:text="@string/donation_title"
+                android:padding="@dimen/common_padding"
+                android:textSize="@dimen/calender_item_title_size"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/donate_content"
+                android:padding="@dimen/common_padding"
+                android:clickable="true"
+                android:background="@drawable/card_touch_bg"
+                android:text="@string/donation_content"
+                android:textColor="@color/md_grey_500"
+                android:textSize="@dimen/calender_item_outline_size"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
 
             <TextView
                 android:text="@string/visit_github_title"

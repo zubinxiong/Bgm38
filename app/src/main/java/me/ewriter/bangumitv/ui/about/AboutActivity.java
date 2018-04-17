@@ -1,5 +1,6 @@
 package me.ewriter.bangumitv.ui.about;
 
+import android.content.ClipboardManager;
 import android.net.Uri;
 import android.support.customtabs.CustomTabsIntent;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 
 import me.ewriter.bangumitv.R;
 import me.ewriter.bangumitv.base.BaseActivity;
+import me.ewriter.bangumitv.utils.ToastUtils;
 import me.ewriter.bangumitv.utils.Tools;
 
 /**
@@ -23,6 +25,7 @@ public class AboutActivity extends BaseActivity implements View.OnClickListener 
     private CollapsingToolbarLayout mCollapsingToolbarLayout;
     private TextView mWeibo;
     private TextView mGithub;
+    private TextView mDonate;
 
     @Override
     protected int getContentViewResId() {
@@ -36,9 +39,19 @@ public class AboutActivity extends BaseActivity implements View.OnClickListener 
         mCollapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         mWeibo = (TextView) findViewById(R.id.weibo_link);
         mGithub = (TextView) findViewById(R.id.github_link);
+        mDonate = findViewById(R.id.donate_content);
 
         mWeibo.setOnClickListener(this);
         mGithub.setOnClickListener(this);
+        mDonate.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                ClipboardManager clipboardManager = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+                clipboardManager.setText("912876635@qq.com");
+                ToastUtils.showShortToast(R.string.donation_hint);
+                return false;
+            }
+        });
 
         setupHeader();
     }

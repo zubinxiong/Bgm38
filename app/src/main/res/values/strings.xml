@@ -92,6 +92,9 @@
     <string name="weibo_url">http://weibo.com/xiongzba</string>
     <string name="github_url">https://github.com/zubinxiong/BangumiTV</string>
     <string name="open_source_list">square/okhttp \nsquare/retrofit \nsquare/picasso  \ngreenrobot/greenDAO \nhdodenhof/CircleImageView \nscarletsky/Bangumi-Android \nJakeWharton/RxBinding \nReactiveX/RxJava \nfranmontiel/PersistentCookieJar \ntbruyelle/RxPermissions \ndrakeet/MultiType \nAnderWeb/discreteSeekBar</string>
+    <string name="donation_title">捐赠</string>
+    <string name="donation_content">如果您觉得 Bgm38 还不错并对你有用，可以进行打赏支持\n\n注意捐赠并不会会有什么功能上的变化也不能让版本更新更快，只是对我的业余的开发的一种鼓励，并不保证未来的版本会支持您当前的系统版本。谢谢！\n\n支付宝: 912876635@qq.com (长按复制)</string>
+    <string name="donation_hint">邮箱已复制到粘贴板中，可前往支付宝捐赠，感谢支持！</string>
 
     <string name="share">分享</string>
 
@@ -130,6 +133,7 @@
         <item>看过</item>
         <item>抛弃</item>
         <item>撤销</item>
+        <item>去超展开看大家的讨论_(:з」∠)_</item>
     </string-array>
 
     <string-array name="bottom_sheet_value">
