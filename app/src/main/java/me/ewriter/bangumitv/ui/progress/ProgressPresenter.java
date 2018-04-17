@@ -1,5 +1,7 @@
 package me.ewriter.bangumitv.ui.progress;
 
+import android.net.Uri;
+import android.support.customtabs.CustomTabsIntent;
 import android.view.View;
 
 import org.jsoup.Jsoup;
@@ -132,6 +134,17 @@ public class ProgressPresenter implements ProgressContract.Presenter {
                 });
 
         mSubscriptions.add(subscription);
+    }
+
+    @Override
+    public void openDiscuss(AnimeEpEntity entity) {
+        String epid = entity.getEpId();
+        String url = "http://bangumi.tv/m/topic/ep/" + epid;
+        CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
+        builder.setToolbarColor(BangumiApp.sAppCtx.getResources().getColor(R.color.colorPrimary));
+        builder.setShowTitle(true);
+        CustomTabsIntent customTabsIntent = builder.build();
+        customTabsIntent.launchUrl(BangumiApp.sAppCtx, Uri.parse(url));
     }
 
     /** 处理列表和进度的数据，混合起来后返回*/

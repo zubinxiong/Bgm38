@@ -140,8 +140,12 @@ public class ProgressActivity extends BaseActivity implements ProgressContract.V
             @Override
             public void onClick(View view, int position) {
                 mBottomSheetDialog.dismiss();
-                showProgressDialog();
-                mPresenter.updateEpStatus(entity, position, gridPosition);
+                if (position == 4) {
+                    mPresenter.openDiscuss(entity);
+                } else {
+                    showProgressDialog();
+                    mPresenter.updateEpStatus(entity, position, gridPosition);
+                }
             }
         });
     }

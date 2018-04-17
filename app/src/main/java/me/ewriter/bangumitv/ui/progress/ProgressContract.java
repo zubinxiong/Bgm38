@@ -17,6 +17,8 @@ public interface ProgressContract {
         void requestProgress(String subjectId);
 
         void updateEpStatus(AnimeEpEntity entity, int position, int gridPosition);
+
+        void openDiscuss(AnimeEpEntity entity);
     }
 
     interface View extends BaseView<Presenter> {

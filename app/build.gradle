@@ -45,30 +45,30 @@ android {
 
     flavorDimensions "default"
     productFlavors {
-        QQ {
-            manifestPlaceholders = [
-                    BUGLY_CHANNEL_VALUE : "QQ"
-            ]
-            dimension "default"
-        }
-        GooglePlay {
-            manifestPlaceholders = [
-                    BUGLY_CHANNEL_VALUE : "GooglePlay"
-            ]
-            dimension "default"
-        }
+//        QQ {
+//            manifestPlaceholders = [
+//                    BUGLY_CHANNEL_VALUE : "QQ"
+//            ]
+//            dimension "default"
+//        }
+//        GooglePlay {
+//            manifestPlaceholders = [
+//                    BUGLY_CHANNEL_VALUE : "GooglePlay"
+//            ]
+//            dimension "default"
+//        }
         CoolApk {
             manifestPlaceholders = [
                     BUGLY_CHANNEL_VALUE : "CoolApk"
             ]
             dimension "default"
         }
-        Github {
-            manifestPlaceholders = [
-                    BUGLY_CHANNEL_VALUE : "Github"
-            ]
-            dimension "default"
-        }
+//        Github {
+//            manifestPlaceholders = [
+//                    BUGLY_CHANNEL_VALUE : "Github"
+//            ]
+//            dimension "default"
+//        }
 
 
     }
