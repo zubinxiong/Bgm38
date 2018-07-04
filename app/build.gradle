@@ -93,35 +93,35 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    testCompile 'junit:junit:4.12'
-    compile rootProject.ext.dependencies["appcompat-v7"]
-    compile rootProject.ext.dependencies["design"]
-    compile rootProject.ext.dependencies["recyclerview"]
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    testImplementation 'junit:junit:4.12'
+    implementation rootProject.ext.dependencies["appcompat-v7"]
+    implementation rootProject.ext.dependencies["design"]
+    implementation rootProject.ext.dependencies["recyclerview"]
 
-    compile rootProject.ext.dependencies["picasso"]
-    compile rootProject.ext.dependencies["retrofit"]
-    compile rootProject.ext.dependencies["convert-gson"]
-    compile rootProject.ext.dependencies["logging-interceptor"]
+    implementation rootProject.ext.dependencies["picasso"]
+    implementation rootProject.ext.dependencies["retrofit"]
+    implementation rootProject.ext.dependencies["convert-gson"]
+    implementation rootProject.ext.dependencies["logging-interceptor"]
 
-    compile rootProject.ext.dependencies["greendao"]
+    implementation rootProject.ext.dependencies["greendao"]
 
-    compile rootProject.ext.dependencies["circleimageview"]
-    compile rootProject.ext.dependencies["customtabs"]
+    implementation rootProject.ext.dependencies["circleimageview"]
+    implementation rootProject.ext.dependencies["customtabs"]
 
-    compile rootProject.ext.dependencies["bugly"]
+    implementation rootProject.ext.dependencies["bugly"]
 
-    compile rootProject.ext.dependencies["rxjava"]
-    compile rootProject.ext.dependencies["rxandroid"]
-    compile rootProject.ext.dependencies["rxjavaAdapter"]
-    compile rootProject.ext.dependencies["rxbinding"]
-    compile rootProject.ext.dependencies["jsoup"]
-    compile rootProject.ext.dependencies["convert-scalars"]
-    compile rootProject.ext.dependencies["multitype"]
-    compile rootProject.ext.dependencies["discrete-seekbar"]
-    compile rootProject.ext.dependencies["rxpermissions"]
-    compile rootProject.ext.dependencies["persistenCookieJar"]
+    implementation rootProject.ext.dependencies["rxjava"]
+    implementation rootProject.ext.dependencies["rxandroid"]
+    implementation rootProject.ext.dependencies["rxjavaAdapter"]
+    implementation rootProject.ext.dependencies["rxbinding"]
+    implementation rootProject.ext.dependencies["jsoup"]
+    implementation rootProject.ext.dependencies["convert-scalars"]
+    implementation rootProject.ext.dependencies["multitype"]
+    implementation rootProject.ext.dependencies["discrete-seekbar"]
+    implementation rootProject.ext.dependencies["rxpermissions"]
+    implementation rootProject.ext.dependencies["persistenCookieJar"]
 
-    debugCompile rootProject.ext.dependencies["debug-leakcanary"]
-    releaseCompile rootProject.ext.dependencies["release-leakcanary"]
+    debugImplementation rootProject.ext.dependencies["debug-leakcanary"]
+    releaseImplementation rootProject.ext.dependencies["release-leakcanary"]
 }
