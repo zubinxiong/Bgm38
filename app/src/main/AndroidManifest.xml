@@ -82,6 +82,10 @@
             android:name="BUGLY_APP_CHANNEL"
             android:value="${BUGLY_CHANNEL_VALUE}" />
 
+        <meta-data
+            android:name="android.max_aspect"
+            android:value="2.1" />
+
     </application>
 
 </manifest>
