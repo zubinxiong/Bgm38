@@ -1,0 +1,174 @@
+<resources>
+
+    <string name="app_name">Bgm38</string>
+
+    <!-- NavigationView -->
+    <string name="nav_my_collection">我的進度</string>
+    <string name="nav_daily_calendar">每日放送</string>
+    <string name="nav_search">搜尋</string>
+    <string name="nav_filter">篩選</string>
+    <string name="nav_ultra_expand">超展開</string>
+    <string name="nav_about">關於</string>
+    <string name="nav_logout">退出登入</string>
+    <string name="nav_setting">設定</string>
+    <string name="nav_night_mode">夜間模式</string>
+    <string name="calender_bangumi_img">calender_bangumi_img</string>
+
+    <!-- 每日放送 -->
+    <string name="monday">星期一</string>
+    <string name="tuesday">星期二</string>
+    <string name="wednesday">星期三</string>
+    <string name="thursday">星期四</string>
+    <string name="friday">星期五</string>
+    <string name="saturday">星期六</string>
+    <string name="sunday">星期日</string>
+    <string name="score_average">評分: %1$s / 排名: %2$s</string>
+
+    <string name="update_failed">更新失敗</string>
+    <string name="update_retry">重試</string>
+
+    <!-- 番劇詳情 -->
+    <string name="bangumi_detail_title">詳情</string>
+    <string name="bangumi_detail_more">更多 &gt; </string>
+    <string name="bangumi_detail_init_error">初始化失敗</string>
+    <string name="bangumi_detail_summary">劇情概覽</string>
+    <string name="bangumi_detail_content">簡介及製作人員</string>
+    <string name="bangumi_detail_character">角色介紹</string>
+    <string name="bangumi_detail_air_day">放送日期: %1$s</string>
+    <string name="cancel">取消</string>
+    <string name="submit">提交</string>
+    <string name="rate_number_hint">評分</string>
+    <string name="rate_text_hint">我要吐槽</string>
+    <string name="want_see">狀態</string>
+    <string name="update_comment">評論已提交</string>
+    <string name="not_display_yet">還沒放送哦！</string>
+    <string name="progress_updated">進度已更新</string>
+    <string name="my_comment">我的評價</string>
+    <string name="rating_number_max">評分不能大於10</string>
+    <string name="progress_updating">進度更新中</string>
+    <string name="tags">大家的標註 : %1$s</string>
+    <string name="score">評分 : %1$s</string>
+    <string name="bangumi_persons">製作人員</string>
+    <string name="bangumi_type">類別</string>
+
+    <!-- 登入 -->
+    <string name="login_email_hint">信箱</string>
+    <string name="login_password_hint">密碼</string>
+    <string name="login">登入</string>
+    <string name="login_hint">App 內不提供註冊功能，請先網頁上註冊！點我去註冊</string>
+    <string name="login_fail">登入失敗</string>
+    <string name="not_login_hint">還沒登入呢！</string>
+    <string name="login_doing">登入中.....</string>
+    <string name="already_login">已經登入了</string>
+    <string name="email_input_hint">請輸入信箱</string>
+    <string name="password_input_hint">請輸入密碼</string>
+
+    <!-- collection -->
+    <string name="get_retry">點擊重試</string>
+    <string name="collection_fail">取得失敗</string>
+
+    <!-- 搜尋 -->
+    <string name="search">搜尋</string>
+    <string name="search_error">搜尋失敗</string>
+    <string name="search_nothing">搜尋的內容不存在</string>
+    <string name="search_null_hint">請輸入搜尋內容</string>
+    <string name="search_api_limit">共 %1$d 條資料,api限制只顯示%2$d 條</string>
+    <string name="search_type">類型 : %1$s</string>
+
+    <!-- 退出登入 -->
+    <string name="logout_title">退出登入</string>
+    <string name="logout_content">確認要退出登入嗎？</string>
+    <string name="logout_confirm">確認</string>
+    <string name="logout_cancel">取消</string>
+
+    <!-- 關於-->
+    <string name="about">關於</string>
+    <string name="version_info">版本: %1$s</string>
+    <string name="about_detail">Bangumi 是由 Sai 於桂林發起的 ACG 分享與交流項目，致力於讓阿宅們在欣賞ACG作品之餘擁有一個輕鬆便捷獨特的交流與溝通環境。\n \n本 App 部分介面參考了 scarletsky 的  Bangumi-Android 項目，並使用了其中部分資源，圖示由 奈白不弍 設計，非常感謝！\n\n如果在使用過程中遇到什麼問題，歡迎戳下面的微博回饋！\n</string>
+    <string name="sina_weibo">新浪微博: \@熊胖胖x</string>
+    <string name="visit_github_title">Github 原始碼</string>
+    <string name="visit_github_detail">項目在 Github 以 Apache 協議開源，歡迎各位提 Issues 或者 Star </string>
+    <string name="open_source_title">本項目用到了下列開源項目</string>
+    <string name="weibo_url">http://weibo.com/xiongzba</string>
+    <string name="github_url">https://github.com/zubinxiong/BangumiTV</string>
+    <string name="open_source_list">square/okhttp \nsquare/retrofit \nsquare/picasso  \ngreenrobot/greenDAO \nhdodenhof/CircleImageView \nscarletsky/Bangumi-Android \nJakeWharton/RxBinding \nReactiveX/RxJava \nfranmontiel/PersistentCookieJar \ntbruyelle/RxPermissions \ndrakeet/MultiType \nAnderWeb/discreteSeekBar</string>
+    <string name="donation_title">捐贈</string>
+    <string name="donation_content">如果您覺得 Bgm38 還不錯並對你有用，可以進行打賞支持\n\n注意捐贈並不會有什麼功能上的變化也不能讓版本更新更快，只是對我的業餘的開發的一種鼓勵，並不保證未來的版本會支持您目前的系統版本。謝謝！\n\n支付寶: 912876635@qq.com (長按複製)</string>
+    <string name="donation_hint">信箱已複製到剪貼板中，可前往支付寶捐贈，感謝支援！</string>
+
+    <string name="share">分享</string>
+
+    <string name="watch_progress">觀看進度</string>
+    <string name="init_failed">初始化失敗，請稍後重試</string>
+
+    <string name="save_picture">儲存</string>
+    <string name="save_disable">預設圖片不能儲存 = =</string>
+    <string name="write_to_sdcard">儲存圖片到 SD 卡</string>
+    <string name="save_ok">圖片已儲存在 SD 卡 Download 目錄</string>
+    <string name="save_failed">圖片儲存失敗</string>
+    <string name="image_already_exist">圖片已儲存在 SD 卡 Download 目錄</string>
+    <string name="permission_retry_title">儲存圖片到 SD 卡需要儲存權限</string>
+    <string name="permission_go">去開啟</string>
+
+    <string name="send_intent_title">分享給</string>
+    <string name="wait_for_loading">請載入完成後再試</string>
+    <string-array name="spinner_name">
+        <item>想看</item>
+        <item>看過</item>
+        <item>在看</item>
+        <item>擱置</item>
+        <item>棄番</item>
+    </string-array>
+
+    <string-array name="spinner_value">
+        <item>wish</item>
+        <item>collect</item>
+        <item>do</item>
+        <item>on_hold</item>
+        <item>dropped</item>
+    </string-array>
+
+    <string-array name="bottom_sheet_name">
+        <item>想看</item>
+        <item>看過</item>
+        <item>拋棄</item>
+        <item>復原</item>
+        <item>去超展開看大家的討論_(:з」∠)_</item>
+    </string-array>
+
+    <string-array name="bottom_sheet_value">
+        <item>queue</item>
+        <item>watched</item>
+        <item>drop</item>
+        <item>remove</item>
+    </string-array>
+
+    <string name="anime">動畫</string>
+    <string name="book">圖書</string>
+    <string name="game">遊戲</string>
+    <string name="music">音樂</string>
+    <string name="real">電視劇</string>
+
+    <string-array name="filter_name">
+        <item>動畫</item>
+        <item>圖書</item>
+        <item>遊戲</item>
+        <item>音樂</item>
+        <item>電視劇</item>
+    </string-array>
+
+    <string-array name="filter_value">
+        <item>anime</item>
+        <item>book</item>
+        <item>game</item>
+        <item>music</item>
+        <item>real</item>
+    </string-array>
+
+
+    <!--footer-->
+    <string name="list_footer_loading">正在載入下一頁_(:з”∠)_</string>
+    <string name="list_footer_network_error">點擊重新載入</string>
+    <string name="list_footer_end">已經沒有更多資料了_(:з”∠)_</string>
+
+</resources>
